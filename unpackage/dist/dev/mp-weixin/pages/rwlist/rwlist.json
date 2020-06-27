@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "userinfo": "/components/userinfo/userinfo",
+    "rwlist-item": "/components/rwlistItem/rwlistItem"
+  }
+}

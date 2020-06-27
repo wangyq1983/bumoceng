@@ -1,0 +1,192 @@
+@charset "UTF-8";
+/* 颜色变量 */
+/* 个人中心 */
+/* 黑与灰 */
+/* 背景颜色 */
+/* 边框颜色 */
+/* 文字尺寸 */
+/* 透明度 */
+/* 布局排列 */
+/* 宽度 */
+/* 内边距 */
+/* 下底边 */
+/* 用户下底边 */
+/* 用户中心其他页面导航 */
+/* 保存按钮 */
+.saveBox {
+  width: 690rpx;
+  padding: 30rpx;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+          justify-content: center;
+}
+.saveBtn {
+  width: 200rpx;
+  height: 80rpx;
+  line-height: 80rpx;
+  text-align: center;
+  background: #ffce00;
+  color: #fff;
+}
+page {
+  overflow-x: hidden;
+}
+.menuguide {
+  border-top: 6rpx solid #ffce00;
+  width: 690rpx;
+  padding: 30rpx;
+  font-size: 32rpx;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+  -webkit-box-pack: start;
+  -webkit-justify-content: flex-start;
+          justify-content: flex-start;
+}
+.jllist {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+  width: 750rpx;
+  -webkit-box-pack: start;
+  -webkit-justify-content: flex-start;
+          justify-content: flex-start;
+}
+.jlitem {
+  width: 690rpx;
+  padding: 30rpx;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+  -webkit-box-pack: start;
+  -webkit-justify-content: flex-start;
+          justify-content: flex-start;
+  border-bottom: 10rpx solid #f4f4f4;
+}
+.xyicon {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50rpx;
+  background: #ffce00;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+          justify-content: center;
+}
+.xyicon image {
+  width: 66rpx;
+  height: 66rpx;
+}
+.xybox {
+  width: 430rpx;
+  margin-left: 20rpx;
+}
+.xyname {
+  font-size: 32rpx;
+  color: #a5a5a5;
+  margin-bottom: 15rpx;
+}
+.xystar {
+  font-size: 28rpx;
+  color: #a5a5a5;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+  -webkit-box-pack: start;
+  -webkit-justify-content: flex-start;
+          justify-content: flex-start;
+}
+.xystar image {
+  width: 28rpx;
+  height: 28rpx;
+  margin-left: 10rpx;
+}
+.shixian {
+  width: 150rpx;
+  height: 58rpx;
+  line-height: 58rpx;
+  text-align: center;
+  font-size: 30rpx;
+}
+.isshixian {
+  background: #ffce00;
+}
+.shixianend {
+  background-color: #bebebe;
+}
+.addxy {
+  width: 120rpx;
+  height: 120rpx;
+  background: #ffce00;
+  border-radius: 100rpx;
+  position: fixed;
+  bottom: 60rpx;
+  left: 315rpx;
+  z-index: 2;
+}
+.addxyBtn {
+  width: 10rpx;
+  height: 80rpx;
+  background: #ffffff;
+  position: absolute;
+  top: 20rpx;
+  left: 55rpx;
+  z-index: 3;
+}
+.addxyBtn1 {
+  width: 80rpx;
+  height: 10rpx;
+  background: #ffffff;
+  position: absolute;
+  left: 20rpx;
+  top: 55rpx;
+  z-index: 3;
+}
+

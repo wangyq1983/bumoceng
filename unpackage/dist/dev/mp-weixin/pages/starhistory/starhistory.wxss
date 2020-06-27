@@ -1,0 +1,168 @@
+@charset "UTF-8";
+/* 颜色变量 */
+/* 个人中心 */
+/* 黑与灰 */
+/* 背景颜色 */
+/* 边框颜色 */
+/* 文字尺寸 */
+/* 透明度 */
+/* 布局排列 */
+/* 宽度 */
+/* 内边距 */
+/* 下底边 */
+/* 用户下底边 */
+/* 用户中心其他页面导航 */
+/* 保存按钮 */
+.saveBox {
+  width: 690rpx;
+  padding: 30rpx;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+          justify-content: center;
+}
+.saveBtn {
+  width: 200rpx;
+  height: 80rpx;
+  line-height: 80rpx;
+  text-align: center;
+  background: #ffce00;
+  color: #fff;
+}
+page {
+  overflow-x: hidden;
+}
+.menuguide {
+  border-top: 6rpx solid #ffce00;
+  width: 690rpx;
+  padding: 30rpx;
+  font-size: 32rpx;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+  -webkit-box-pack: start;
+  -webkit-justify-content: flex-start;
+          justify-content: flex-start;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+          justify-content: space-between;
+}
+/* ==================
+         时间轴
+ ==================== */
+.cu-timeline {
+  display: block;
+  background-color: #ffffff;
+  font-size: 28rpx;
+}
+.cu-timeline .cu-time {
+  width: 120rpx;
+  text-align: center;
+  padding: 20rpx 0;
+  font-size: 26rpx;
+  color: #888;
+  display: block;
+}
+.cu-timeline > .cu-item {
+  padding: 30rpx 30rpx 30rpx 120rpx;
+  position: relative;
+  display: block;
+  z-index: 0;
+}
+.cu-timeline > .cu-item:not([class*="text-"]) {
+  color: #333;
+}
+.cu-timeline > .cu-item::after {
+  content: "";
+  display: block;
+  position: absolute;
+  width: 1rpx;
+  background-color: #ddd;
+  left: 60rpx;
+  height: 100%;
+  top: 0;
+  z-index: 8;
+}
+.cu-timeline > .cu-item .content {
+  padding: 20rpx;
+  border-radius: 16rpx;
+  -webkit-box-pack: start;
+  -webkit-justify-content: flex-start;
+          justify-content: flex-start;
+}
+.cu-timeline > .cu-item .content image {
+  width: 30rpx;
+  height: 30rpx;
+  margin: 0 10rpx 0 20rpx;
+}
+.con1 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+  -webkit-box-pack: start;
+  -webkit-justify-content: flex-start;
+          justify-content: flex-start;
+}
+.con2 {
+  padding: 10rpx;
+}
+.addbg {
+  background: #39b54a;
+  color: #fff;
+}
+.jianbg {
+  background: #0081ff;
+  color: #fff;
+}
+.addicon {
+  width: 40rpx;
+  height: 40rpx;
+  line-height: 40rpx;
+  text-align: center;
+  color: #fff;
+  background: #39b54a;
+  border-radius: 30rpx;
+  border: 6rpx solid #ffffff;
+  position: absolute;
+  z-index: 999;
+  left: 34rpx;
+  top: 16rpx;
+}
+.jianicon {
+  width: 40rpx;
+  height: 40rpx;
+  line-height: 40rpx;
+  text-align: center;
+  color: #fff;
+  background: #0081ff;
+  border-radius: 30rpx;
+  border: 6rpx solid #ffffff;
+  position: absolute;
+  z-index: 999;
+  left: 34rpx;
+  top: 16rpx;
+}
+

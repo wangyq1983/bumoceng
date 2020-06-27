@@ -1,0 +1,111 @@
+/* 颜色变量 */
+$color-m:#ffce00;  //风格颜色
+
+$color-mbg:#ffb123; 
+$color-mtop:#ffbf2d;
+
+$color-qiandao:#ff971e; //签到
+
+$color-star:#ffd732; //星
+
+$color-otherbg:#3c8ceb;
+$color-othertop:#489cf0;
+
+/* 个人中心 */
+$color-u-jl:#3c8ceb;
+$color-u-jl1:#5ebbf8;
+$color-u-star:#ffb123;
+$color-u-star1:#ffdb41;
+$color-u-cj:#80d043;
+$color-u-cj1:#acea65;
+$color-u-ph:#8861d9;
+$color-u-ph1:#b78ef1;
+
+$color-tabbar:#b69406;
+
+/* 黑与灰 */
+$color-36:#363636;  
+$color-00:#000000;
+$color-ff:#ffffff;
+$color-bb:#bbbbbb;
+$color-a5:#a5a5a5;
+$color-f7:#f7f7f7; //进度条背景
+
+/* 背景颜色 */
+$bg-color-mask:rgba(0, 0, 0, 0.4);//遮罩颜色
+
+/* 边框颜色 */
+$color-bor:#f4f4f4;
+
+/* 文字尺寸 */
+$fontsize-22:22upx;
+$fontsize-24:24upx;
+$fontsize-28:28upx;
+$fontsize-30:30upx;
+$fontsize-32:32upx;
+$fontsize-34:34upx;
+$fontsize-36:36upx;
+
+
+/* 透明度 */
+$uni-opacity-disabled: 0.3; // 组件禁用态的透明度
+
+/* 布局排列 */
+
+@mixin rowflex {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+	
+@mixin colflex {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+/* 宽度 */
+@mixin warpwidth {
+	width:690upx;
+}
+/* 内边距 */
+@mixin warppadding{
+	padding:30upx
+}
+/* 下底边 */
+@mixin borderbottom{
+	border-bottom: 10upx solid $color-bor;
+}
+/* 用户下底边 */
+@mixin userbor{
+	border-top:6upx solid $color-m;
+}
+
+/* 用户中心其他页面导航 */
+@mixin userguide{
+	@include userbor;
+	@include warpwidth;
+	@include warppadding;
+	font-size: $fontsize-32;
+	@include rowflex;
+	justify-content: flex-start;
+}
+/* 保存按钮 */
+.saveBox {
+	@include warpwidth;
+	@include warppadding;
+	@include rowflex;
+	justify-content: center;
+}
+.saveBtn {
+	width: 200upx;
+	height:80upx;
+	line-height: 80upx;
+	text-align: center;
+	background: $color-m;
+	color: #fff;
+}
+
+page{
+	overflow-x: hidden;
+}

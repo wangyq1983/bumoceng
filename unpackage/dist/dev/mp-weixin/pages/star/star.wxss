@@ -1,0 +1,131 @@
+@charset "UTF-8";
+/* 颜色变量 */
+/* 个人中心 */
+/* 黑与灰 */
+/* 背景颜色 */
+/* 边框颜色 */
+/* 文字尺寸 */
+/* 透明度 */
+/* 布局排列 */
+/* 宽度 */
+/* 内边距 */
+/* 下底边 */
+/* 用户下底边 */
+/* 用户中心其他页面导航 */
+/* 保存按钮 */
+.saveBox {
+  width: 690rpx;
+  padding: 30rpx;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+          justify-content: center;
+}
+.saveBtn {
+  width: 200rpx;
+  height: 80rpx;
+  line-height: 80rpx;
+  text-align: center;
+  background: #ffce00;
+  color: #fff;
+}
+page {
+  overflow-x: hidden;
+}
+.menuguide {
+  border-top: 6rpx solid #ffce00;
+  width: 690rpx;
+  padding: 30rpx;
+  font-size: 32rpx;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+  -webkit-box-pack: start;
+  -webkit-justify-content: flex-start;
+          justify-content: flex-start;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+          justify-content: space-between;
+}
+.starWarp {
+  width: 690rpx;
+  padding: 30rpx;
+}
+.starAction {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+  -webkit-box-pack: start;
+  -webkit-justify-content: flex-start;
+          justify-content: flex-start;
+  padding: 20rpx 0;
+}
+.actionBtn {
+  width: 100rpx;
+  height: 50rpx;
+  line-height: 50rpx;
+  text-align: center;
+  font-size: 28rpx;
+  background: #f7f7f7;
+  margin-right: 20rpx;
+  padding: 3rpx 15rpx;
+}
+.current {
+  background: #ffce00;
+}
+.starChange {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+  -webkit-box-pack: start;
+  -webkit-justify-content: flex-start;
+          justify-content: flex-start;
+  font-size: 30rpx;
+  padding: 20rpx 0;
+}
+.starChange image {
+  width: 26rpx;
+  height: 26rpx;
+  margin: 0 8rpx;
+}
+.starChange input {
+  border: 2rpx solid #ffce00;
+  margin-left: 10rpx;
+  width: 120rpx;
+}
+.starliyou textarea {
+  width: 660rpx;
+  padding: 10rpx;
+  border: 2rpx solid #ffce00;
+}
+
