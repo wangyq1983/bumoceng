@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<userinfo></userinfo>
-		<view class="rwtable">
+		<view class="rwtable" @tap="testlink">
 			
 		</view>
 		<view class="scenelist">
@@ -110,6 +110,9 @@
 						url:'/pages/ph/ph'
 					})
 				}
+			},
+			testlink:function(){
+				this.$api.test(123)
 			}
 		}
 	}

@@ -2,33 +2,25 @@
 	<view>
 		<view class="typetip">请选择类别,长按类型标签出现删除按钮</view>
 		<view class="typeCon">
-			<view class="typeBox">语文</view>
-			<view class="typeBox">语文</view>
-			<view class="typeBox">语文</view>
-			<view class="typeBox">语文</view>
-			<view class="typeBox">语文</view>
-			<view class="typeBox">语文</view>
-			<view class="typeBox">语文</view>
-			<view class="typeBox">语文</view>
-			<view class="typeBox">语文</view>
-			<view class="typeBox">语文</view>
-			<view class="typeBox">语文</view>
-			<view class="typeBox">语文</view>
+			<view :class = "(curtype == items)?'typeBox cur':'typeBox'"  v-for="items in defaluttype" :key='items' @tap="typeselect" :data-value = "items">
+				{{items}}
+			</view>
+			
 			<view class="typeBox noedit">
 				+新建类别
 			</view>
 		</view>
-		<view class="wordBox"><textarea value="" placeholder="请输入作业内容" /></view>
+		<view class="wordBox"><textarea value="" placeholder="请输入作业内容" v-model="zycon" /></view>
 		<view class="selectTime">
 			<image src="/static/shijian.png" mode="" class="Imgicon"></image>
 			<view class="">请设置时长</view>
-			<input type="text" value="" />
+			<input type="text" value="" v-model="timelength" />
 			<view class="">分钟</view>
 		</view>
 		<view class="selectStar">
 			<image src="/static/star.png" mode="" class="Imgicon"></image>
 			<view class="">设置奖励星</view>
-			<input type="text" value="" />
+			<input type="text" value="" v-model="rewardstar" />
 			<view class="">颗</view>
 		</view>
 		<view class="zhiliangSwitch">
@@ -36,24 +28,68 @@
 				完成质量检查
 			</view>
 			<view class="">
-				<switch  color="#FFCE00" @change="switch2Change" />
+				<switch color="#FFCE00" :checked="quality" @change="switch2Change" />
 			</view>
 		</view>
-		<view class="saveBox"><view class="saveBtn">保存</view></view>
+		<view class="saveBox"><view class="saveBtn" @tap="creatzyRequest">保存</view></view>
 	</view>
 </template>
 
 <script>
 export default {
 	data() {
-		return {};
+		return {
+			defaluttype:['语文','数学','英语'],
+			curtype:'',
+			zycon:'',
+			timelength:'',
+			rewardstar:'',
+			quality:false
+		};
 	},
 	methods: {
+		creatzyRequest:async function(){
+			var params = {
+				flag:1,
+				typeName:this.curtype,
+				jobDescription:this.zycon,
+				duration:parseInt(this.timelength),
+				starNumber:parseInt(this.rewardstar),
+				completionSwitch:this.quality
+			}
+			console.log(params);
+			await this.$api.showLoading(); // 显示loading
+			var ctask = await this.$api.postData(this.$api.webapi.cTask, params);
+			await this.$api.hideLoading(); // 等待请求数据成功后，隐藏loading
+			console.log(ctask)
+			if (this.$api.reshook(ctask, this.$mp.page.route)) {
+				this.createSuccess(ctask);
+			}
+		},
+		createSuccess(res){
+			console.log(res)
+			uni.showToast({
+				title:"任务创建成功！",
+				icon:'none',
+				duration:2000
+			});
+			setTimeout(function(){
+				uni.reLaunch({
+					url:'/pages/rwlist/rwlist'
+				})
+			},2000)
+		},
+		typeselect:function(e){
+			console.log(e.currentTarget.dataset.value)
+			this.curtype = e.currentTarget.dataset.value
+		},
 		switch1Change: function (e) {
 			console.log('switch1 发生 change 事件，携带值为', e.detail.value)
+			this.quality = e.detail.value
 		},
 		switch2Change: function (e) {
 			console.log('switch2 发生 change 事件，携带值为', e.detail.value)
+			this.quality = e.detail.value
 		}
 	}
 };

@@ -11,7 +11,8 @@
     "pages/star/star",
     "pages/cj/cj",
     "pages/ph/ph",
-    "pages/starhistory/starhistory"
+    "pages/starhistory/starhistory",
+    "pages/login/login"
   ],
   "subPackages": [],
   "window": {
@@ -42,5 +43,5 @@
   },
   "publicPath": "./",
   "usingComponents": {},
-  "sitemapLocation": "sitemap5.json"
+  "sitemapLocation": "sitemap31.json"
 }

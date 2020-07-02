@@ -1,0 +1,1 @@
+<view><view class="logintop"><image src="/static/icon.png" mode></image></view><view class="logincon"><button class="wxloginbtn" type="primary" open-type="getUserInfo" withCredentials="true" lang="zh_CN" data-event-opts="{{[['getuserinfo',[['login',['$event']]]]]}}" bindgetuserinfo="__e">微信授权登录</button></view></view>

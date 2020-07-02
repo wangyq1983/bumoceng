@@ -41,8 +41,37 @@
 page {
   overflow-x: hidden;
 }
+/* 遮罩层 */
+.maskbg {
+  background: rgba(0, 0, 0, 0.5);
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+          justify-content: center;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 9;
+}
+.maskBox {
+  position: relative;
+}
+.maskClose {
+  position: absolute;
+}
 .timeSelect {
-  width: 750rpx;
+  width: 710rpx;
   height: 80rpx;
   line-height: 80rpx;
   background: #ffce00;

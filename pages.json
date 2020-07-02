@@ -50,6 +50,10 @@
             "path" : "pages/starhistory/starhistory",
             "style" : {}
         }
+        ,{
+            "path" : "pages/login/login",
+            "style" : {}
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

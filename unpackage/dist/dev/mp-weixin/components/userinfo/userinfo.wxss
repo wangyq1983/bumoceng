@@ -41,8 +41,37 @@
 page {
   overflow-x: hidden;
 }
+/* 遮罩层 */
+.maskbg {
+  background: rgba(0, 0, 0, 0.5);
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+          justify-content: center;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 9;
+}
+.maskBox {
+  position: relative;
+}
+.maskClose {
+  position: absolute;
+}
 .userbox {
-  width: 720rpx;
+  width: 700rpx;
   height: 150rpx;
   padding: 20rpx 15rpx;
 }
@@ -56,7 +85,7 @@ page {
   height: 132rpx;
   border-radius: 168rpx;
   border: 8rpx solid #ffffff;
-  box-shadow: 0rpx 0rpx 15rpx #C0C0C0;
+  box-shadow: 0rpx 0rpx 15rpx #c0c0c0;
 }
 .userinfo {
   width: 540rpx;
@@ -182,5 +211,17 @@ page {
 .cjword {
   font-size: 24rpx;
   color: #363636;
+}
+.actionTest {
+  position: fixed;
+  right: 0;
+  top: 30rpx;
+  z-index: 999;
+}
+.actionTest view {
+  margin: 10rpx;
+  background: #333;
+  color: #fff;
+  padding: 10rpx;
 }
 

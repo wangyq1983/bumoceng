@@ -109,3 +109,22 @@ $uni-opacity-disabled: 0.3; // 组件禁用态的透明度
 page{
 	overflow-x: hidden;
 }
+
+/* 遮罩层 */
+.maskbg{
+	background:rgba(0,0,0,0.5);
+	@include rowflex;
+	justify-content: center;
+	position: fixed;
+	top:0;
+	right:0;
+	bottom:0;
+	left:0;
+	z-index: 9;
+}
+.maskBox{
+	position: relative;
+}
+.maskClose{
+	position: absolute;
+}
