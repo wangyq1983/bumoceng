@@ -124,7 +124,20 @@ page{
 }
 .maskBox{
 	position: relative;
+	@include colflex;
+	justify-content: center;
+}
+.maskCon{
+	
 }
 .maskClose{
-	position: absolute;
+	width:80upx;
+	height:80upx;
+	line-height: 80upx;
+	text-align: center;
+	border-radius: 50upx;
+	border: 4upx solid #fff;
+	margin-top: 20upx;
+	font-size: 60upx;
+	color: #fff;
 }

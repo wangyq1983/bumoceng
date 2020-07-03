@@ -92,7 +92,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "recyclableRender", function() { return recyclableRender; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "components", function() { return components; });
-var components
+var components = {
+  mask: function() {
+    return __webpack_require__.e(/*! import() | components/mask/mask */ "components/mask/mask").then(__webpack_require__.bind(null, /*! @/components/mask/mask.vue */ 145))
+  }
+}
 var render = function() {
   var _vm = this
   var _h = _vm.$createElement
@@ -167,6 +171,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 var _default =
 {
   data: function data() {
@@ -176,11 +192,66 @@ var _default =
       zycon: '',
       timelength: '',
       rewardstar: '',
-      quality: false };
+      quality: false,
+      newtypeshow: false,
+      typevalue: '' };
 
   },
+  onShow: function onShow() {
+    this.typelist();
+  },
   methods: {
-    creatzyRequest: function () {var _creatzyRequest = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {var params, ctask;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:
+    // 查询类别
+    typelist: function () {var _typelist = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {var params, typelist;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:
+                params = {
+                  flag: 1 };_context.next = 3;return (
+
+                  this.$api.showLoading());case 3:_context.next = 5;return (
+                  this.$api.getData(this.$api.webapi.rTaskType, params));case 5:typelist = _context.sent;_context.next = 8;return (
+                  this.$api.hideLoading());case 8: // 等待请求数据成功后，隐藏loading
+                console.log(typelist);
+                if (this.$api.reshook(typelist, this.$mp.page.route)) {
+                  //this.createSuccess(ctask);
+                  console.log('typelist');
+                  console.log(typelist.data);
+                  this.defaluttype = typelist.data;
+                }case 10:case "end":return _context.stop();}}}, _callee, this);}));function typelist() {return _typelist.apply(this, arguments);}return typelist;}(),
+
+    // 创建类别
+    ctype: function () {var _ctype = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee2() {var params, ctype, _this;return _regenerator.default.wrap(function _callee2$(_context2) {while (1) {switch (_context2.prev = _context2.next) {case 0:
+                params = {
+                  flag: 1,
+                  typeName: this.typevalue };_context2.next = 3;return (
+
+                  this.$api.showLoading());case 3:_context2.next = 5;return (
+                  this.$api.postData(this.$api.webapi.cTaskType, params));case 5:ctype = _context2.sent;_context2.next = 8;return (
+                  this.$api.hideLoading());case 8: // 等待请求数据成功后，隐藏loading
+                if (this.$api.reshook(ctype, this.$mp.page.route)) {
+                  console.log('ctype');
+                  console.log(ctype);
+                  _this = this;
+                  if (ctype.resultCode == 0) {
+                    uni.showToast({
+                      title: '类别新建成功',
+                      icon: 'none',
+                      duration: 1500 });
+
+                    setTimeout(function () {
+                      _this.closemask();
+                    }, 1500);
+
+                  }
+                }case 9:case "end":return _context2.stop();}}}, _callee2, this);}));function ctype() {return _ctype.apply(this, arguments);}return ctype;}(),
+
+    closemask: function closemask() {
+      this.newtypeshow = false;
+    },
+    //打开创建类别弹层
+    newtype: function newtype() {
+      console.log('newtype is tap');
+      this.newtypeshow = true;
+    },
+    creatzyRequest: function () {var _creatzyRequest = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee3() {var params, ctask;return _regenerator.default.wrap(function _callee3$(_context3) {while (1) {switch (_context3.prev = _context3.next) {case 0:
                 params = {
                   flag: 1,
                   typeName: this.curtype,
@@ -189,14 +260,14 @@ var _default =
                   starNumber: parseInt(this.rewardstar),
                   completionSwitch: this.quality };
 
-                console.log(params);_context.next = 4;return (
-                  this.$api.showLoading());case 4:_context.next = 6;return (
-                  this.$api.postData(this.$api.webapi.cTask, params));case 6:ctask = _context.sent;_context.next = 9;return (
+                console.log(params);_context3.next = 4;return (
+                  this.$api.showLoading());case 4:_context3.next = 6;return (
+                  this.$api.postData(this.$api.webapi.cTask, params));case 6:ctask = _context3.sent;_context3.next = 9;return (
                   this.$api.hideLoading());case 9: // 等待请求数据成功后，隐藏loading
                 console.log(ctask);
                 if (this.$api.reshook(ctask, this.$mp.page.route)) {
                   this.createSuccess(ctask);
-                }case 11:case "end":return _context.stop();}}}, _callee, this);}));function creatzyRequest() {return _creatzyRequest.apply(this, arguments);}return creatzyRequest;}(),
+                }case 11:case "end":return _context3.stop();}}}, _callee3, this);}));function creatzyRequest() {return _creatzyRequest.apply(this, arguments);}return creatzyRequest;}(),
 
     createSuccess: function createSuccess(res) {
       console.log(res);

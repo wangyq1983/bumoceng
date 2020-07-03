@@ -170,10 +170,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
 var _default =
 {
   data: function data() {
@@ -208,6 +204,9 @@ var _default =
                 }case 12:case "end":return _context.stop();}}}, _callee);}))();
     },
     renderList: function renderList(res) {
+      if (res.resultCode == 0) {
+        this.rwlist = res.data;
+      }
       console.log(res);
     },
     gotoCreate: function gotoCreate(e) {

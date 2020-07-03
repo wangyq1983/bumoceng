@@ -18,11 +18,7 @@
 				</view>
 			</view>
 		</view>
-		<rwlistItem></rwlistItem>
-		<rwlistItem></rwlistItem>
-		<rwlistItem></rwlistItem>
-		<rwlistItem></rwlistItem>
-		<rwlistItem></rwlistItem>
+		<rwlistItem v-for="items in rwlist" :key='items.id' :info = "items"></rwlistItem>
 	</view>
 </template>
 
@@ -60,6 +56,9 @@ export default {
 			}
 		},
 		renderList(res) {
+			if(res.resultCode == 0){
+				this.rwlist = res.data
+			}
 			console.log(res);
 		},
 		gotoCreate: function(e) {

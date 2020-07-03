@@ -137,38 +137,20 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 var _default =
 {
   data: function data() {
-    return {};
+    return {
+      itemcon: {} };
 
+  },
+  props: {
+    info: Object },
 
+  created: function created() {
+    console.log('组件创建后，但还未挂载');
+    this.itemcon = this.info;
+    console.log(this.itemcon);
   } };exports.default = _default;
 
 /***/ }),

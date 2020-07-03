@@ -66,9 +66,30 @@ page {
 }
 .maskBox {
   position: relative;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+          justify-content: center;
 }
 .maskClose {
-  position: absolute;
+  width: 80rpx;
+  height: 80rpx;
+  line-height: 80rpx;
+  text-align: center;
+  border-radius: 50rpx;
+  border: 4rpx solid #fff;
+  margin-top: 20rpx;
+  font-size: 60rpx;
+  color: #fff;
 }
 .typetip {
   width: 690rpx;
@@ -167,5 +188,49 @@ page {
 .Imgicon {
   width: 50rpx;
   height: 50rpx;
+}
+.layerCon {
+  width: 600rpx;
+  height: 500rpx;
+  background: #fff;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+          justify-content: center;
+}
+.layerCon .title {
+  width: 600rpx;
+  height: 60rpx;
+  line-height: 60rpx;
+  text-align: center;
+  color: #363636;
+}
+.layerCon .con {
+  width: 600rpx;
+}
+.layerCon .con input {
+  width: 450rpx;
+  height: 70rpx;
+  margin: 70rpx;
+  border: 2rpx solid #ffce00;
+  padding: 10rpx;
+}
+.layerCon .eventBtn {
+  width: 300rpx;
+  height: 80rpx;
+  line-height: 80rpx;
+  text-align: center;
+  background: #ffce00;
+  color: #363636;
+  font-size: 32rpx;
 }
 

@@ -1,12 +1,24 @@
 <template>
 	<view>
+		<mask :showmask = 'newtypeshow' @on-close = "closemask">
+			<view class="layerCon">
+				<view class="title">
+					新建类别
+				</view>
+				<view class="con">
+					<input type="text" placeholder="请输入类别名称" v-model="typevalue" />
+				</view>
+				<view class="eventBtn" @tap="ctype">
+					保存
+				</view>
+			</view>
+		</mask>
 		<view class="typetip">请选择类别,长按类型标签出现删除按钮</view>
 		<view class="typeCon">
-			<view :class = "(curtype == items)?'typeBox cur':'typeBox'"  v-for="items in defaluttype" :key='items' @tap="typeselect" :data-value = "items">
-				{{items}}
+			<view :class = "(curtype == items.typeName)?'typeBox cur':'typeBox'"  v-for="items in defaluttype" :key='items.typeName' @tap="typeselect" :data-value = "items.typeName">
+				{{items.typeName}}
 			</view>
-			
-			<view class="typeBox noedit">
+			<view class="typeBox noedit" @tap = "newtype">
 				+新建类别
 			</view>
 		</view>
@@ -44,10 +56,65 @@ export default {
 			zycon:'',
 			timelength:'',
 			rewardstar:'',
-			quality:false
+			quality:false,
+			newtypeshow:false,
+			typevalue:''
 		};
 	},
+	onShow() {
+		this.typelist()
+	},
 	methods: {
+		// 查询类别
+		typelist:async function(){
+			var params = {
+				flag:1
+			}
+			await this.$api.showLoading(); // 显示loading
+			var typelist = await this.$api.getData(this.$api.webapi.rTaskType, params);
+			await this.$api.hideLoading(); // 等待请求数据成功后，隐藏loading
+			console.log(typelist)
+			if (this.$api.reshook(typelist, this.$mp.page.route)) {
+				//this.createSuccess(ctask);
+				console.log('typelist')
+				console.log(typelist.data)
+				this.defaluttype = typelist.data
+			}
+		},
+		// 创建类别
+		ctype:async function(){
+			var params = {
+				flag:1,
+				typeName:this.typevalue
+			}
+			await this.$api.showLoading(); // 显示loading
+			var ctype = await this.$api.postData(this.$api.webapi.cTaskType, params);
+			await this.$api.hideLoading(); // 等待请求数据成功后，隐藏loading
+			if (this.$api.reshook(ctype, this.$mp.page.route)) {
+				console.log('ctype')
+				console.log(ctype)
+				let _this = this;
+				if(ctype.resultCode == 0){
+					uni.showToast({
+						title:'类别新建成功',
+						icon:'none',
+						duration:1500
+					})
+					setTimeout(function(){
+						_this.closemask();
+					},1500)
+					
+				}
+			}
+		},
+		closemask:function(){
+			this.newtypeshow = false
+		},
+		//打开创建类别弹层
+		newtype:function(){
+			console.log('newtype is tap');
+			this.newtypeshow = true
+		},
 		creatzyRequest:async function(){
 			var params = {
 				flag:1,
@@ -166,5 +233,37 @@ export default {
 	width: 50upx;
 	height: 50upx;
 }
-
+.layerCon{
+	width:600upx;
+	height:500upx;
+	background: #fff;
+	@include colflex;
+	justify-content: center;
+	.title{
+		width: 600upx;
+		height:60upx;
+		line-height: 60upx;
+		text-align: center;
+		color:$color-36
+	}
+	.con{
+		width:600upx;
+		input{
+			width:450upx;
+			height:70upx;
+			margin: 70upx;
+			border: 2upx solid $color-m;
+			padding:10upx;
+		}
+	}
+	.eventBtn{
+		width: 300upx;
+		height: 80upx;
+		line-height: 80upx;
+		text-align: center;
+		background: $color-m;
+		color: $color-36;
+		font-size: $fontsize-32;
+	}
+}
 </style>
