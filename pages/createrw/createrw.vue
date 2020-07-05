@@ -15,12 +15,21 @@
 		</mask>
 		<view class="typetip">请选择类别,长按类型标签出现删除按钮</view>
 		<view class="typeCon">
-			<view :class = "(curtype == items.typeName)?'typeBox cur':'typeBox'"  v-for="items in defaluttype" :key='items.typeName' @tap="typeselect" :data-value = "items.typeName">
-				{{items.typeName}}
+			<view class="typeWarp" v-for="items in defaluttype" :key='items.typeName'>
+				<view :class = "(curtype == items.typeName)?'typeBox cur':'typeBox'" @longtap="showdel" @tap="typeselect" :data-value = "items.typeName">
+					{{items.typeName}}
+					
+				</view>
+				<view class="" v-if="(curdel == items.typeName)" @tap="deltype" :data-id = "items.id">
+					×
+				</view>
 			</view>
-			<view class="typeBox noedit" @tap = "newtype">
-				+新建类别
+			<view class="typeWarp">
+				<view class="typeBox noedit" @tap = "newtype">
+					+新建类别
+				</view>
 			</view>
+			
 		</view>
 		<view class="wordBox"><textarea value="" placeholder="请输入作业内容" v-model="zycon" /></view>
 		<view class="selectTime">
@@ -53,18 +62,48 @@ export default {
 		return {
 			defaluttype:['语文','数学','英语'],
 			curtype:'',
+			curdel:'', 
 			zycon:'',
 			timelength:'',
 			rewardstar:'',
 			quality:false,
 			newtypeshow:false,
-			typevalue:''
+			typevalue:'',
+			isdel:false
 		};
 	},
 	onShow() {
 		this.typelist()
 	},
 	methods: {
+		// 类型删除事件
+		deltype:async function(e){
+			var params = {
+				id:e.currentTarget.dataset.id
+			}
+			await this.$api.showLoading(); // 显示loading
+			var typedel = await this.$api.postData(this.$api.webapi.dTaskType, params);
+			await this.$api.hideLoading(); // 等待请求数据成功后，隐藏loading
+			console.log(typedel)
+			if (this.$api.reshook(typedel, this.$mp.page.route)) {
+				if(typedel.resultCode == 0){
+					let delId = typedel.data.id;
+					
+					this.defaluttype.forEach(function(item, index, arr) {
+						if(item.id == delId) {
+							arr.splice(index, 1);
+							//this.defaulttype = arr
+						}
+					});
+
+				}
+			}
+		},
+		// 显示类别删除
+		showdel:function(e){
+			//var cur = e.currentTarget.dataset.value;
+			this.curdel = e.currentTarget.dataset.value; 
+		}, 
 		// 查询类别
 		typelist:async function(){
 			var params = {
@@ -102,6 +141,7 @@ export default {
 					})
 					setTimeout(function(){
 						_this.closemask();
+						_this.defaluttype.unshift(ctype.data)
 					},1500)
 					
 				}
@@ -175,13 +215,20 @@ export default {
 	flex-wrap: wrap;
 	border-bottom: 10upx solid $color-bor;
 }
+.typeWarp{
+	@include rowflex;
+	justify-content: flex-start;
+	margin: 15upx 20upx;
+}
 .typeBox {
 	padding: 5upx 20upx;
 	font-size: $fontsize-28;
 	color: $color-36;
 	background: #ffffff;
 	border: 1upx solid $color-mbg;
-	margin: 15upx 20upx;
+	
+	@include rowflex;
+	justify-content: flex-start;
 }
 .typeBox.cur {
 	background: $color-mbg;

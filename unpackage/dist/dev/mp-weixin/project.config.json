@@ -40,28 +40,13 @@
 			"current": -1,
 			"list": []
 		},
-		"plugin": {
-			"current": -1,
-			"list": []
-		},
 		"game": {
-			"current": -1,
-			"list": []
-		},
-		"gamePlugin": {
 			"current": -1,
 			"list": []
 		},
 		"miniprogram": {
 			"current": -1,
-			"list": [
-				{
-					"id": -1,
-					"name": "创建作业任务",
-					"pathName": "pages/createrw/createrw",
-					"scene": null
-				}
-			]
+			"list": []
 		}
 	}
 }

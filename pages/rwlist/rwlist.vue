@@ -1,7 +1,12 @@
 <template>
 	<view>
+		<mask :showmask = 'cdtime' @on-close = "closemask" v-if="nowtask">
+			<view class="cdlayer">
+				<uniCountdown @on-complete = 'timed' :showmask = 'cdtime' :show-day="false" :show-hour="showhour" :hour="hourTask" :minute="minuteTask" :second="secondTask" ref = "countDown"></uniCountdown>
+			</view>
+		</mask>
 		<userinfo></userinfo>
-		<view class="timeSelect">2020年3月221日</view>
+		<view class="timeSelect">2020年3月21日</view>
 		<view class="createBox" style="border-bottom: 10upx solid #e6e6e6;">
 			<view class="createTask zuoye" @tap="gotoCreate" data-type="zuoye">
 				<view class="taskbg zuoye1"></view>
@@ -18,17 +23,28 @@
 				</view>
 			</view>
 		</view>
-		<rwlistItem v-for="items in rwlist" :key='items.id' :info = "items"></rwlistItem>
+		<rwlistItem v-for="items in rwlist" :key='items.id' :info = "items" @on-cdtime = "countTime"></rwlistItem>
 	</view>
 </template>
 
 <script>
+import uniCountdown from '@/components/uni-countdown/uni-countdown.vue'
 export default {
 	data() {
 		return {
 			dataStep: 20,
-			rwlist: []
+			rwlist: [],
+			cdtime:false,
+			taskTime:'',
+			minuteTask:'',
+			secondTask:'',
+			hourTask:'',
+			showhour:false,
+			nowtask:''
 		};
+	},
+	components:{
+		uniCountdown
 	},
 	onLoad: function(options) {
 		console.log('load');
@@ -40,6 +56,52 @@ export default {
 		console.log('show')
 	},
 	methods: {
+		formatTime:function(tasktime){
+			// tasktime 任务计时默认以分钟计算
+			this.secondTask = 0;
+			if(tasktime > 60){
+				this.hourTask = Math.floor(tasktime/60);
+				this.minuteTask = tasktime % 60;
+				this.showhour = true
+			}else{
+				this.hourTask = 0;
+				this.minuteTask = tasktime;
+				this.showhour = false;
+			}
+		},
+		//子组件点击开始任务触发
+		countTime:function(cdtime,taskid){
+			this.cdtime = true;
+			console.log(cdtime);
+			console.log(taskid)
+			this.nowtask = taskid;
+			this.formatTime(cdtime)
+		},
+		// 关闭计时弹层
+		closemask:function(){
+			console.log(this);
+			//this.$refs.countDown.timeOver()
+			this.showhour = false;
+			this.cdtime = false;
+			this.nowtask = '';
+		},
+		// 任务完成
+		timed:async function(minute){
+			console.log('分钟数');
+			console.log(minute);
+			console.log('nowtask is');
+			console.log(this.nowtask);
+			var params = {
+				id:this.nowtask,
+				realDuration:this.minute
+			};
+			await this.$api.showLoading(); // 显示loading
+			var taskend = await this.$api.postData(this.$api.webapi.TaskEnd, params);
+			await this.$api.hideLoading(); // 等待请求数据成功后，隐藏loading
+			if (this.$api.reshook(taskend, this.$mp.page.route)) {
+				console.log(taskend)
+			}
+		},
 		async init() {
 			console.log('init run')
 			console.log(this.dataStep)
@@ -74,7 +136,6 @@ export default {
 					url: '/pages/createother/createother'
 				});
 			}
-			// alert(11);
 		}
 	}
 };
@@ -148,4 +209,12 @@ export default {
 	font-size: $fontsize-32;
 	color: #ffffff;
 }
+.cdlayer{
+	width: 720upx;
+	height:800upx;
+	background: #fff;
+	@include rowflex;
+	justify-content: center;
+}
+
 </style>

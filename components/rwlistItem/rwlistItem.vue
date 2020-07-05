@@ -8,7 +8,7 @@
 		</view>
 		<view class="rwInfo">{{itemcon.jobDescription}}</view>
 		<view class="rwAction">
-			<view class="rwBtn"><view class="startBtn">开始任务</view></view>
+			<view class="rwBtn" @tap="beginTask" :data-time = "itemcon.duration"><view class="startBtn">开始任务</view></view>
 			<view class="rwTime">预计完成时间： {{itemcon.duration}}分钟</view>
 		</view>
 		<view class="rwOther">
@@ -32,9 +32,17 @@ export default {
 		info: Object
 	},
 	created() {
+		
 		console.log('组件创建后，但还未挂载');
 		this.itemcon = this.info;
 		console.log(this.itemcon)
+	},
+	methods:{
+		beginTask(e){
+			console.log(this)
+			console.log(e.currentTarget.dataset.time)
+			this.$emit("on-cdtime",e.currentTarget.dataset.time,this.itemcon.id); 
+		}
 	}
 };
 </script>
