@@ -192,6 +192,20 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 var _default =
 {
   data: function data() {
@@ -212,6 +226,37 @@ var _default =
     this.typelist();
   },
   methods: {
+    // 参数校验
+    paramsVer: function paramsVer(params) {
+      console.log('ver');
+      console.log(params);
+      // this.$api.trim()
+      if (params.typeName == '') {
+        uni.showToast({
+          title: '请选择类别,类别不可为空!',
+          icon: 'none',
+          duration: 1500 });
+
+        return false;
+      }
+      if (Number.isInteger(params.duration) == false || params.duration == 0) {
+        uni.showToast({
+          title: '时长请填写整数',
+          icon: 'none',
+          duration: 1500 });
+
+        return false;
+      }
+      if (Number.isInteger(params.starNumber) == false || params.starNumber == 0) {
+        uni.showToast({
+          title: '奖励星请填写整数',
+          icon: 'none',
+          duration: 1500 });
+
+        return false;
+      }
+      return true;
+    },
     // 类型删除事件
     deltype: function () {var _deltype = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee(e) {var params, typedel, delId;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:
                 params = {
@@ -291,23 +336,33 @@ var _default =
       console.log('newtype is tap');
       this.newtypeshow = true;
     },
-    creatzyRequest: function () {var _creatzyRequest = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee4() {var params, ctask;return _regenerator.default.wrap(function _callee4$(_context4) {while (1) {switch (_context4.prev = _context4.next) {case 0:
+    creatzyRequest: function () {var _creatzyRequest = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee4() {var verparam, params, ctask;return _regenerator.default.wrap(function _callee4$(_context4) {while (1) {switch (_context4.prev = _context4.next) {case 0:
+
+                verparam = {
+                  typeName: this.curtype,
+                  duration: Number(this.timelength),
+                  starNumber: Number(this.rewardstar) };if (!
+
+                this.paramsVer(verparam)) {_context4.next = 12;break;}
+                console.log('params is ok');
                 params = {
                   flag: 1,
                   typeName: this.curtype,
                   jobDescription: this.zycon,
                   duration: parseInt(this.timelength),
                   starNumber: parseInt(this.rewardstar),
-                  completionSwitch: this.quality };
+                  completionSwitch: this.quality };_context4.next = 6;return (
 
-                console.log(params);_context4.next = 4;return (
-                  this.$api.showLoading());case 4:_context4.next = 6;return (
-                  this.$api.postData(this.$api.webapi.cTask, params));case 6:ctask = _context4.sent;_context4.next = 9;return (
-                  this.$api.hideLoading());case 9: // 等待请求数据成功后，隐藏loading
-                console.log(ctask);
+
+                  this.$api.showLoading());case 6:_context4.next = 8;return (
+                  this.$api.postData(this.$api.webapi.cTask, params));case 8:ctask = _context4.sent;_context4.next = 11;return (
+                  this.$api.hideLoading());case 11: // 等待请求数据成功后，隐藏loading
+
                 if (this.$api.reshook(ctask, this.$mp.page.route)) {
                   this.createSuccess(ctask);
-                }case 11:case "end":return _context4.stop();}}}, _callee4, this);}));function creatzyRequest() {return _creatzyRequest.apply(this, arguments);}return creatzyRequest;}(),
+                }case 12:case "end":return _context4.stop();}}}, _callee4, this);}));function creatzyRequest() {return _creatzyRequest.apply(this, arguments);}return creatzyRequest;}(),
+
+
 
     createSuccess: function createSuccess(res) {
       console.log(res);

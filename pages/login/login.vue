@@ -91,11 +91,15 @@ export default {
 			});
 		},
 		
-		loginSuccess(res,platform){
+		async loginSuccess(res,platform){
 			console.log(this.origin)
 			console.log('loginsuccess');
 			console.log(res.data);
 			this.$store.commit('login',res.data);
+			
+			await this.$api.getUserinfo()
+			
+			
 			uni.reLaunch({
 					url:this.origin
 			})

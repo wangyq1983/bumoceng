@@ -21,9 +21,28 @@
 <script>
 export default {
 	data() {
-		return {};
+		return {
+			dataStep:50
+		};
 	},
-	methods: {}
+	onLoad() {
+		this.init()
+	},
+	methods: {
+		async init(){
+			var params = {
+				from: 1,
+				count: this.dataStep,
+				rankType:'summaryRank'
+			};
+			await this.$api.showLoading(); // 显示loading
+			var ranklist = await this.$api.getData(this.$api.webapi.ranklist, params);
+			await this.$api.hideLoading(); // 等待请求数据成功后，隐藏loading
+			if (this.$api.reshook(ranklist, this.$mp.page.route)) {
+				console.log(ranklist)
+			}
+		}
+	}
 };
 </script>
 

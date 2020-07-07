@@ -6,7 +6,7 @@
 			</view>
 		</mask>
 		<userinfo></userinfo>
-		<view class="timeSelect">2020年3月21日</view>
+		<view class="timeSelect">{{datetime}}</view>
 		<view class="createBox" style="border-bottom: 10upx solid #e6e6e6;">
 			<view class="createTask zuoye" @tap="gotoCreate" data-type="zuoye">
 				<view class="taskbg zuoye1"></view>
@@ -40,7 +40,8 @@ export default {
 			secondTask:'',
 			hourTask:'',
 			showhour:false,
-			nowtask:''
+			nowtask:'',
+			datetime:''
 		};
 	},
 	components:{
@@ -56,6 +57,10 @@ export default {
 		console.log('show')
 	},
 	methods: {
+		//获取用户信息
+		getUser:async function(){
+			
+		},
 		formatTime:function(tasktime){
 			// tasktime 任务计时默认以分钟计算
 			this.secondTask = 0;
@@ -87,13 +92,13 @@ export default {
 		},
 		// 任务完成
 		timed:async function(minute){
-			console.log('分钟数');
+			console.log('秒数');
 			console.log(minute);
 			console.log('nowtask is');
 			console.log(this.nowtask);
 			var params = {
 				id:this.nowtask,
-				realDuration:this.minute
+				realDuration:minute
 			};
 			await this.$api.showLoading(); // 显示loading
 			var taskend = await this.$api.postData(this.$api.webapi.TaskEnd, params);
@@ -106,6 +111,10 @@ export default {
 			console.log('init run')
 			console.log(this.dataStep)
 			console.log(this.rwlist)
+			var date = new Date();
+			console.log('当前日期')
+			this.datetime = this.$api.formatTime(date);
+			console.log(this.$api.formatTime(date));
 			var params = {
 				from: 1,
 				count: this.dataStep
@@ -118,6 +127,7 @@ export default {
 			}
 		},
 		renderList(res) {
+			// state  状态：1 创建完成，2 开始（未使用该状态），3 完成，4 超时
 			if(res.resultCode == 0){
 				this.rwlist = res.data
 			}

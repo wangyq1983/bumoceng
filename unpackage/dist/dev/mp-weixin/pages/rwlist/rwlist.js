@@ -108,7 +108,7 @@ var components = {
     return __webpack_require__.e(/*! import() | components/mask/mask */ "components/mask/mask").then(__webpack_require__.bind(null, /*! @/components/mask/mask.vue */ 117))
   },
   userinfo: function() {
-    return __webpack_require__.e(/*! import() | components/userinfo/userinfo */ "components/userinfo/userinfo").then(__webpack_require__.bind(null, /*! @/components/userinfo/userinfo.vue */ 122))
+    return Promise.all(/*! import() | components/userinfo/userinfo */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/userinfo/userinfo")]).then(__webpack_require__.bind(null, /*! @/components/userinfo/userinfo.vue */ 122))
   },
   rwlistItem: function() {
     return __webpack_require__.e(/*! import() | components/rwlistItem/rwlistItem */ "components/rwlistItem/rwlistItem").then(__webpack_require__.bind(null, /*! @/components/rwlistItem/rwlistItem.vue */ 129))
@@ -191,7 +191,8 @@ __webpack_require__.r(__webpack_exports__);
       secondTask: '',
       hourTask: '',
       showhour: false,
-      nowtask: '' };
+      nowtask: '',
+      datetime: '' };
 
   },
   components: {
@@ -207,6 +208,10 @@ __webpack_require__.r(__webpack_exports__);
     console.log('show');
   },
   methods: {
+    //获取用户信息
+    getUser: function () {var _getUser = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:case "end":return _context.stop();}}}, _callee);}));function getUser() {return _getUser.apply(this, arguments);}return getUser;}(),
+
+
     formatTime: function formatTime(tasktime) {
       // tasktime 任务计时默认以分钟计算
       this.secondTask = 0;
@@ -237,38 +242,43 @@ __webpack_require__.r(__webpack_exports__);
       this.nowtask = '';
     },
     // 任务完成
-    timed: function () {var _timed = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee(minute) {var params, taskend;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:
-                console.log('分钟数');
+    timed: function () {var _timed = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee2(minute) {var params, taskend;return _regenerator.default.wrap(function _callee2$(_context2) {while (1) {switch (_context2.prev = _context2.next) {case 0:
+                console.log('秒数');
                 console.log(minute);
                 console.log('nowtask is');
                 console.log(this.nowtask);
                 params = {
                   id: this.nowtask,
-                  realDuration: this.minute };_context.next = 7;return (
+                  realDuration: minute };_context2.next = 7;return (
 
-                  this.$api.showLoading());case 7:_context.next = 9;return (
-                  this.$api.postData(this.$api.webapi.TaskEnd, params));case 9:taskend = _context.sent;_context.next = 12;return (
+                  this.$api.showLoading());case 7:_context2.next = 9;return (
+                  this.$api.postData(this.$api.webapi.TaskEnd, params));case 9:taskend = _context2.sent;_context2.next = 12;return (
                   this.$api.hideLoading());case 12: // 等待请求数据成功后，隐藏loading
                 if (this.$api.reshook(taskend, this.$mp.page.route)) {
                   console.log(taskend);
-                }case 13:case "end":return _context.stop();}}}, _callee, this);}));function timed(_x) {return _timed.apply(this, arguments);}return timed;}(),
+                }case 13:case "end":return _context2.stop();}}}, _callee2, this);}));function timed(_x) {return _timed.apply(this, arguments);}return timed;}(),
 
-    init: function init() {var _this = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee2() {var params, cjlist;return _regenerator.default.wrap(function _callee2$(_context2) {while (1) {switch (_context2.prev = _context2.next) {case 0:
+    init: function init() {var _this = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee3() {var date, params, cjlist;return _regenerator.default.wrap(function _callee3$(_context3) {while (1) {switch (_context3.prev = _context3.next) {case 0:
                 console.log('init run');
                 console.log(_this.dataStep);
                 console.log(_this.rwlist);
+                date = new Date();
+                console.log('当前日期');
+                _this.datetime = _this.$api.formatTime(date);
+                console.log(_this.$api.formatTime(date));
                 params = {
                   from: 1,
-                  count: _this.dataStep };_context2.next = 6;return (
+                  count: _this.dataStep };_context3.next = 10;return (
 
-                  _this.$api.showLoading());case 6:_context2.next = 8;return (
-                  _this.$api.getData(_this.$api.webapi.TaskList, params));case 8:cjlist = _context2.sent;_context2.next = 11;return (
-                  _this.$api.hideLoading());case 11: // 等待请求数据成功后，隐藏loading
+                  _this.$api.showLoading());case 10:_context3.next = 12;return (
+                  _this.$api.getData(_this.$api.webapi.TaskList, params));case 12:cjlist = _context3.sent;_context3.next = 15;return (
+                  _this.$api.hideLoading());case 15: // 等待请求数据成功后，隐藏loading
                 if (_this.$api.reshook(cjlist, _this.$mp.page.route)) {
                   _this.renderList(cjlist);
-                }case 12:case "end":return _context2.stop();}}}, _callee2);}))();
+                }case 16:case "end":return _context3.stop();}}}, _callee3);}))();
     },
     renderList: function renderList(res) {
+      // state  状态：1 创建完成，2 开始（未使用该状态），3 完成，4 超时
       if (res.resultCode == 0) {
         this.rwlist = res.data;
       }

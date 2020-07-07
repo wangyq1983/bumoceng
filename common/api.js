@@ -30,9 +30,15 @@ var webapi = {
 
 	// 任务结束动作
 	TaskEnd: webhost + 'job/end',
+	
+	// 排行榜
+	ranklist:webhost + 'rank/list',
 
 	// 微信登陆
-	uniLogin: webhost + "public/weixin/mp/common/user/login/wx"
+	uniLogin: webhost + "public/weixin/mp/common/user/login/wx",
+	
+	// 获取用户信息
+	userInfo: webhost + "weixin/mp/common/user/info"
 }
 
 // request get 请求
@@ -106,9 +112,20 @@ const postData = (url, param) => {
 	})
 }
 
-// 测试函数 
-const test = (t1) => {
-	console.log(t1 + 'hello')
+// 获取用户信息
+const getUserinfo = async() => {
+	// 获取用户信息
+	var userRes = await getData(webapi.userInfo);
+	
+	if (reshook(userRes)) {
+		console.log('userinfo is')
+		console.log(userRes)
+		// userRes字段  currentExperience  、  totalExperienceForCurrentLevel
+		uni.setStorage({
+			key: 'level',
+			data: userRes.data.userLevelInfo.level
+		});
+	}
 }
 
 // loading加载提示
@@ -146,6 +163,10 @@ const checkCode = (code) => {
 	}
 }
 
+function trim(str){ //删除左右两端的空格
+　　     return str.replace(/(^\s*)|(\s*$)/g, "");
+　　 }
+
 const reshook = (res, path) => {
 	if (checkCode(res.resultCode)) {
 		return true
@@ -175,13 +196,33 @@ const encodeData = (datadetail) => {
 	return dataparams
 }
 
+/** 
+ * new Date() ---> 转化为 年 月 日 时 分 秒
+ * let date = new Date();
+ * date: 传入参数日期 Date
+*/
+// 时间
+
+function formatNumber(n) {
+  n = n.toString()
+  return n[1] ? n : '0' + n
+}
+const formatTime = (date) => {	
+  var year = date.getFullYear()
+  var month = date.getMonth() + 1
+  var day = date.getDate()
+  return [year, month, day].map(formatNumber).join('-') 
+}
+
 export default {
-	test,
 	encodeData,
 	getData,
 	postData,
 	webapi,
 	reshook,
 	showLoading,
-	hideLoading
+	hideLoading,
+	formatTime,
+	getUserinfo,
+	trim
 }

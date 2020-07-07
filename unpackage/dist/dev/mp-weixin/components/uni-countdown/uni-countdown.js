@@ -132,6 +132,11 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 //
 //
 //
+//
+//
+//
+//
+//
 
 /**
  * Countdown 倒计时
@@ -206,8 +211,12 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
       i: '00',
       s: '00',
       leftTime: 0,
-      seconds: 0 };
-
+      seconds: 0,
+      realDuration: 0,
+      timeout: false, // 是否超时
+      timeouter: null, // 超时计数器
+      timeoutSeconds: 0 // 超时秒数
+    };
   },
   watch: {
     day: function day(val) {
@@ -238,19 +247,34 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
     },
     timeUp: function timeUp() {
       clearInterval(this.timer);
+      this.timeout = true;
+      this.timeoutStart();
       this.$emit('timeup');
     },
     timeOver: function timeOver() {
       clearInterval(this.timer);
     },
+
+    // 计时完成
     taskover: function taskover() {
-      //this.timeOver();
-      console.log('经历分钟数是');
-      console.log('hour is' + this.h + 'minute is' + this.i);
-      console.log(this.toMinutes(this.h, this.i));
-      var realDuration = this.toMinutes(this.hour, this.minute) - this.toMinutes(this.h, this.i) - 1;
-      this.$emit("on-complete", realDuration);
+      if (this.timeout) {
+        // 如果超时
+        clearInterval(this.timeouter);
+        var allDuration = this.toSeconds(0, this.hour, this.minute, this.second) + this.timeoutSeconds;
+        console.log(allDuration);
+        this.$emit("on-complete", allDuration);
+      } else {
+        // 规定时间内完成
+        this.timeOver();
+        console.log('经历秒数是');
+        console.log('hour is' + this.h + 'minute is' + this.i + 'seconds is' + this.s);
+        console.log(this.toSeconds(0, this.h, this.i, this.s));
+        var realDuration = this.toSeconds(0, this.hour, this.minute, this.second) - this.toSeconds(0, this.h, this.i, this.s);
+        console.log(realDuration);
+        this.$emit("on-complete", realDuration);
+      }
     },
+
     countDown: function countDown() {
       var seconds = this.seconds;var
       day = 0,hour = 0,minute = 0,second = 0;
@@ -279,19 +303,24 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
       this.i = minute;
       this.s = second;
     },
-    startData: function startData() {var _this = this;
+    timeoutStart: function timeoutStart() {var _this = this;
+      this.timeouter = setInterval(function () {
+        _this.timeoutSeconds++;
+      }, 1000);
+    },
+    startData: function startData() {var _this2 = this;
       this.seconds = this.toSeconds(this.day, this.hour, this.minute, this.second);
       if (this.seconds <= 0) {
         return;
       }
       this.countDown();
       this.timer = setInterval(function () {
-        _this.seconds--;
-        if (_this.seconds < 0) {
-          _this.timeUp();
+        _this2.seconds--;
+        if (_this2.seconds < 0) {
+          _this2.timeUp();
           return;
         }
-        _this.countDown();
+        _this2.countDown();
       }, 1000);
     },
     changeFlag: function changeFlag() {

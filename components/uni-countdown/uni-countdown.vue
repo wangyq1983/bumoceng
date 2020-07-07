@@ -10,11 +10,16 @@
 			<text :style="{ borderColor: borderColor, color: color, backgroundColor: backgroundColor }" class="uni-countdown__number">{{ s }}</text>
 			<text v-if="!showColon" :style="{ color: splitorColor }" class="uni-countdown__splitor">秒</text>
 		</view>
+		<view class="timeout" v-if="timeout">
+			<view>任务已超时</view>
+			<view class="">
+				超时 {{timeoutSeconds}} 秒
+			</view>
+		</view>
 		<view class="taskendBtn" @tap="taskover">
 			任务完成
 		</view>
 	</view>
-	
 </template>
 <script>
 	/**
@@ -90,7 +95,11 @@
 				i: '00',
 				s: '00',
 				leftTime: 0,
-				seconds: 0
+				seconds: 0,
+				realDuration:0,
+				timeout:false,  // 是否超时
+				timeouter:null, // 超时计数器
+				timeoutSeconds:0 // 超时秒数
 			}
 		},
 		watch: {
@@ -120,21 +129,36 @@
 			toMinutes(hours,minutes){
 				return hours*60 + minutes;
 			},
-			timeUp() {
-				clearInterval(this.timer)
+			timeUp() { 
+				clearInterval(this.timer);
+				this.timeout = true;
+				this.timeoutStart();
 				this.$emit('timeup')
 			},
 			timeOver(){
 				clearInterval(this.timer);
 			},
+			
+			// 计时完成
 			taskover(){
-				//this.timeOver();
-				console.log('经历分钟数是');
-				console.log('hour is'+this.h+'minute is'+this.i);
-				console.log(this.toMinutes(this.h,this.i));
-				let realDuration = this.toMinutes(this.hour,this.minute) - this.toMinutes(this.h,this.i) - 1;
-				this.$emit("on-complete",realDuration);
+				if(this.timeout){
+					// 如果超时
+					clearInterval(this.timeouter);
+					let allDuration = this.toSeconds(0,this.hour,this.minute,this.second) + this.timeoutSeconds;
+					console.log(allDuration);
+					this.$emit("on-complete",allDuration);
+				}else{
+					// 规定时间内完成
+					this.timeOver();
+					console.log('经历秒数是');
+					console.log('hour is'+this.h+'minute is'+this.i + 'seconds is' + this.s);
+					console.log(this.toSeconds(0,this.h,this.i,this.s));
+					let realDuration = this.toSeconds(0,this.hour,this.minute,this.second) - this.toSeconds(0,this.h,this.i,this.s);
+					console.log(realDuration)
+					this.$emit("on-complete",realDuration);
+				}
 			},
+			
 			countDown() {
 				let seconds = this.seconds
 				let [day, hour, minute, second] = [0, 0, 0, 0]
@@ -162,6 +186,11 @@
 				this.h = hour
 				this.i = minute
 				this.s = second
+			},
+			timeoutStart(){
+				this.timeouter = setInterval(()=>{
+					this.timeoutSeconds++ 
+				},1000)
 			},
 			startData() {
 				this.seconds = this.toSeconds(this.day, this.hour, this.minute, this.second)
@@ -235,5 +264,11 @@
 		background: #FFCE00;
 		color:#363636;
 		margin-top:60upx;
+	}
+	.timeout{
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
 	}
 </style>

@@ -223,24 +223,28 @@ var _default =
 
     },
 
-    loginSuccess: function loginSuccess(res, platform) {
-      console.log(this.origin);
-      console.log('loginsuccess');
-      console.log(res.data);
-      this.$store.commit('login', res.data);
-      uni.reLaunch({
-        url: this.origin });
+    loginSuccess: function loginSuccess(res, platform) {var _this2 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee3() {return _regenerator.default.wrap(function _callee3$(_context3) {while (1) {switch (_context3.prev = _context3.next) {case 0:
+                console.log(_this2.origin);
+                console.log('loginsuccess');
+                console.log(res.data);
+                _this2.$store.commit('login', res.data);_context3.next = 6;return (
 
-      // if((this.origin.indexOf('pages/rwlist/rwlist') != -1) ||(this.origin.indexOf('pages/my/my') != -1)){
-      // 	uni.switchTab({
-      // 		url:this.origin
-      // 	})
-      // }else{
-      // 	uni.redirectTo({
-      // 		url:this.origin
-      // 	})
-      // }
+                  _this2.$api.getUserinfo());case 6:
 
+
+                uni.reLaunch({
+                  url: _this2.origin });
+
+                // if((this.origin.indexOf('pages/rwlist/rwlist') != -1) ||(this.origin.indexOf('pages/my/my') != -1)){
+                // 	uni.switchTab({
+                // 		url:this.origin
+                // 	})
+                // }else{
+                // 	uni.redirectTo({
+                // 		url:this.origin
+                // 	})
+                // }
+              case 7:case "end":return _context3.stop();}}}, _callee3);}))();
     },
     //向后台更新信息
     updateUserInfo: function updateUserInfo() {

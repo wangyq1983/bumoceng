@@ -61,7 +61,6 @@
         "setting" : {
             "urlCheck" : false
         },
-        "publicPath" : "./",
         "usingComponents" : true
     },
     "mp-alipay" : {

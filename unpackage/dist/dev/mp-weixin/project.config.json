@@ -5,7 +5,8 @@
 	},
 	"setting": {
 		"urlCheck": false,
-		"es6": true,
+		"es6": false,
+		"enhance": true,
 		"postcss": true,
 		"preloadBackgroundData": false,
 		"minified": true,
@@ -23,10 +24,11 @@
 			"outputPath": ""
 		},
 		"useCompilerModule": false,
-		"userConfirmedUseCompilerModuleSwitch": false
+		"userConfirmedUseCompilerModuleSwitch": false,
+		"nodeModules": true
 	},
 	"compileType": "miniprogram",
-	"libVersion": "",
+	"libVersion": "2.11.3",
 	"appid": "wx68fa52964aa56d13",
 	"projectname": "defaultmoban",
 	"simulatorType": "wechat",
@@ -40,13 +42,28 @@
 			"current": -1,
 			"list": []
 		},
+		"plugin": {
+			"current": -1,
+			"list": []
+		},
 		"game": {
+			"current": -1,
+			"list": []
+		},
+		"gamePlugin": {
 			"current": -1,
 			"list": []
 		},
 		"miniprogram": {
 			"current": -1,
-			"list": []
+			"list": [
+				{
+					"id": -1,
+					"name": "pages/createrw/createrw任务",
+					"pathName": "pages/createrw/createrw",
+					"scene": null
+				}
+			]
 		}
 	}
 }

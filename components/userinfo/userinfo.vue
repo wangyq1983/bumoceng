@@ -42,6 +42,16 @@ export default {
 		};
 	},
 	methods: {
+		//获取用户信息
+		getUser:async function(){
+			await this.$api.showLoading(); // 显示loading
+			var userRes = await this.$api.getData(this.$api.webapi.userInfo);
+			await this.$api.hideLoading(); // 等待请求数据成功后，隐藏loading
+			if (this.$api.reshook(userRes)) {
+				console.log('userinfo is')
+				console.log(userRes)
+			}
+		},
 		storetap() {
 			console.log('storetap')
 			this.$store.commit('addLevel',1);
@@ -62,12 +72,9 @@ export default {
 		console.log(this.$store);
 		console.log(this.$store.state.userInfo);
 		console.log(this.$store.state.userInfo.avatar);
+		// this.getUser()
 		this.icon = uni.getStorageSync('avatarUrl') ? uni.getStorageSync('avatarUrl') : '';
 		this.name = uni.getStorageSync('nickName') ? uni.getStorageSync('nickName') : '';
-		uni.setStorage({
-			key: 'level',
-			data: 1
-		});
 		this.level = uni.getStorageSync('level') ? uni.getStorageSync('level') : 0;
 		console.log(this.icon);
 		console.log(this.name);

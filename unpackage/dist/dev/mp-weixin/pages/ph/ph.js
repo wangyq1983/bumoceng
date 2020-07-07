@@ -107,7 +107,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "components", function() { return components; });
 var components = {
   userinfo: function() {
-    return __webpack_require__.e(/*! import() | components/userinfo/userinfo */ "components/userinfo/userinfo").then(__webpack_require__.bind(null, /*! @/components/userinfo/userinfo.vue */ 122))
+    return Promise.all(/*! import() | components/userinfo/userinfo */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/userinfo/userinfo")]).then(__webpack_require__.bind(null, /*! @/components/userinfo/userinfo.vue */ 122))
   }
 }
 var render = function() {
@@ -147,7 +147,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _regenerator = _interopRequireDefault(__webpack_require__(/*! ./node_modules/@vue/babel-preset-app/node_modules/@babel/runtime/regenerator */ 11));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};} //
 //
 //
 //
@@ -170,9 +170,27 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 var _default =
 {
   data: function data() {
-    return {};
+    return {
+      dataStep: 50 };
+
   },
-  methods: {} };exports.default = _default;
+  onLoad: function onLoad() {
+    this.init();
+  },
+  methods: {
+    init: function init() {var _this = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {var params, ranklist;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:
+                params = {
+                  from: 1,
+                  count: _this.dataStep,
+                  rankType: 'summaryRank' };_context.next = 3;return (
+
+                  _this.$api.showLoading());case 3:_context.next = 5;return (
+                  _this.$api.getData(_this.$api.webapi.ranklist, params));case 5:ranklist = _context.sent;_context.next = 8;return (
+                  _this.$api.hideLoading());case 8: // 等待请求数据成功后，隐藏loading
+                if (_this.$api.reshook(ranklist, _this.$mp.page.route)) {
+                  console.log(ranklist);
+                }case 9:case "end":return _context.stop();}}}, _callee);}))();
+    } } };exports.default = _default;
 
 /***/ }),
 

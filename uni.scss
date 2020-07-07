@@ -110,6 +110,29 @@ page{
 	overflow-x: hidden;
 }
 
+.muststyle{
+	color:#f00;
+	font-size: $fontsize-28;
+	padding:5upx 20upx;
+}
+.nomuststyle{
+	color: #666;
+	font-size: $fontsize-28;
+	padding:5upx 20upx;
+}
+.tipbar{
+	width:710upx;
+	height: 50upx;
+	line-height: 50upx;
+	padding:20upx;
+	background: #fff48a;
+	color: #c46b1b;
+	font-size: $fontsize-28;
+	text{
+		font-weight: bold;
+	}
+}
+
 /* 遮罩层 */
 .maskbg{
 	background:rgba(0,0,0,0.5);

@@ -41,6 +41,28 @@
 page {
   overflow-x: hidden;
 }
+.muststyle {
+  color: #f00;
+  font-size: 28rpx;
+  padding: 5rpx 20rpx;
+}
+.nomuststyle {
+  color: #666;
+  font-size: 28rpx;
+  padding: 5rpx 20rpx;
+}
+.tipbar {
+  width: 710rpx;
+  height: 50rpx;
+  line-height: 50rpx;
+  padding: 20rpx;
+  background: #fff48a;
+  color: #c46b1b;
+  font-size: 28rpx;
+}
+.tipbar text {
+  font-weight: bold;
+}
 /* 遮罩层 */
 .maskbg {
   background: rgba(0, 0, 0, 0.5);
@@ -94,7 +116,7 @@ page {
 .typetip {
   width: 690rpx;
   padding: 30rpx;
-  font-size: 22rpx;
+  font-size: 28rpx;
   color: #bbbbbb;
   text-align: center;
 }

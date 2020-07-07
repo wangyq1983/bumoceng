@@ -3,7 +3,7 @@
 		<view class="TitleBox">
 			<view class="rwState ongoing"></view>
 			<view class="rwType">{{itemcon.typeName}}</view>
-			<view class="rwTitle">{{itemcon.jobDescription}}</view>
+			<view class="rwTitle"></view>
 			<view class="rwHandle">⋮</view>
 		</view>
 		<view class="rwInfo">{{itemcon.jobDescription}}</view>

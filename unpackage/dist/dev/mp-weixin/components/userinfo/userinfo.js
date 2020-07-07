@@ -114,7 +114,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _regenerator = _interopRequireDefault(__webpack_require__(/*! ./node_modules/@vue/babel-preset-app/node_modules/@babel/runtime/regenerator */ 11));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};} //
 //
 //
 //
@@ -158,6 +158,16 @@ var _default =
     };
   },
   methods: {
+    //获取用户信息
+    getUser: function () {var _getUser = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {var userRes;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:_context.next = 2;return (
+                  this.$api.showLoading());case 2:_context.next = 4;return (
+                  this.$api.getData(this.$api.webapi.userInfo));case 4:userRes = _context.sent;_context.next = 7;return (
+                  this.$api.hideLoading());case 7: // 等待请求数据成功后，隐藏loading
+                if (this.$api.reshook(userRes)) {
+                  console.log('userinfo is');
+                  console.log(userRes);
+                }case 8:case "end":return _context.stop();}}}, _callee, this);}));function getUser() {return _getUser.apply(this, arguments);}return getUser;}(),
+
     storetap: function storetap() {
       console.log('storetap');
       this.$store.commit('addLevel', 1);
@@ -178,12 +188,9 @@ var _default =
     console.log(this.$store);
     console.log(this.$store.state.userInfo);
     console.log(this.$store.state.userInfo.avatar);
+    // this.getUser()
     this.icon = uni.getStorageSync('avatarUrl') ? uni.getStorageSync('avatarUrl') : '';
     this.name = uni.getStorageSync('nickName') ? uni.getStorageSync('nickName') : '';
-    uni.setStorage({
-      key: 'level',
-      data: 1 });
-
     this.level = uni.getStorageSync('level') ? uni.getStorageSync('level') : 0;
     console.log(this.icon);
     console.log(this.name);
