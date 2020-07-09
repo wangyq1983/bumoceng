@@ -38,6 +38,7 @@
 	 * @event {Function} timeup 倒计时时间到触发事件
 	 * @example <uni-countdown :day="1" :hour="1" :minute="12" :second="40"></uni-countdown>
 	 */
+	const innerAudioContext  = uni.getBackgroundAudioManager();
 	export default {
 		name: 'UniCountdown',
 		props: {
@@ -123,6 +124,34 @@
 			clearInterval(this.timer)
 		},
 		methods: {
+			audioplay:function(){
+				
+				innerAudioContext.title = '作业不磨蹭';
+				innerAudioContext.src = 'http://downsc.chinaz.net/files/download/sound1/201312/3939.mp3';
+				
+				innerAudioContext.onPlay(() => {//可以播放事件
+					console.log('开始播放');
+					//innerAudioContext.play()
+					//this.playing = !innerAudioContext.paused;//查看是否可以自动播放
+				});
+				innerAudioContext.onError((res) => {
+					console.log(res.errMsg);
+					console.log(res.errCode);
+				});
+				innerAudioContext.onEnded(()=>{
+					console.log('播放结束')
+					// innerAudioContext.seek(2);
+					console.log('重新开始')
+					innerAudioContext.src = 'http://downsc.chinaz.net/files/download/sound1/201312/3939.mp3';
+					
+					//innerAudioContext.play()
+				})
+			},
+			audiostop:function(){
+				console.log('audiostop')
+				console.log(innerAudioContext)
+				innerAudioContext.stop()
+			},
 			toSeconds(day, hours, minutes, seconds) {
 				return day * 60 * 60 * 24 + hours * 60 * 60 + minutes * 60 + seconds
 			},
@@ -141,6 +170,7 @@
 			
 			// 计时完成
 			taskover(){
+				this.audiostop()
 				if(this.timeout){
 					// 如果超时
 					clearInterval(this.timeouter);
@@ -149,6 +179,7 @@
 					this.$emit("on-complete",allDuration);
 				}else{
 					// 规定时间内完成
+					
 					this.timeOver();
 					console.log('经历秒数是');
 					console.log('hour is'+this.h+'minute is'+this.i + 'seconds is' + this.s);
@@ -186,6 +217,7 @@
 				this.h = hour
 				this.i = minute
 				this.s = second
+				
 			},
 			timeoutStart(){
 				this.timeouter = setInterval(()=>{
@@ -197,6 +229,7 @@
 				if (this.seconds <= 0) {
 					return
 				}
+				this.audioplay()
 				this.countDown()
 				this.timer = setInterval(() => {
 					this.seconds--

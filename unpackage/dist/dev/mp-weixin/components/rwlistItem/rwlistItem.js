@@ -137,11 +137,56 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 var _default =
 {
   data: function data() {
     return {
-      itemcon: {} };
+      itemcon: {},
+      items: [
+      {
+        value: 120,
+        name: '优' },
+
+      {
+        value: 100,
+        name: '良' },
+
+      {
+        value: 80,
+        name: '中' },
+
+      {
+        value: 50,
+        name: '差' }] };
+
+
 
   },
   props: {
@@ -153,7 +198,21 @@ var _default =
     this.itemcon = this.info;
     console.log(this.itemcon);
   },
+  computed: {
+    realtime: function realtime() {
+      return this.$api.secToTime(this.itemcon.realDuration);
+    } },
+
   methods: {
+    radioChange: function radioChange(evt) {
+      console.log(evt.detail.value);
+      for (var i = 0; i < this.items.length; i++) {
+        if (this.items[i].value === evt.detail.value) {
+          this.current = i;
+          break;
+        }
+      }
+    },
     beginTask: function beginTask(e) {
       console.log(this);
       console.log(e.currentTarget.dataset.time);

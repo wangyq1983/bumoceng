@@ -7773,14 +7773,14 @@ function normalizeComponent (
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _regenerator = _interopRequireDefault(__webpack_require__(/*! ./node_modules/@vue/babel-preset-app/node_modules/@babel/runtime/regenerator */ 11));var _store = _interopRequireDefault(__webpack_require__(/*! @/store */ 10));var _this = void 0;function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}
-
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _regenerator = _interopRequireDefault(__webpack_require__(/*! ./node_modules/@vue/babel-preset-app/node_modules/@babel/runtime/regenerator */ 10));var _store = _interopRequireDefault(__webpack_require__(/*! @/store */ 13));var _this = void 0;function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}
 // 正式服务器
 //var webhost = "https://task.vsclouds.com/";
 
 // 开发服务器
 var webhost = "http://jielongtest.vsclouds.com/8080/polly/";
 
+// 接口列表
 var webapi = {
   // 任务类别创建
   cTaskType: webhost + 'type/create',
@@ -7813,8 +7813,35 @@ var webapi = {
   uniLogin: webhost + "public/weixin/mp/common/user/login/wx",
 
   // 获取用户信息
-  userInfo: webhost + "weixin/mp/common/user/info" };
+  userInfo: webhost + "weixin/mp/common/user/info",
 
+  // 经验接口
+  exp: webhost + "user/experience/cumulative",
+
+  // 星接口
+  star: webhost + "star/adjust/create" };
+
+
+// 经验值设置
+var expval = {
+  ctask: 10,
+  endtask: 30,
+  signin: 10,
+  share: 50 };
+
+
+// 经验值对应称号
+var expTitle = function expTitle(exp) {
+  if (exp >= 200 && exp < 1000) {
+    return '青铜';
+  }
+  if (exp >= 1000 && exp < 2000) {
+    return '白银';
+  }
+  if (exp >= 2000 && exp < 5000) {
+    return '黄金';
+  }
+};
 
 // request get 请求
 var getData = function getData(url, param) {
@@ -7900,7 +7927,37 @@ var getUserinfo = /*#__PURE__*/function () {var _ref = _asyncToGenerator( /*#__P
                 key: 'level',
                 data: userRes.data.userLevelInfo.level });
 
+            } else {
+              uni.showToast({
+                title: '用户信息获取失败',
+                icon: 'none',
+                duration: 1500 });
+
             }case 4:case "end":return _context.stop();}}}, _callee);}));return function getUserinfo() {return _ref.apply(this, arguments);};}();
+
+
+// 经验变化接口
+var addExp = /*#__PURE__*/function () {var _ref2 = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee2(exp) {var params, expRes;return _regenerator.default.wrap(function _callee2$(_context2) {while (1) {switch (_context2.prev = _context2.next) {case 0:
+            params = {
+              experience: exp };_context2.next = 3;return (
+
+              postData(webapi.exp, params));case 3:expRes = _context2.sent;
+            if (reshook(expRes)) {
+              console.log(expRes);
+              getUserinfo();
+            }case 5:case "end":return _context2.stop();}}}, _callee2);}));return function addExp(_x) {return _ref2.apply(this, arguments);};}();
+
+
+// 星变化接口
+var starAdjust = /*#__PURE__*/function () {var _ref3 = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee3(star, reason) {var params, starRes;return _regenerator.default.wrap(function _callee3$(_context3) {while (1) {switch (_context3.prev = _context3.next) {case 0:
+            params = {
+              adjustCount: star,
+              reason: reason };_context3.next = 3;return (
+
+              postData(webapi.star, params));case 3:starRes = _context3.sent;
+            if (reshook(expRes)) {
+              console.log(expRes);
+            }case 5:case "end":return _context3.stop();}}}, _callee3);}));return function starAdjust(_x2, _x3) {return _ref3.apply(this, arguments);};}();
 
 
 // loading加载提示
@@ -7971,6 +8028,22 @@ var encodeData = function encodeData(datadetail) {
   return dataparams;
 };
 
+// 秒数转正常时间显示 x小时x分钟x秒
+
+var secToTime = function secToTime(sec) {
+  if (sec > 3600) {
+    var hour = parseInt(sec / 3600);
+    var minu = parseInt((sec - hour * 3600) / 60);
+    var second = sec - hour * 3600 - minu * 60;
+    return hour + '小时' + minu + '分钟' + second + '秒';
+  } else {
+    var _minu = parseInt(sec / 60);
+    var _second = sec - _minu * 60;
+    return (_minu == 0 ? '' : _minu + '分钟') + _second + '秒';
+  }
+};
+
+
 /** 
     * new Date() ---> 转化为 年 月 日 时 分 秒
     * let date = new Date();
@@ -7999,130 +8072,25 @@ var formatTime = function formatTime(date) {
   hideLoading: hideLoading,
   formatTime: formatTime,
   getUserinfo: getUserinfo,
-  trim: trim };exports.default = _default;
+  trim: trim,
+  secToTime: secToTime,
+  addExp: addExp,
+  starAdjust: starAdjust,
+  expval: expval };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
 /* 10 */
-/*!*****************************************************************!*\
-  !*** D:/g工作/zilv/code/defaultmoban/defaultmoban/store/index.js ***!
-  \*****************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _regenerator = _interopRequireDefault(__webpack_require__(/*! ./node_modules/@vue/babel-preset-app/node_modules/@babel/runtime/regenerator */ 11));var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));
-var _vuex = _interopRequireDefault(__webpack_require__(/*! vuex */ 14));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}
-
-_vue.default.use(_vuex.default);
-
-var store = new _vuex.default.Store({
-  state: {
-    hasLogin: false,
-    loginProvider: "",
-    userInfo: {},
-    avatar: "",
-    nickname: "",
-    token: "",
-    userid: "",
-    level: 1,
-    openid: null,
-    testvuex: false,
-    colorIndex: 0,
-    colorList: ['#FF0000', '#00FF00', '#0000FF'] },
-
-  mutations: {
-    login: function login(state, res) {
-      state.hasLogin = true;
-      state.userInfo = res;
-      state.avatar = res.weiChatAuthUser.avatarUrl;
-      state.nickname = res.weiChatAuthUser.nickName;
-      state.token = res.token;
-      // 仅做测试
-      state.level = 1;
-
-      var storgeName = ['avatarUrl', 'nickName', 'token', 'isLogin', 'userId'];
-      var storgeVal = [res.weiChatAuthUser.avatarUrl, res.weiChatAuthUser.nickName, res.token, true, res.userId];
-      for (var i = 0; i < storgeName.length; i++) {
-        uni.setStorage({
-          key: storgeName[i],
-          data: storgeVal[i] });
-
-      }
-      console.log('store state');
-      console.log(state.userInfo);
-    },
-    logout: function logout(state) {
-      state.hasLogin = false;
-      state.openid = null;
-    },
-    addLevel: function addLevel(state, num) {
-      state.level = state.level + num;
-    },
-    setOpenid: function setOpenid(state, openid) {
-      state.openid = openid;
-    },
-    setTestTrue: function setTestTrue(state) {
-      state.testvuex = true;
-    },
-    setTestFalse: function setTestFalse(state) {
-      state.testvuex = false;
-    },
-    setColorIndex: function setColorIndex(state, index) {
-      state.colorIndex = index;
-    } },
-
-  getters: {
-    currentColor: function currentColor(state) {
-      return state.colorList[state.colorIndex];
-    } },
-
-  actions: {
-    // lazy loading openid
-    getUserOpenId: function () {var _getUserOpenId = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee(_ref) {var commit, state;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:
-                commit = _ref.commit,
-                state = _ref.state;_context.next = 3;return (
-
-                  new Promise(function (resolve, reject) {
-                    if (state.openid) {
-                      resolve(state.openid);
-                    } else {
-                      uni.login({
-                        success: function success(data) {
-                          commit('login');
-                          setTimeout(function () {//模拟异步请求服务器获取 openid
-                            var openid = '123456789';
-                            console.log('uni.request mock openid[' + openid + ']');
-                            commit('setOpenid', openid);
-                            resolve(openid);
-                          }, 1000);
-                        },
-                        fail: function fail(err) {
-                          console.log('uni.login 接口调用失败，将无法正常使用开放接口等服务', err);
-                          reject(err);
-                        } });
-
-                    }
-                  }));case 3:return _context.abrupt("return", _context.sent);case 4:case "end":return _context.stop();}}}, _callee);}));function getUserOpenId(_x) {return _getUserOpenId.apply(this, arguments);}return getUserOpenId;}() } });var _default =
-
-
-
-
-store;exports.default = _default;
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
-
-/***/ }),
-/* 11 */
 /*!*********************************************************************************************!*\
   !*** ./node_modules/@vue/babel-preset-app/node_modules/@babel/runtime/regenerator/index.js ***!
   \*********************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! regenerator-runtime */ 12);
+module.exports = __webpack_require__(/*! regenerator-runtime */ 11);
 
 /***/ }),
-/* 12 */
+/* 11 */
 /*!************************************************************!*\
   !*** ./node_modules/regenerator-runtime/runtime-module.js ***!
   \************************************************************/
@@ -8153,7 +8121,7 @@ var oldRuntime = hadRuntime && g.regeneratorRuntime;
 // Force reevalutation of runtime.js.
 g.regeneratorRuntime = undefined;
 
-module.exports = __webpack_require__(/*! ./runtime */ 13);
+module.exports = __webpack_require__(/*! ./runtime */ 12);
 
 if (hadRuntime) {
   // Restore the original runtime.
@@ -8169,7 +8137,7 @@ if (hadRuntime) {
 
 
 /***/ }),
-/* 13 */
+/* 12 */
 /*!*****************************************************!*\
   !*** ./node_modules/regenerator-runtime/runtime.js ***!
   \*****************************************************/
@@ -8898,6 +8866,115 @@ if (hadRuntime) {
   })() || Function("return this")()
 );
 
+
+/***/ }),
+/* 13 */
+/*!*****************************************************************!*\
+  !*** D:/g工作/zilv/code/defaultmoban/defaultmoban/store/index.js ***!
+  \*****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _regenerator = _interopRequireDefault(__webpack_require__(/*! ./node_modules/@vue/babel-preset-app/node_modules/@babel/runtime/regenerator */ 10));var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));
+var _vuex = _interopRequireDefault(__webpack_require__(/*! vuex */ 14));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}
+
+_vue.default.use(_vuex.default);
+
+var store = new _vuex.default.Store({
+  state: {
+    hasLogin: false,
+    loginProvider: "",
+    userInfo: {},
+    avatar: "",
+    nickname: "",
+    token: "",
+    userid: "",
+    level: 1,
+    openid: null,
+    testvuex: false,
+    colorIndex: 0,
+    colorList: ['#FF0000', '#00FF00', '#0000FF'] },
+
+  mutations: {
+    login: function login(state, res) {
+      state.hasLogin = true;
+      state.userInfo = res;
+      state.avatar = res.weiChatAuthUser.avatarUrl;
+      state.nickname = res.weiChatAuthUser.nickName;
+      state.token = res.token;
+      // 仅做测试
+      state.level = 1;
+
+      var storgeName = ['avatarUrl', 'nickName', 'token', 'isLogin', 'userId'];
+      var storgeVal = [res.weiChatAuthUser.avatarUrl, res.weiChatAuthUser.nickName, res.token, true, res.userId];
+      for (var i = 0; i < storgeName.length; i++) {
+        uni.setStorage({
+          key: storgeName[i],
+          data: storgeVal[i] });
+
+      }
+      console.log('store state');
+      console.log(state.userInfo);
+    },
+    logout: function logout(state) {
+      state.hasLogin = false;
+      state.openid = null;
+    },
+    addLevel: function addLevel(state, num) {
+      state.level = state.level + num;
+    },
+    setOpenid: function setOpenid(state, openid) {
+      state.openid = openid;
+    },
+    setTestTrue: function setTestTrue(state) {
+      state.testvuex = true;
+    },
+    setTestFalse: function setTestFalse(state) {
+      state.testvuex = false;
+    },
+    setColorIndex: function setColorIndex(state, index) {
+      state.colorIndex = index;
+    } },
+
+  getters: {
+    currentColor: function currentColor(state) {
+      return state.colorList[state.colorIndex];
+    } },
+
+  actions: {
+    // lazy loading openid
+    getUserOpenId: function () {var _getUserOpenId = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee(_ref) {var commit, state;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:
+                commit = _ref.commit,
+                state = _ref.state;_context.next = 3;return (
+
+                  new Promise(function (resolve, reject) {
+                    if (state.openid) {
+                      resolve(state.openid);
+                    } else {
+                      uni.login({
+                        success: function success(data) {
+                          commit('login');
+                          setTimeout(function () {//模拟异步请求服务器获取 openid
+                            var openid = '123456789';
+                            console.log('uni.request mock openid[' + openid + ']');
+                            commit('setOpenid', openid);
+                            resolve(openid);
+                          }, 1000);
+                        },
+                        fail: function fail(err) {
+                          console.log('uni.login 接口调用失败，将无法正常使用开放接口等服务', err);
+                          reject(err);
+                        } });
+
+                    }
+                  }));case 3:return _context.abrupt("return", _context.sent);case 4:case "end":return _context.stop();}}}, _callee);}));function getUserOpenId(_x) {return _getUserOpenId.apply(this, arguments);}return getUserOpenId;}() } });var _default =
+
+
+
+
+store;exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
 /* 14 */

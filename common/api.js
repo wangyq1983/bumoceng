@@ -1,11 +1,11 @@
 import store from '@/store'
-
 // 正式服务器
 //var webhost = "https://task.vsclouds.com/";
 
 // 开发服务器
 var webhost = "http://jielongtest.vsclouds.com/8080/polly/";
 
+// 接口列表
 var webapi = {
 	// 任务类别创建
 	cTaskType: webhost + 'type/create',
@@ -38,7 +38,34 @@ var webapi = {
 	uniLogin: webhost + "public/weixin/mp/common/user/login/wx",
 	
 	// 获取用户信息
-	userInfo: webhost + "weixin/mp/common/user/info"
+	userInfo: webhost + "weixin/mp/common/user/info",
+	
+	// 经验接口
+	exp: webhost + "user/experience/cumulative",
+	
+	// 星接口
+	star: webhost + "star/adjust/create"
+}
+
+// 经验值设置
+var expval = {
+	ctask:10,
+	endtask:30,
+	signin:10,
+	share:50,
+}
+
+// 经验值对应称号
+const expTitle = (exp) => {
+	if(exp >= 200 && exp < 1000){
+		return '青铜'
+	}
+	if(exp >= 1000 && exp < 2000){
+		return '白银'
+	}
+	if(exp >= 2000 && exp < 5000){
+		return '黄金'
+	}
 }
 
 // request get 请求
@@ -125,6 +152,36 @@ const getUserinfo = async() => {
 			key: 'level',
 			data: userRes.data.userLevelInfo.level
 		});
+	}else{
+		uni.showToast({
+			title:'用户信息获取失败',
+			icon:'none',
+			duration:1500
+		})
+	}
+}
+
+// 经验变化接口
+const addExp = async(exp)=>{
+	let params = {
+		experience:exp
+	}
+	var expRes = await postData(webapi.exp,params);
+	if(reshook(expRes)){
+		console.log(expRes);
+		getUserinfo()
+	}
+}
+
+// 星变化接口
+const starAdjust = async(star,reason) =>{
+	let params = {
+		adjustCount:star,
+		reason:reason
+	}
+	var starRes = await postData(webapi.star,params);
+	if(reshook(expRes)){
+		console.log(expRes);
 	}
 }
 
@@ -196,6 +253,22 @@ const encodeData = (datadetail) => {
 	return dataparams
 }
 
+// 秒数转正常时间显示 x小时x分钟x秒
+
+const secToTime = (sec) =>{
+	if(sec > 3600){
+		let hour = parseInt(sec/3600);
+		let minu = parseInt((sec-(hour*3600))/60);
+		let second = sec- hour*3600 - minu*60;
+		return hour+'小时'+minu+'分钟'+second+'秒'
+	}else{
+		let minu = parseInt(sec/60);
+		let second = sec- minu*60;
+		return ((minu == 0)?'':minu+'分钟')+second+'秒'
+	}
+}
+
+
 /** 
  * new Date() ---> 转化为 年 月 日 时 分 秒
  * let date = new Date();
@@ -224,5 +297,9 @@ export default {
 	hideLoading,
 	formatTime,
 	getUserinfo,
-	trim
+	trim,
+	secToTime,
+	addExp,
+	starAdjust,
+	expval
 }

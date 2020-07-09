@@ -85,7 +85,7 @@ export default {
 		// 关闭计时弹层
 		closemask:function(){
 			console.log(this);
-			//this.$refs.countDown.timeOver()
+			this.$refs.countDown.audiostop()
 			this.showhour = false;
 			this.cdtime = false;
 			this.nowtask = '';

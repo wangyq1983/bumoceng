@@ -16,11 +16,10 @@
 		<view class="typetip">请选择类别,长按类型标签出现删除按钮</view>
 		<view class="typeCon">
 			<view class="typeWarp" v-for="items in defaluttype" :key='items.typeName'>
-				<view :class = "(curtype == items.typeName)?'typeBox cur':'typeBox'" @longtap="showdel" @tap="typeselect" :data-value = "items.typeName">
+				<view :class = "(curtype == items.typeName)?'typeBox cur':'typeBox'" @longtap="showdel" @tap="typeselect" :data-id = "items.id" :data-value = "items.typeName">
 					{{items.typeName}}
-					
 				</view>
-				<view class="" v-if="(curdel == items.typeName)" @tap="deltype" :data-id = "items.id">
+				<view class="" v-if="(curdel == items.id)" @tap="deltype" :data-id = "items.id">
 					×
 				</view>
 			</view>
@@ -74,7 +73,8 @@
 export default {
 	data() {
 		return {
-			defaluttype:['语文','数学','英语'],
+			defaluttype:[],
+			deftype:[],
 			curtype:'',
 			curdel:'', 
 			zycon:'',
@@ -123,6 +123,16 @@ export default {
 		},
 		// 类型删除事件
 		deltype:async function(e){
+			console.log('deltype');
+			console.log(e.currentTarget.dataset.id);
+			if(e.currentTarget.dataset.id == undefined){
+				uni.showToast({
+					title:'初始类别不可删除',
+					icon:'none',
+					duration:1500
+				})
+				return false;
+			}
 			var params = {
 				id:e.currentTarget.dataset.id
 			}
@@ -147,7 +157,17 @@ export default {
 		// 显示类别删除
 		showdel:function(e){
 			//var cur = e.currentTarget.dataset.value;
-			this.curdel = e.currentTarget.dataset.value; 
+			console.log('showdel')
+			if(e.currentTarget.dataset.id){
+				console.log(e)
+				this.curdel = e.currentTarget.dataset.id; 
+			}else{
+				uni.showToast({
+					title:'默认类别不能删除哦',
+					icon:'none',
+					duration:1500
+				})
+			}
 		}, 
 		// 查询类别
 		typelist:async function(){
@@ -162,7 +182,20 @@ export default {
 				//this.createSuccess(ctask);
 				console.log('typelist')
 				console.log(typelist.data)
-				this.defaluttype = typelist.data
+				
+				var deftype = [
+					{	
+						typeName:'语文'
+					},
+					{
+						typeName:'数学'
+					},
+					{
+						typeName:'英语'
+					}
+				]
+				// console.log(deftype.concat(typelist.data))
+				this.defaluttype = deftype.concat(typelist.data)
 			}
 		},
 		// 创建类别

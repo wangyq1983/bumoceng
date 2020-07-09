@@ -134,8 +134,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _regenerator = _interopRequireDefault(__webpack_require__(/*! ./node_modules/@vue/babel-preset-app/node_modules/@babel/runtime/regenerator */ 11));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};} //
-//
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _regenerator = _interopRequireDefault(__webpack_require__(/*! ./node_modules/@vue/babel-preset-app/node_modules/@babel/runtime/regenerator */ 10));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};} //
 //
 //
 //
@@ -210,7 +209,8 @@ var _default =
 {
   data: function data() {
     return {
-      defaluttype: ['语文', '数学', '英语'],
+      defaluttype: [],
+      deftype: [],
       curtype: '',
       curdel: '',
       zycon: '',
@@ -259,12 +259,22 @@ var _default =
     },
     // 类型删除事件
     deltype: function () {var _deltype = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee(e) {var params, typedel, delId;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:
-                params = {
-                  id: e.currentTarget.dataset.id };_context.next = 3;return (
+                console.log('deltype');
+                console.log(e.currentTarget.dataset.id);if (!(
+                e.currentTarget.dataset.id == undefined)) {_context.next = 5;break;}
+                uni.showToast({
+                  title: '初始类别不可删除',
+                  icon: 'none',
+                  duration: 1500 });return _context.abrupt("return",
 
-                  this.$api.showLoading());case 3:_context.next = 5;return (
-                  this.$api.postData(this.$api.webapi.dTaskType, params));case 5:typedel = _context.sent;_context.next = 8;return (
-                  this.$api.hideLoading());case 8: // 等待请求数据成功后，隐藏loading
+                false);case 5:
+
+                params = {
+                  id: e.currentTarget.dataset.id };_context.next = 8;return (
+
+                  this.$api.showLoading());case 8:_context.next = 10;return (
+                  this.$api.postData(this.$api.webapi.dTaskType, params));case 10:typedel = _context.sent;_context.next = 13;return (
+                  this.$api.hideLoading());case 13: // 等待请求数据成功后，隐藏loading
                 console.log(typedel);
                 if (this.$api.reshook(typedel, this.$mp.page.route)) {
                   if (typedel.resultCode == 0) {
@@ -278,15 +288,25 @@ var _default =
                     });
 
                   }
-                }case 10:case "end":return _context.stop();}}}, _callee, this);}));function deltype(_x) {return _deltype.apply(this, arguments);}return deltype;}(),
+                }case 15:case "end":return _context.stop();}}}, _callee, this);}));function deltype(_x) {return _deltype.apply(this, arguments);}return deltype;}(),
 
     // 显示类别删除
     showdel: function showdel(e) {
       //var cur = e.currentTarget.dataset.value;
-      this.curdel = e.currentTarget.dataset.value;
+      console.log('showdel');
+      if (e.currentTarget.dataset.id) {
+        console.log(e);
+        this.curdel = e.currentTarget.dataset.id;
+      } else {
+        uni.showToast({
+          title: '默认类别不能删除哦',
+          icon: 'none',
+          duration: 1500 });
+
+      }
     },
     // 查询类别
-    typelist: function () {var _typelist = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee2() {var params, typelist;return _regenerator.default.wrap(function _callee2$(_context2) {while (1) {switch (_context2.prev = _context2.next) {case 0:
+    typelist: function () {var _typelist = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee2() {var params, typelist, deftype;return _regenerator.default.wrap(function _callee2$(_context2) {while (1) {switch (_context2.prev = _context2.next) {case 0:
                 params = {
                   flag: 1 };_context2.next = 3;return (
 
@@ -298,7 +318,20 @@ var _default =
                   //this.createSuccess(ctask);
                   console.log('typelist');
                   console.log(typelist.data);
-                  this.defaluttype = typelist.data;
+
+                  deftype = [
+                  {
+                    typeName: '语文' },
+
+                  {
+                    typeName: '数学' },
+
+                  {
+                    typeName: '英语' }];
+
+
+                  // console.log(deftype.concat(typelist.data))
+                  this.defaluttype = deftype.concat(typelist.data);
                 }case 10:case "end":return _context2.stop();}}}, _callee2, this);}));function typelist() {return _typelist.apply(this, arguments);}return typelist;}(),
 
     // 创建类别

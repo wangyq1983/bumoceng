@@ -114,7 +114,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
 //
 //
 //
@@ -153,7 +153,8 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
  * @property {String} splitorColor 分割符号颜色
  * @event {Function} timeup 倒计时时间到触发事件
  * @example <uni-countdown :day="1" :hour="1" :minute="12" :second="40"></uni-countdown>
- */var _default =
+ */
+var innerAudioContext = uni.getBackgroundAudioManager();var _default =
 {
   name: 'UniCountdown',
   props: {
@@ -239,6 +240,34 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
     clearInterval(this.timer);
   },
   methods: {
+    audioplay: function audioplay() {
+
+      innerAudioContext.title = '作业不磨蹭';
+      innerAudioContext.src = 'http://downsc.chinaz.net/files/download/sound1/201312/3939.mp3';
+
+      innerAudioContext.onPlay(function () {//可以播放事件
+        console.log('开始播放');
+        //innerAudioContext.play()
+        //this.playing = !innerAudioContext.paused;//查看是否可以自动播放
+      });
+      innerAudioContext.onError(function (res) {
+        console.log(res.errMsg);
+        console.log(res.errCode);
+      });
+      innerAudioContext.onEnded(function () {
+        console.log('播放结束');
+        // innerAudioContext.seek(2);
+        console.log('重新开始');
+        innerAudioContext.src = 'http://downsc.chinaz.net/files/download/sound1/201312/3939.mp3';
+
+        //innerAudioContext.play()
+      });
+    },
+    audiostop: function audiostop() {
+      console.log('audiostop');
+      console.log(innerAudioContext);
+      innerAudioContext.stop();
+    },
     toSeconds: function toSeconds(day, hours, minutes, seconds) {
       return day * 60 * 60 * 24 + hours * 60 * 60 + minutes * 60 + seconds;
     },
@@ -257,6 +286,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
     // 计时完成
     taskover: function taskover() {
+      this.audiostop();
       if (this.timeout) {
         // 如果超时
         clearInterval(this.timeouter);
@@ -265,6 +295,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
         this.$emit("on-complete", allDuration);
       } else {
         // 规定时间内完成
+
         this.timeOver();
         console.log('经历秒数是');
         console.log('hour is' + this.h + 'minute is' + this.i + 'seconds is' + this.s);
@@ -302,6 +333,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
       this.h = hour;
       this.i = minute;
       this.s = second;
+
     },
     timeoutStart: function timeoutStart() {var _this = this;
       this.timeouter = setInterval(function () {
@@ -313,6 +345,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
       if (this.seconds <= 0) {
         return;
       }
+      this.audioplay();
       this.countDown();
       this.timer = setInterval(function () {
         _this2.seconds--;
@@ -330,6 +363,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
         this.syncFlag = true;
       }
     } } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
 

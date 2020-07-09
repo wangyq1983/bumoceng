@@ -41,5 +41,9 @@
       }
     ]
   },
-  "usingComponents": {}
+  "requiredBackgroundModes": [
+    "audio"
+  ],
+  "usingComponents": {},
+  "sitemapLocation": "sitemap40.json"
 }
