@@ -164,3 +164,46 @@ page{
 	font-size: 60upx;
 	color: #fff;
 }
+
+.successLayer{
+	width:666upx;
+	height:466upx;
+	position: relative;
+}
+.slayImg{
+	position: absolute;
+	top:0;
+	left:0;
+	z-index: 9;
+	width:666upx;
+	height:466upx;
+}
+.slayCon{
+	width:666upx;
+	height:466upx;
+	position: absolute;
+	z-index: 99;
+	top:0;
+	left:0;
+	@include colflex;
+	justify-content: center;
+	.title{
+		color:#fff;
+		font-size: 60upx;
+		margin-bottom: 30upx;
+	}
+	.con{
+		@include colflex;
+		justify-content: center;
+		color: #fff;
+		font-size: 50upx;
+		.item{
+			@include rowflex;
+			justify-content: flex-start;
+			image{
+				width:60upx;
+				height: 60upx;
+			}
+		}
+	}
+}

@@ -114,16 +114,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
-//
-//
-//
-//
-//
-//
-//
-//
-//
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _regenerator = _interopRequireDefault(__webpack_require__(/*! ./node_modules/@vue/babel-preset-app/node_modules/@babel/runtime/regenerator */ 10));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};} //
 //
 //
 //
@@ -169,6 +160,7 @@ var _default =
   data: function data() {
     return {
       itemcon: {},
+      zhiliangCur: null,
       items: [
       {
         value: 120,
@@ -193,7 +185,6 @@ var _default =
     info: Object },
 
   created: function created() {
-
     console.log('组件创建后，但还未挂载');
     this.itemcon = this.info;
     console.log(this.itemcon);
@@ -206,6 +197,7 @@ var _default =
   methods: {
     radioChange: function radioChange(evt) {
       console.log(evt.detail.value);
+      this.zhiliangCur = evt.detail.value;
       for (var i = 0; i < this.items.length; i++) {
         if (this.items[i].value === evt.detail.value) {
           this.current = i;
@@ -216,8 +208,48 @@ var _default =
     beginTask: function beginTask(e) {
       console.log(this);
       console.log(e.currentTarget.dataset.time);
-      this.$emit("on-cdtime", e.currentTarget.dataset.time, this.itemcon.id);
+      this.$emit('on-cdtime', e.currentTarget.dataset.time, this.itemcon.id, this.itemcon.starNumber, this.itemcon.completionSwitch);
+    },
+    zhiliangEvent: function zhiliangEvent() {var _this2 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {var realstar;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:if (!(
+                _this2.itemcon.state == 1)) {_context.next = 4;break;}
+                uni.showToast({
+                  title: '任务未完成,不能评价完成质量',
+                  icon: 'none',
+                  duration: 1500 });_context.next = 10;break;case 4:
+
+
+                realstar = _this2.itemcon.starNumber * 0.01 * _this2.zhiliangCur;_context.next = 7;return (
+                  _this2.$api.addExp(_this2.$api.expval.endtask));case 7:_context.next = 9;return (
+                  _this2.$api.starAdjust(realstar, '任务完成'));case 9:
+                _this2.$emit('on-zhiliang', realstar, _this2.$api.expval.endtask);case 10:case "end":return _context.stop();}}}, _callee);}))();
+
+    },
+    delAction: function delAction() {
+      var _this = this;
+      uni.showActionSheet({
+        itemList: ['删除'],
+        success: function success(res) {
+          console.log(res.tapIndex);
+          if (res.tapIndex == 0) {
+            _this.deltask();
+          }
+        },
+        fail: function fail(res) {
+          console.log(res.errMsg);
+        } });
+
+    },
+    deltask: function deltask() {var _this3 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee2() {var params, taskdel;return _regenerator.default.wrap(function _callee2$(_context2) {while (1) {switch (_context2.prev = _context2.next) {case 0:
+                params = {
+                  id: _this3.itemcon.id };_context2.next = 3;return (
+
+                  _this3.$api.showLoading());case 3:_context2.next = 5;return (
+                  _this3.$api.postData(_this3.$api.webapi.dTask, params));case 5:taskdel = _context2.sent;_context2.next = 8;return (
+                  _this3.$api.hideLoading());case 8:
+                console.log(taskdel);
+                _this3.$emit('on-del', _this3.itemcon.id);case 10:case "end":return _context2.stop();}}}, _callee2);}))();
     } } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
 

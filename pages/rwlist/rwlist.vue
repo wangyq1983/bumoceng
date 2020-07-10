@@ -1,10 +1,14 @@
 <template>
 	<view>
-		<mask :showmask = 'cdtime' @on-close = "closemask" v-if="nowtask">
-			<view class="cdlayer">
+		<mask :showmask = 'cdtime' @on-close = "closemask">
+			
+			<view class="cdlayer" v-if="nowtask">
 				<uniCountdown @on-complete = 'timed' :showmask = 'cdtime' :show-day="false" :show-hour="showhour" :hour="hourTask" :minute="minuteTask" :second="secondTask" ref = "countDown"></uniCountdown>
 			</view>
+			<successdata :starNum = 'star' :expType = 'exptype' v-if="taskSuccess"></successdata>
+			
 		</mask>
+		
 		<userinfo></userinfo>
 		<view class="timeSelect">{{datetime}}</view>
 		<view class="createBox" style="border-bottom: 10upx solid #e6e6e6;">
@@ -23,7 +27,7 @@
 				</view>
 			</view>
 		</view>
-		<rwlistItem v-for="items in rwlist" :key='items.id' :info = "items" @on-cdtime = "countTime"></rwlistItem>
+		<rwlistItem v-for="items in rwlist" :key='items.id' :info = "items" @on-cdtime = "countTime" @on-zhiliang = "zhiliang" @on-del = "deltask"></rwlistItem>
 	</view>
 </template>
 
@@ -32,7 +36,8 @@ import uniCountdown from '@/components/uni-countdown/uni-countdown.vue'
 export default {
 	data() {
 		return {
-			dataStep: 20,
+			taskSuccess:false,
+			dataStep: 50,
 			rwlist: [],
 			cdtime:false,
 			taskTime:'',
@@ -41,7 +46,10 @@ export default {
 			hourTask:'',
 			showhour:false,
 			nowtask:'',
-			datetime:''
+			datetime:'',
+			star:null,
+			exptype:null,
+			ifswitch:false
 		};
 	},
 	components:{
@@ -57,9 +65,20 @@ export default {
 		console.log('show')
 	},
 	methods: {
-		//获取用户信息
-		getUser:async function(){
-			
+		deltask:function(id){
+			this.rwlist.forEach(function(item, index, arr) {
+				if(item.id == id) {
+					arr.splice(index, 1);
+					// this.rwlist = arr
+				}
+				console.log(arr)
+			});
+		},
+		zhiliang:function(star,exp){
+			this.star = star;
+			this.exptype = exp;
+			this.cdtime = true;
+			this.taskSuccess = true;
 		},
 		formatTime:function(tasktime){
 			// tasktime 任务计时默认以分钟计算
@@ -75,20 +94,29 @@ export default {
 			}
 		},
 		//子组件点击开始任务触发
-		countTime:function(cdtime,taskid){
+		countTime:function(cdtime,taskid,star,ifswitch){
 			this.cdtime = true;
 			console.log(cdtime);
 			console.log(taskid)
 			this.nowtask = taskid;
+			this.star = star;
+			this.ifswitch = ifswitch;
 			this.formatTime(cdtime)
 		},
 		// 关闭计时弹层
 		closemask:function(){
 			console.log(this);
-			this.$refs.countDown.audiostop()
+			if(this.taskSuccess){
+				this.taskSuccess = false
+			}else{
+				this.$refs.countDown.audiostop()
+			}
+			
 			this.showhour = false;
 			this.cdtime = false;
 			this.nowtask = '';
+			this.rwlist = [];
+			this.init();
 		},
 		// 任务完成
 		timed:async function(minute){
@@ -105,6 +133,21 @@ export default {
 			await this.$api.hideLoading(); // 等待请求数据成功后，隐藏loading
 			if (this.$api.reshook(taskend, this.$mp.page.route)) {
 				console.log(taskend)
+				if(taskend.resultCode == 0){
+					if(this.ifswitch){
+						//await this.$api.addExp(this.$api.expval.endtask)
+						//this.taskSuccess = true;
+						// this.nowtask = '';
+						// this.cdtime = false;
+						this.closemask();
+					}else{
+						await this.$api.addExp(this.$api.expval.endtask);
+						await this.$api.starAdjust(this.star,'任务完成');
+						this.taskSuccess = true;
+						this.nowtask = '';
+						this.exptype = this.$api.expval.endtask
+					}
+				}
 			}
 		},
 		async init() {
@@ -163,7 +206,7 @@ export default {
 .createBox {
 	width: 750upx;
 	height: 158upx;
-	@include rowflex justify-content: space-around;
+	@include rowflex; justify-content: space-around;
 }
 .createTask {
 	width: 346upx;

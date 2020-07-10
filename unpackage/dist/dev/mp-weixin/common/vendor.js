@@ -7955,8 +7955,8 @@ var starAdjust = /*#__PURE__*/function () {var _ref3 = _asyncToGenerator( /*#__P
               reason: reason };_context3.next = 3;return (
 
               postData(webapi.star, params));case 3:starRes = _context3.sent;
-            if (reshook(expRes)) {
-              console.log(expRes);
+            if (reshook(starRes)) {
+              console.log(starRes);
             }case 5:case "end":return _context3.stop();}}}, _callee3);}));return function starAdjust(_x2, _x3) {return _ref3.apply(this, arguments);};}();
 
 

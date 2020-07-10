@@ -180,8 +180,8 @@ const starAdjust = async(star,reason) =>{
 		reason:reason
 	}
 	var starRes = await postData(webapi.star,params);
-	if(reshook(expRes)){
-		console.log(expRes);
+	if(reshook(starRes)){
+		console.log(starRes);
 	}
 }
 

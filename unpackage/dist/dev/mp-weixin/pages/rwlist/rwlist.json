@@ -1,6 +1,7 @@
 {
   "usingComponents": {
     "mask": "/components/mask/mask",
+    "successdata": "/components/successdata/successdata",
     "userinfo": "/components/userinfo/userinfo",
     "rwlist-item": "/components/rwlistItem/rwlistItem",
     "uni-countdown": "/components/uni-countdown/uni-countdown"

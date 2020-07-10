@@ -3,47 +3,38 @@
 		<view class="TitleBox">
 			<view v-if="itemcon.state == 1" class="rwState ongoing"></view>
 			<view v-if="itemcon.state == 3" class="rwState onend"></view>
-			<view class="rwType">{{itemcon.typeName}}</view>
+			<view class="rwType">{{ itemcon.typeName }}</view>
 			<view class="rwTitle">
 				<image src="/static/menustar.png" mode=""></image>
-				<view class="">
-					{{itemcon.starNumber}}
-				</view>
-				
+				<view class="">{{ itemcon.starNumber }}</view>
 			</view>
-			<view class="rwHandle">⋮</view>
+			<view class="rwHandle" @tap="delAction">⋮</view>
 		</view>
-		<view class="rwInfo" v-if="itemcon.jobDescription">{{itemcon.jobDescription}}</view>
+		<view class="rwInfo" v-if="itemcon.jobDescription">{{ itemcon.jobDescription }}</view>
 		<view class="rwAction">
-			<view v-if="itemcon.state == 1" class="rwBtn" @tap="beginTask" :data-time = "itemcon.duration"><view class="startBtn">开始任务</view></view>
-			<view class="rwBtn" v-if="itemcon.state == 3">
-				<view class="taskover">
-					任务已完成
-				</view>
-				
-			</view>
-			
+			<view v-if="itemcon.state == 1" class="rwBtn" @tap="beginTask" :data-time="itemcon.duration"><view class="startBtn">开始任务</view></view>
+			<view class="rwBtn" v-if="itemcon.state == 3"><view class="taskover">任务已完成</view></view>
+
 			<view class="timebox">
-				<view class="rwTime">预计时间： <text>{{itemcon.duration}}分钟</text></view>
+				<view class="rwTime">
+					预计时间：
+					<text>{{ itemcon.duration }}分钟</text>
+				</view>
 				<view v-if="itemcon.state == 3" class="rwTime">
-					实际完成时间 <text>{{realtime}}</text>
+					实际完成时间
+					<text>{{ realtime }}</text>
 				</view>
 			</view>
-			
 		</view>
 		<view class="rwOther" v-if="itemcon.completionSwitch">
 			<view class="title">完成质量:</view>
 			<radio-group @change="radioChange" class="radiogroup">
 				<label v-for="(item, index) in items" :key="item.value">
 					<radio color="#ffce00" :value="item.value" :checked="index === current" style="transform:scale(0.7)" />
-					<view class="">
-						{{item.name}}
-					</view>
+					<view class="">{{ item.name }}</view>
 				</label>
 			</radio-group>
-			<view class="zhiliangBtn">
-				确定
-			</view>
+			<view class="zhiliangBtn" @tap="zhiliangEvent">确定</view>
 		</view>
 	</view>
 </template>
@@ -53,23 +44,24 @@ export default {
 	data() {
 		return {
 			itemcon: {},
-			items:[
+			zhiliangCur: null,
+			items: [
 				{
-					value:120,
-					name:'优'
+					value: 120,
+					name: '优'
 				},
 				{
-					value:100,
-					name:'良'
+					value: 100,
+					name: '良'
 				},
 				{
-					value:80,
-					name:'中'
+					value: 80,
+					name: '中'
 				},
 				{
-					value:50,
-					name:'差'
-				},
+					value: 50,
+					name: '差'
+				}
 			]
 		};
 	},
@@ -77,19 +69,19 @@ export default {
 		info: Object
 	},
 	created() {
-		
 		console.log('组件创建后，但还未挂载');
 		this.itemcon = this.info;
-		console.log(this.itemcon)
+		console.log(this.itemcon);
 	},
-	computed:{
-		realtime(){
-			return this.$api.secToTime(this.itemcon.realDuration)
+	computed: {
+		realtime() {
+			return this.$api.secToTime(this.itemcon.realDuration);
 		}
 	},
-	methods:{
+	methods: {
 		radioChange(evt) {
-			console.log(evt.detail.value)
+			console.log(evt.detail.value);
+			this.zhiliangCur = evt.detail.value;
 			for (let i = 0; i < this.items.length; i++) {
 				if (this.items[i].value === evt.detail.value) {
 					this.current = i;
@@ -97,10 +89,49 @@ export default {
 				}
 			}
 		},
-		beginTask(e){
-			console.log(this)
-			console.log(e.currentTarget.dataset.time)
-			this.$emit("on-cdtime",e.currentTarget.dataset.time,this.itemcon.id); 
+		beginTask(e) {
+			console.log(this);
+			console.log(e.currentTarget.dataset.time);
+			this.$emit('on-cdtime', e.currentTarget.dataset.time, this.itemcon.id, this.itemcon.starNumber, this.itemcon.completionSwitch);
+		},
+		async zhiliangEvent() {
+			if (this.itemcon.state == 1) {
+				uni.showToast({
+					title: '任务未完成,不能评价完成质量',
+					icon: 'none',
+					duration: 1500
+				});
+			} else {
+				var realstar = this.itemcon.starNumber * 0.01 * this.zhiliangCur;
+				await this.$api.addExp(this.$api.expval.endtask);
+				await this.$api.starAdjust(realstar, '任务完成');
+				this.$emit('on-zhiliang', realstar, this.$api.expval.endtask);
+			}
+		},
+		delAction() {
+			var _this = this;
+			uni.showActionSheet({
+				itemList: ['删除'],
+				success(res) {
+					console.log(res.tapIndex);
+					if (res.tapIndex == 0) {
+						_this.deltask()
+					}
+				},
+				fail(res) {
+					console.log(res.errMsg);
+				}
+			});
+		},
+		async deltask() {
+			var params = {
+				id: this.itemcon.id
+			};
+			await this.$api.showLoading(); // 显示loading
+			var taskdel = await this.$api.postData(this.$api.webapi.dTask, params);
+			await this.$api.hideLoading();
+			console.log(taskdel);
+			this.$emit('on-del',this.itemcon.id)
 		}
 	}
 };
@@ -131,8 +162,7 @@ export default {
 	background-image: url(/static/duihao.png);
 	background-size: 50upx 50upx;
 }
-.onfail{
-	
+.onfail {
 }
 .rwType {
 	padding: 10upx;
@@ -140,15 +170,15 @@ export default {
 	font-size: $fontsize-28;
 }
 .rwTitle {
-	padding-left:30upx;
+	padding-left: 30upx;
 	font-size: $fontsize-24;
 	color: $color-a5;
 	@include rowflex;
 	justify-content: flex-start;
-	image{
-		width:30upx;
-		height:30upx;
-		margin-right:10upx;
+	image {
+		width: 30upx;
+		height: 30upx;
+		margin-right: 10upx;
 	}
 }
 .rwHandle {
@@ -160,7 +190,7 @@ export default {
 }
 .rwInfo {
 	@include warpwidth;
-	padding:15upx;
+	padding: 15upx;
 	box-sizing: border-box;
 	background: $color-bor;
 	color: $color-00;
@@ -171,7 +201,7 @@ export default {
 	height: 86upx;
 	@include rowflex;
 	justify-content: space-between;
-	padding-top:16upx;
+	padding-top: 16upx;
 }
 .rwBtn {
 	font-size: $fontsize-30;
@@ -180,9 +210,9 @@ export default {
 	background: $color-m;
 	padding: 10upx 20upx;
 }
-.taskover{
-	background:  $color-36;
-	color:$color-m;
+.taskover {
+	background: $color-36;
+	color: $color-m;
 	padding: 10upx 20upx;
 }
 .endBtn {
@@ -198,41 +228,40 @@ export default {
 	@include rowflex;
 	justify-content: flex-start;
 	font-size: $fontsize-28;
-	padding-top:10upx;
-	.title{
-		padding-right:28upx;
+	padding-top: 10upx;
+	.title {
+		padding-right: 28upx;
 	}
-	.item{
-		
+	.item {
 	}
 }
 
-.timebox{
+.timebox {
 	@include colflex;
 	justify-content: flex-start;
 	align-items: flex-start;
-	view{
-		padding:8upx 0;
+	view {
+		padding: 8upx 0;
 	}
-	text{
+	text {
 		font-weight: bold;
 	}
 }
-.radiogroup{
+.radiogroup {
 	@include rowflex;
 	justify-content: flex-start;
-	label{
+	label {
 		@include rowflex;
 		justify-content: flex-start;
 		margin-right: 16upx;
 	}
 }
-.zhiliangBtn{
+.zhiliangBtn {
 	background: $color-m;
-	color:$color-36;
+	color: $color-36;
 	font-size: $fontsize-28;
 	text-align: center;
-	padding:8upx 26upx;
-	margin-left:16upx
+	padding: 8upx 26upx;
+	margin-left: 16upx;
 }
 </style>

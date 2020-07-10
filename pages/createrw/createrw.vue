@@ -55,6 +55,7 @@
 			</view>
 		</view>
 		<view class="zhiliangSwitch">
+			<image src="/static/zhiliang.png" mode="" class="Imgicon"></image>
 			<view class="">
 				完成质量检查
 			</view>
@@ -65,6 +66,24 @@
 				(选填)
 			</view>
 		</view>
+		<!-- <view class="zhilianginfo">
+			<view class="">
+				开启完成质量检查,任务会有 优、良、中、差四个选项:
+			</view>
+			<view class="">
+				优可获得120%的奖励星数,
+			</view>
+			<view class="">
+				良可获得100%的奖励星数,
+			</view>
+			<view class="">
+				中可获得80%的奖励星数,
+			</view>
+			<view class="">
+				差仅能获得50%的奖励星数。 
+			</view>
+			
+		</view> -->
 		<view class="saveBox"><view class="saveBtn" @tap="creatzyRequest">保存</view></view>
 	</view>
 </template>
@@ -400,5 +419,13 @@ export default {
 		color: $color-36;
 		font-size: $fontsize-32;
 	}
+}
+.zhilianginfo{
+	margin:10upx 30upx;
+	font-size: $fontsize-28;
+	background: $color-f7;
+	color: $color-a5;
+	padding:20upx;
+	line-height: 48upx;
 }
 </style>

@@ -108,7 +108,7 @@
 /******/ 		if(installedCssChunks[chunkId]) promises.push(installedCssChunks[chunkId]);
 /******/ 		else if(installedCssChunks[chunkId] !== 0 && cssChunks[chunkId]) {
 /******/ 			promises.push(installedCssChunks[chunkId] = new Promise(function(resolve, reject) {
-/******/ 				var href = "" + ({"components/userinfo/userinfo":"components/userinfo/userinfo","components/mask/mask":"components/mask/mask","components/rwlistItem/rwlistItem":"components/rwlistItem/rwlistItem","components/uni-countdown/uni-countdown":"components/uni-countdown/uni-countdown"}[chunkId]||chunkId) + ".wxss";
+/******/ 				var href = "" + ({"components/userinfo/userinfo":"components/userinfo/userinfo","components/mask/mask":"components/mask/mask","components/rwlistItem/rwlistItem":"components/rwlistItem/rwlistItem","components/successdata/successdata":"components/successdata/successdata","components/uni-countdown/uni-countdown":"components/uni-countdown/uni-countdown"}[chunkId]||chunkId) + ".wxss";
 /******/ 				var fullhref = __webpack_require__.p + href;
 /******/ 				var existingLinkTags = document.getElementsByTagName("link");
 /******/ 				for(var i = 0; i < existingLinkTags.length; i++) {
