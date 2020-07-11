@@ -188,6 +188,15 @@ page {
   width: 60rpx;
   height: 60rpx;
 }
+.eventBtn {
+  width: 300rpx;
+  height: 80rpx;
+  line-height: 80rpx;
+  text-align: center;
+  background: #ffce00;
+  color: #363636;
+  font-size: 32rpx;
+}
 .menuguide {
   border-top: 6rpx solid #ffce00;
   width: 690rpx;
@@ -259,6 +268,10 @@ page {
           justify-content: flex-start;
   font-size: 30rpx;
   padding: 20rpx 0;
+}
+.starChange .info {
+  color: #bbbbbb;
+  padding-left: 20rpx;
 }
 .starChange image {
   width: 26rpx;

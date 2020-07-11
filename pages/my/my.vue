@@ -135,7 +135,7 @@
 		width: 750upx;
 	}
 	.scenelist .titlebox{
-		width:665upx;
+		width:660upx;
 		height:72upx;
 		line-height: 72upx;
 		padding:0 45upx;

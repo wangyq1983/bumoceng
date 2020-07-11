@@ -43,8 +43,29 @@ var webapi = {
 	// 经验接口
 	exp: webhost + "user/experience/cumulative",
 	
-	// 星接口
-	star: webhost + "star/adjust/create"
+	// 星接口  星数调整
+	star: webhost + "star/adjust/create",
+	
+	// 星调整历史
+	starhistory: webhost + 'star/adjust/history',
+	
+	// 创建奖励
+	creward: webhost + 'star/exchange/create',
+	
+	// 奖励修改
+	ureward: webhost + 'star/exchange/update',
+	
+	// 兑换记录查询
+	rewardList: webhost + 'star/exchange/list',
+	
+	// 奖励兑换
+	rewardOk: webhost + 'star/exchange/exchange',
+	
+	// 签到
+	signin:webhost + 'sign/in',
+	 
+	// 签到查询
+	signget: webhost + 'sign/get'
 }
 
 // 经验值设置

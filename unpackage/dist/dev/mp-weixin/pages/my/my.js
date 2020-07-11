@@ -94,7 +94,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "components", function() { return components; });
 var components = {
   userinfo: function() {
-    return Promise.all(/*! import() | components/userinfo/userinfo */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/userinfo/userinfo")]).then(__webpack_require__.bind(null, /*! @/components/userinfo/userinfo.vue */ 122))
+    return Promise.all(/*! import() | components/userinfo/userinfo */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/userinfo/userinfo")]).then(__webpack_require__.bind(null, /*! @/components/userinfo/userinfo.vue */ 127))
   }
 }
 var render = function() {

@@ -14,10 +14,10 @@
 
 		<view class="starWarp">
 			<view class="starAction">
-				<view class="actionBtn current">
+				<view :class="(changeType == 'add')?'actionBtn current':'actionBtn'" data-val = "add" @tap="actionEvt">  
 					+增加
 				</view>
-				<view class="actionBtn">
+				<view :class="(changeType == 'reduce')?'actionBtn current':'actionBtn'" data-val = "reduce" @tap="actionEvt">
 					-减少
 				</view>
 			</view>
@@ -29,14 +29,17 @@
 				<view class="">
 					数量
 				</view>
-				<input type="text" value="" />
+				<input type="text" v-model="inputstar" />
+				<view class="info">
+					请输入整数
+				</view>
 			</view>
 			<view class="starliyou">
-				<textarea value="" placeholder="请输入理由(选填)" />
+				<textarea placeholder="请输入理由(选填)" v-model="starliyou" maxlength="500" />
 			</view>
 			
 		</view>
-		<view class="saveBox"><view class="saveBtn">保存</view></view>
+		<view class="saveBox"><view class="saveBtn" @tap="saveEvent">保存</view></view>
 	</view>
 </template>
 
@@ -44,14 +47,50 @@
 	export default {
 		data() {
 			return {
-				
+				changeType:'add',
+				inputstar:'',
+				starliyou:''
 			}
 		},
 		methods: {
+			actionEvt:function(e){
+				console.log(e.currentTarget.dataset.val);
+				this.changeType = e.currentTarget.dataset.val;
+			},
 			showhistory:function(){
 				uni.navigateTo({
 					url:"/pages/starhistory/starhistory"
 				})
+			},
+			saveEvent:async function(){
+				var StarCount = Number(this.inputstar);
+				console.log(StarCount)
+				if(Number.isInteger(StarCount) && (StarCount !== 0)){
+					var starNum = (this.changeType == 'add')?StarCount:(-Math.abs(StarCount));
+					var params = {
+						adjustCount:starNum,
+						reason:this.starliyou
+					}
+					await this.$api.showLoading(); // 显示loading
+					var starRes = await this.$api.postData(this.$api.webapi.star, params);
+					await this.$api.hideLoading(); // 等待请求数据成功后，隐藏loading
+					if (this.$api.reshook(starRes, this.$mp.page.route)) {
+						if(starRes.resultCode == 0){
+							uni.showToast({
+								title:'操作成功！',
+								icon:'none',
+								duration:1500
+							})
+						}
+					}
+				}else{
+					uni.showToast({
+						title:'星数量请输入整数',
+						icon:'none',
+						duration:1500
+					})
+				}
+				
 			}
 		}
 	}
@@ -89,6 +128,10 @@
 	justify-content: flex-start;
 	font-size: $fontsize-30;
 	padding:20upx 0;
+	.info{
+		color: $color-bb;
+		padding-left: 20upx;
+	}
 }
 .starChange image{
 	width: 26upx;

@@ -1,5 +1,6 @@
 {
   "usingComponents": {
+    "mask": "/components/mask/mask",
     "userinfo": "/components/userinfo/userinfo"
   }
 }

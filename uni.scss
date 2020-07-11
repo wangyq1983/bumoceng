@@ -1,51 +1,50 @@
 /* 颜色变量 */
-$color-m:#ffce00;  //风格颜色
+$color-m: #ffce00; //风格颜色
 
-$color-mbg:#ffb123; 
-$color-mtop:#ffbf2d;
+$color-mbg: #ffb123;
+$color-mtop: #ffbf2d;
 
-$color-qiandao:#ff971e; //签到
+$color-qiandao: #ff971e; //签到
 
-$color-star:#ffd732; //星
+$color-star: #ffd732; //星
 
-$color-otherbg:#3c8ceb;
-$color-othertop:#489cf0;
+$color-otherbg: #3c8ceb;
+$color-othertop: #489cf0;
 
 /* 个人中心 */
-$color-u-jl:#3c8ceb;
-$color-u-jl1:#5ebbf8;
-$color-u-star:#ffb123;
-$color-u-star1:#ffdb41;
-$color-u-cj:#80d043;
-$color-u-cj1:#acea65;
-$color-u-ph:#8861d9;
-$color-u-ph1:#b78ef1;
+$color-u-jl: #3c8ceb;
+$color-u-jl1: #5ebbf8;
+$color-u-star: #ffb123;
+$color-u-star1: #ffdb41;
+$color-u-cj: #80d043;
+$color-u-cj1: #acea65;
+$color-u-ph: #8861d9;
+$color-u-ph1: #b78ef1;
 
-$color-tabbar:#b69406;
+$color-tabbar: #b69406;
 
 /* 黑与灰 */
-$color-36:#363636;  
-$color-00:#000000;
-$color-ff:#ffffff;
-$color-bb:#bbbbbb;
-$color-a5:#a5a5a5;
-$color-f7:#f7f7f7; //进度条背景
+$color-36: #363636;
+$color-00: #000000;
+$color-ff: #ffffff;
+$color-bb: #bbbbbb;
+$color-a5: #a5a5a5;
+$color-f7: #f7f7f7; //进度条背景
 
 /* 背景颜色 */
-$bg-color-mask:rgba(0, 0, 0, 0.4);//遮罩颜色
+$bg-color-mask: rgba(0, 0, 0, 0.4); //遮罩颜色
 
 /* 边框颜色 */
-$color-bor:#f4f4f4;
+$color-bor: #f4f4f4;
 
 /* 文字尺寸 */
-$fontsize-22:22upx;
-$fontsize-24:24upx;
-$fontsize-28:28upx;
-$fontsize-30:30upx;
-$fontsize-32:32upx;
-$fontsize-34:34upx;
-$fontsize-36:36upx;
-
+$fontsize-22: 22upx;
+$fontsize-24: 24upx;
+$fontsize-28: 28upx;
+$fontsize-30: 30upx;
+$fontsize-32: 32upx;
+$fontsize-34: 34upx;
+$fontsize-36: 36upx;
 
 /* 透明度 */
 $uni-opacity-disabled: 0.3; // 组件禁用态的透明度
@@ -57,7 +56,7 @@ $uni-opacity-disabled: 0.3; // 组件禁用态的透明度
 	flex-direction: row;
 	align-items: center;
 }
-	
+
 @mixin colflex {
 	display: flex;
 	flex-direction: column;
@@ -66,23 +65,23 @@ $uni-opacity-disabled: 0.3; // 组件禁用态的透明度
 
 /* 宽度 */
 @mixin warpwidth {
-	width:690upx;
+	width: 690upx;
 }
 /* 内边距 */
-@mixin warppadding{
-	padding:30upx
+@mixin warppadding {
+	padding: 30upx;
 }
 /* 下底边 */
-@mixin borderbottom{
+@mixin borderbottom {
 	border-bottom: 10upx solid $color-bor;
 }
 /* 用户下底边 */
-@mixin userbor{
-	border-top:6upx solid $color-m;
+@mixin userbor {
+	border-top: 6upx solid $color-m;
 }
 
 /* 用户中心其他页面导航 */
-@mixin userguide{
+@mixin userguide {
 	@include userbor;
 	@include warpwidth;
 	@include warppadding;
@@ -99,63 +98,62 @@ $uni-opacity-disabled: 0.3; // 组件禁用态的透明度
 }
 .saveBtn {
 	width: 200upx;
-	height:80upx;
+	height: 80upx;
 	line-height: 80upx;
 	text-align: center;
 	background: $color-m;
 	color: #fff;
 }
 
-page{
+page {
 	overflow-x: hidden;
 }
 
-.muststyle{
-	color:#f00;
+.muststyle {
+	color: #f00;
 	font-size: $fontsize-28;
-	padding:5upx 20upx;
+	padding: 5upx 20upx;
 }
-.nomuststyle{
+.nomuststyle {
 	color: #666;
 	font-size: $fontsize-28;
-	padding:5upx 20upx;
+	padding: 5upx 20upx;
 }
-.tipbar{
-	width:710upx;
+.tipbar {
+	width: 710upx;
 	height: 50upx;
 	line-height: 50upx;
-	padding:20upx;
+	padding: 20upx;
 	background: #fff48a;
 	color: #c46b1b;
 	font-size: $fontsize-28;
-	text{
+	text {
 		font-weight: bold;
 	}
 }
 
 /* 遮罩层 */
-.maskbg{
-	background:rgba(0,0,0,0.5);
+.maskbg {
+	background: rgba(0, 0, 0, 0.5);
 	@include rowflex;
 	justify-content: center;
 	position: fixed;
-	top:0;
-	right:0;
-	bottom:0;
-	left:0;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
 	z-index: 9;
 }
-.maskBox{
+.maskBox {
 	position: relative;
 	@include colflex;
 	justify-content: center;
 }
-.maskCon{
-	
+.maskCon {
 }
-.maskClose{
-	width:80upx;
-	height:80upx;
+.maskClose {
+	width: 80upx;
+	height: 80upx;
 	line-height: 80upx;
 	text-align: center;
 	border-radius: 50upx;
@@ -165,45 +163,54 @@ page{
 	color: #fff;
 }
 
-.successLayer{
-	width:666upx;
-	height:466upx;
+.successLayer {
+	width: 666upx;
+	height: 466upx;
 	position: relative;
 }
-.slayImg{
+.slayImg {
 	position: absolute;
-	top:0;
-	left:0;
+	top: 0;
+	left: 0;
 	z-index: 9;
-	width:666upx;
-	height:466upx;
+	width: 666upx;
+	height: 466upx;
 }
-.slayCon{
-	width:666upx;
-	height:466upx;
+.slayCon {
+	width: 666upx;
+	height: 466upx;
 	position: absolute;
 	z-index: 99;
-	top:0;
-	left:0;
+	top: 0;
+	left: 0;
 	@include colflex;
 	justify-content: center;
-	.title{
-		color:#fff;
+	.title {
+		color: #fff;
 		font-size: 60upx;
 		margin-bottom: 30upx;
 	}
-	.con{
+	.con {
 		@include colflex;
 		justify-content: center;
 		color: #fff;
 		font-size: 50upx;
-		.item{
+		.item {
 			@include rowflex;
 			justify-content: flex-start;
-			image{
-				width:60upx;
+			image {
+				width: 60upx;
 				height: 60upx;
 			}
 		}
 	}
+}
+.eventBtn {
+	width: 300upx;
+	height: 80upx;
+	line-height: 80upx;
+	text-align: center;
+	background: $color-m;
+	color: $color-36;
+	font-size: $fontsize-32;
 }

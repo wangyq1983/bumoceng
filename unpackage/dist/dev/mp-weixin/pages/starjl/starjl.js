@@ -93,8 +93,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "recyclableRender", function() { return recyclableRender; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "components", function() { return components; });
 var components = {
+  mask: function() {
+    return __webpack_require__.e(/*! import() | components/mask/mask */ "components/mask/mask").then(__webpack_require__.bind(null, /*! @/components/mask/mask.vue */ 117))
+  },
   userinfo: function() {
-    return Promise.all(/*! import() | components/userinfo/userinfo */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/userinfo/userinfo")]).then(__webpack_require__.bind(null, /*! @/components/userinfo/userinfo.vue */ 122))
+    return Promise.all(/*! import() | components/userinfo/userinfo */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/userinfo/userinfo")]).then(__webpack_require__.bind(null, /*! @/components/userinfo/userinfo.vue */ 127))
   }
 }
 var render = function() {
@@ -134,7 +137,33 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _regenerator = _interopRequireDefault(__webpack_require__(/*! ./node_modules/@vue/babel-preset-app/node_modules/@babel/runtime/regenerator */ 10));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};} //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -200,11 +229,97 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 var _default =
 {
   data: function data() {
-    return {};
-
+    return {
+      dataStep: 50,
+      rewardList: [],
+      creward: false,
+      rewardcon: '',
+      starcon: '' };
 
   },
-  methods: {} };exports.default = _default;
+  onLoad: function onLoad() {
+    this.init();
+  },
+  methods: {
+    exchangeBtn: function exchangeBtn(e) {var _this = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {var item, params, rewardOkRes;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:
+                console.log(e.currentTarget.dataset.info.isExchange);
+                item = e.currentTarget.dataset.info;if (
+                e.currentTarget.dataset.info.isExchange) {_context.next = 12;break;}
+                params = {
+                  id: item.id,
+                  consumeCount: item.consumeCount,
+                  description: item.description };_context.next = 6;return (
+
+
+                  _this.$api.showLoading());case 6:_context.next = 8;return (
+                  _this.$api.postData(_this.$api.webapi.rewardOk, params));case 8:rewardOkRes = _context.sent;_context.next = 11;return (
+                  _this.$api.hideLoading());case 11: // 等待请求数据成功后，隐藏loading
+                if (_this.$api.reshook(rewardOkRes, _this.$mp.page.route)) {
+                  if (rewardOkRes.resultCode == 0) {
+                    uni.showToast({
+                      title: '操作成功！',
+                      icon: 'none',
+                      duration: 1500 });
+
+                    _this.init();
+
+                    // 是否要跟新用户信息相关星？
+
+                  }
+                }case 12:case "end":return _context.stop();}}}, _callee);}))();
+
+    },
+    createReward: function createReward() {var _this2 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee2() {var StarCount, params, cRewardRes;return _regenerator.default.wrap(function _callee2$(_context2) {while (1) {switch (_context2.prev = _context2.next) {case 0:
+                StarCount = Number(_this2.starcon);if (!(
+                Number.isInteger(StarCount) && StarCount !== 0)) {_context2.next = 13;break;}
+                params = {
+                  description: _this2.rewardcon,
+                  consumeCount: StarCount };_context2.next = 5;return (
+
+                  _this2.$api.showLoading());case 5:_context2.next = 7;return (
+                  _this2.$api.postData(_this2.$api.webapi.creward, params));case 7:cRewardRes = _context2.sent;_context2.next = 10;return (
+                  _this2.$api.hideLoading());case 10: // 等待请求数据成功后，隐藏loading
+                if (_this2.$api.reshook(cRewardRes, _this2.$mp.page.route)) {
+                  if (cRewardRes.resultCode == 0) {
+                    _this2.creward = false;
+                    uni.showToast({
+                      title: '操作成功！',
+                      icon: 'none',
+                      duration: 1500 });
+
+                    _this2.init();
+                  }
+                }_context2.next = 14;break;case 13:
+
+                uni.showToast({
+                  title: '星数量请输入整数',
+                  icon: 'none',
+                  duration: 1500 });case 14:case "end":return _context2.stop();}}}, _callee2);}))();
+
+
+    },
+    init: function init() {var _this3 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee3() {var params, rewardlist;return _regenerator.default.wrap(function _callee3$(_context3) {while (1) {switch (_context3.prev = _context3.next) {case 0:
+                params = {
+                  from: 1,
+                  count: _this3.dataStep };_context3.next = 3;return (
+
+                  _this3.$api.showLoading());case 3:_context3.next = 5;return (
+                  _this3.$api.getData(_this3.$api.webapi.rewardList, params));case 5:rewardlist = _context3.sent;_context3.next = 8;return (
+                  _this3.$api.hideLoading());case 8: // 等待请求数据成功后，隐藏loading
+                if (_this3.$api.reshook(rewardlist, _this3.$mp.page.route)) {
+                  if (rewardlist.resultCode == 0) {
+                    _this3.rewardList = rewardlist.data;
+                  }
+                  console.log(rewardlist);
+                }case 9:case "end":return _context3.stop();}}}, _callee3);}))();
+    },
+    addReward: function addReward() {
+      this.creward = true;
+    },
+    closemask: function closemask() {
+      this.creward = false;
+    } } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
 

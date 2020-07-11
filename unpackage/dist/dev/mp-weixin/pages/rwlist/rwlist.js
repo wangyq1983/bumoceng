@@ -108,13 +108,13 @@ var components = {
     return __webpack_require__.e(/*! import() | components/mask/mask */ "components/mask/mask").then(__webpack_require__.bind(null, /*! @/components/mask/mask.vue */ 117))
   },
   successdata: function() {
-    return __webpack_require__.e(/*! import() | components/successdata/successdata */ "components/successdata/successdata").then(__webpack_require__.bind(null, /*! @/components/successdata/successdata.vue */ 158))
+    return __webpack_require__.e(/*! import() | components/successdata/successdata */ "components/successdata/successdata").then(__webpack_require__.bind(null, /*! @/components/successdata/successdata.vue */ 122))
   },
   userinfo: function() {
-    return Promise.all(/*! import() | components/userinfo/userinfo */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/userinfo/userinfo")]).then(__webpack_require__.bind(null, /*! @/components/userinfo/userinfo.vue */ 122))
+    return Promise.all(/*! import() | components/userinfo/userinfo */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/userinfo/userinfo")]).then(__webpack_require__.bind(null, /*! @/components/userinfo/userinfo.vue */ 127))
   },
   rwlistItem: function() {
-    return __webpack_require__.e(/*! import() | components/rwlistItem/rwlistItem */ "components/rwlistItem/rwlistItem").then(__webpack_require__.bind(null, /*! @/components/rwlistItem/rwlistItem.vue */ 129))
+    return __webpack_require__.e(/*! import() | components/rwlistItem/rwlistItem */ "components/rwlistItem/rwlistItem").then(__webpack_require__.bind(null, /*! @/components/rwlistItem/rwlistItem.vue */ 134))
   }
 }
 var render = function() {
@@ -152,7 +152,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _regenerator = _interopRequireDefault(__webpack_require__(/*! ./node_modules/@vue/babel-preset-app/node_modules/@babel/runtime/regenerator */ 10));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}var uniCountdown = function uniCountdown() {__webpack_require__.e(/*! require.ensure | components/uni-countdown/uni-countdown */ "components/uni-countdown/uni-countdown").then((function () {return resolve(__webpack_require__(/*! @/components/uni-countdown/uni-countdown.vue */ 136));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _regenerator = _interopRequireDefault(__webpack_require__(/*! ./node_modules/@vue/babel-preset-app/node_modules/@babel/runtime/regenerator */ 10));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}var uniCountdown = function uniCountdown() {__webpack_require__.e(/*! require.ensure | components/uni-countdown/uni-countdown */ "components/uni-countdown/uni-countdown").then((function () {return resolve(__webpack_require__(/*! @/components/uni-countdown/uni-countdown.vue */ 141));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
 
 
 
@@ -212,6 +212,7 @@ __webpack_require__.r(__webpack_exports__);
   onLoad: function onLoad(options) {
     console.log('load');
     //console.log(this.$mp.page.route)
+    this.signget();
     this.init();
   },
   onShow: function onShow() {
@@ -219,6 +220,11 @@ __webpack_require__.r(__webpack_exports__);
     console.log('show');
   },
   methods: {
+    signget: function () {var _signget = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {var signget;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:_context.next = 2;return (
+                  this.$api.getData(this.$api.webapi.signget));case 2:signget = _context.sent;
+                console.log('签到查询');
+                console.log(signget);case 5:case "end":return _context.stop();}}}, _callee, this);}));function signget() {return _signget.apply(this, arguments);}return signget;}(),
+
     deltask: function deltask(id) {
       this.rwlist.forEach(function (item, index, arr) {
         if (item.id == id) {
@@ -265,7 +271,6 @@ __webpack_require__.r(__webpack_exports__);
       } else {
         this.$refs.countDown.audiostop();
       }
-
       this.showhour = false;
       this.cdtime = false;
       this.nowtask = '';
@@ -273,38 +278,38 @@ __webpack_require__.r(__webpack_exports__);
       this.init();
     },
     // 任务完成
-    timed: function () {var _timed = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee(minute) {var params, taskend;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:
+    timed: function () {var _timed = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee2(minute) {var params, taskend;return _regenerator.default.wrap(function _callee2$(_context2) {while (1) {switch (_context2.prev = _context2.next) {case 0:
                 console.log('秒数');
                 console.log(minute);
                 console.log('nowtask is');
                 console.log(this.nowtask);
                 params = {
                   id: this.nowtask,
-                  realDuration: minute };_context.next = 7;return (
+                  realDuration: minute };_context2.next = 7;return (
 
-                  this.$api.showLoading());case 7:_context.next = 9;return (
-                  this.$api.postData(this.$api.webapi.TaskEnd, params));case 9:taskend = _context.sent;_context.next = 12;return (
+                  this.$api.showLoading());case 7:_context2.next = 9;return (
+                  this.$api.postData(this.$api.webapi.TaskEnd, params));case 9:taskend = _context2.sent;_context2.next = 12;return (
                   this.$api.hideLoading());case 12:if (!
-                this.$api.reshook(taskend, this.$mp.page.route)) {_context.next = 26;break;}
+                this.$api.reshook(taskend, this.$mp.page.route)) {_context2.next = 26;break;}
                 console.log(taskend);if (!(
-                taskend.resultCode == 0)) {_context.next = 26;break;}if (!
-                this.ifswitch) {_context.next = 19;break;}
+                taskend.resultCode == 0)) {_context2.next = 26;break;}if (!
+                this.ifswitch) {_context2.next = 19;break;}
                 //await this.$api.addExp(this.$api.expval.endtask)
                 //this.taskSuccess = true;
                 // this.nowtask = '';
                 // this.cdtime = false;
-                this.closemask();_context.next = 26;break;case 19:_context.next = 21;return (
+                this.closemask();_context2.next = 26;break;case 19:_context2.next = 21;return (
 
-                  this.$api.addExp(this.$api.expval.endtask));case 21:_context.next = 23;return (
+                  this.$api.addExp(this.$api.expval.endtask));case 21:_context2.next = 23;return (
                   this.$api.starAdjust(this.star, '任务完成'));case 23:
                 this.taskSuccess = true;
                 this.nowtask = '';
-                this.exptype = this.$api.expval.endtask;case 26:case "end":return _context.stop();}}}, _callee, this);}));function timed(_x) {return _timed.apply(this, arguments);}return timed;}(),
+                this.exptype = this.$api.expval.endtask;case 26:case "end":return _context2.stop();}}}, _callee2, this);}));function timed(_x) {return _timed.apply(this, arguments);}return timed;}(),
 
 
 
 
-    init: function init() {var _this = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee2() {var date, params, cjlist;return _regenerator.default.wrap(function _callee2$(_context2) {while (1) {switch (_context2.prev = _context2.next) {case 0:
+    init: function init() {var _this = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee3() {var date, params, cjlist;return _regenerator.default.wrap(function _callee3$(_context3) {while (1) {switch (_context3.prev = _context3.next) {case 0:
                 console.log('init run');
                 console.log(_this.dataStep);
                 console.log(_this.rwlist);
@@ -314,14 +319,14 @@ __webpack_require__.r(__webpack_exports__);
                 console.log(_this.$api.formatTime(date));
                 params = {
                   from: 1,
-                  count: _this.dataStep };_context2.next = 10;return (
+                  count: _this.dataStep };_context3.next = 10;return (
 
-                  _this.$api.showLoading());case 10:_context2.next = 12;return (
-                  _this.$api.getData(_this.$api.webapi.TaskList, params));case 12:cjlist = _context2.sent;_context2.next = 15;return (
+                  _this.$api.showLoading());case 10:_context3.next = 12;return (
+                  _this.$api.getData(_this.$api.webapi.TaskList, params));case 12:cjlist = _context3.sent;_context3.next = 15;return (
                   _this.$api.hideLoading());case 15: // 等待请求数据成功后，隐藏loading
                 if (_this.$api.reshook(cjlist, _this.$mp.page.route)) {
                   _this.renderList(cjlist);
-                }case 16:case "end":return _context2.stop();}}}, _callee2);}))();
+                }case 16:case "end":return _context3.stop();}}}, _callee3);}))();
     },
     renderList: function renderList(res) {
       // state  状态：1 创建完成，2 开始（未使用该状态），3 完成，4 超时

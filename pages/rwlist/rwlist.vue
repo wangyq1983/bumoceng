@@ -58,6 +58,7 @@ export default {
 	onLoad: function(options) {
 		console.log('load');
 		//console.log(this.$mp.page.route)
+		this.signget()
 		this.init();
 	},
 	onShow() {
@@ -65,6 +66,11 @@ export default {
 		console.log('show')
 	},
 	methods: {
+		signget:async function(){
+			var signget = await this.$api.getData(this.$api.webapi.signget);
+			console.log('签到查询');
+			console.log(signget)
+		},
 		deltask:function(id){
 			this.rwlist.forEach(function(item, index, arr) {
 				if(item.id == id) {
@@ -111,7 +117,6 @@ export default {
 			}else{
 				this.$refs.countDown.audiostop()
 			}
-			
 			this.showhour = false;
 			this.cdtime = false;
 			this.nowtask = '';
