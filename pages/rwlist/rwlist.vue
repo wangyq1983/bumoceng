@@ -1,16 +1,53 @@
 <template>
 	<view>
 		<mask :showmask = 'cdtime' @on-close = "closemask">
-			
 			<view class="cdlayer" v-if="nowtask">
 				<uniCountdown @on-complete = 'timed' :showmask = 'cdtime' :show-day="false" :show-hour="showhour" :hour="hourTask" :minute="minuteTask" :second="secondTask" ref = "countDown"></uniCountdown>
 			</view>
 			<successdata :starNum = 'star' :expType = 'exptype' v-if="taskSuccess"></successdata>
-			
+			<view class="signin" v-if="signIn">
+				<view class="signTitle">
+					一周签到
+				</view>
+				<view class="signList">
+					<view :class="(nowweekday == items.day)?'signItemCur':'signItem'" v-for="items in signList" :key="items.weekday">
+						<view :class="(nowweekday == items.day)?'sItem':'sItemCur'">
+							{{items.day}}
+						</view>
+						<view class="">
+							<view class="">
+								EXP经验
+							</view>
+							
+							<view class="">
+								+{{items.exp}}
+							</view>
+							<view class="" v-if="items.isSigned == true">
+								已签到
+							</view>
+							<view class="" v-if="items.isSigned == false">
+								未签到
+							</view>
+						</view>
+					</view>
+				</view>
+				<view class="signBtn" @tap="signOk" :data-exp = 'items.exp'>
+					签到
+				</view>
+			</view>
 		</mask>
 		
 		<userinfo></userinfo>
-		<view class="timeSelect">{{datetime}}</view>
+		<view class="timeSelect">
+			<view class="selectCon">
+				{{datetime}}
+			</view>
+			<view class="signCon" @tap="signEvent">
+				<image src="/static/sign.png" mode=""></image>
+				<view>签到</view>
+			</view>
+			
+		</view>
 		<view class="createBox" style="border-bottom: 10upx solid #e6e6e6;">
 			<view class="createTask zuoye" @tap="gotoCreate" data-type="zuoye">
 				<view class="taskbg zuoye1"></view>
@@ -49,7 +86,39 @@ export default {
 			datetime:'',
 			star:null,
 			exptype:null,
-			ifswitch:false
+			ifswitch:false,
+			signIn:false,
+			signList:[
+				{
+					day:'周一',
+					exp:10
+				},
+				{
+					day:'周二',
+					exp:20
+				},
+				{
+					day:'周三',
+					exp:10
+				},
+				{
+					day:'周四',
+					exp:20
+				},
+				{
+					day:'周五',
+					exp:30
+				},
+				{
+					day:'周六',
+					exp:10
+				},
+				{
+					day:'周日',
+					exp:10
+				}
+			],
+			nowweekday:''
 		};
 	},
 	components:{
@@ -58,18 +127,84 @@ export default {
 	onLoad: function(options) {
 		console.log('load');
 		//console.log(this.$mp.page.route)
-		this.signget()
+		// this.signget()
 		this.init();
 	},
 	onShow() {
-		console.log()
-		console.log('show')
+		console.log();
+		console.log('show');
 	},
 	methods: {
+		daystate:function(e){
+			
+		},
+		signEvent:function(){
+			this.signget()
+		},
+		signOk:async function(e){
+			var _this = this;
+			console.log(this.nowweekday);
+			var nowexp;
+			var signed;
+			this.signList.forEach(function(item,index,arr){
+				if(item.day == _this.nowweekday){
+					nowexp = item.exp;
+					signed = item.isSigned
+				}
+			})
+			console.log(nowexp);
+			if(!signed){
+				var params = {
+					experience:nowexp
+				}
+				await this.$api.showLoading(); // 显示loading
+				var signRes = await this.$api.postData(this.$api.webapi.signin, params);
+				await this.$api.hideLoading(); // 等待请求数据成功后，隐藏loading
+				if (this.$api.reshook(signRes, this.$mp.page.route)) {
+					console.log(signRes);
+					this.closemask();
+				}
+			}else{
+				uni.showToast({
+					title:'已经签到过了',
+					icon:'none',
+					duration:1500
+				})
+			}
+			
+		},
+		nowWeek:function(){
+			var d = new Date();
+			let weekList = [
+				'周日',
+				'周一',
+				'周二',
+				'周三',
+				'周四',
+				'周五',
+				'周六'
+			]
+			this.nowweekday = weekList[d.getDay()];
+		},
 		signget:async function(){
+			var _this = this;
+			var newArr = [];
 			var signget = await this.$api.getData(this.$api.webapi.signget);
+			// this.signList;
+			console.log(this.signList)
+			signget.data.forEach(function(item,index,arr){
+				console.log(_this.signList[index])
+				var newitem = Object.assign(item,_this.signList[index]);
+				console.log(newitem)
+				newArr.push(newitem)
+			})
+			console.log(newArr);
+			this.signList = newArr;
 			console.log('签到查询');
-			console.log(signget)
+			console.log(signget);
+			this.signIn = true;
+			this.cdtime = true;
+			this.nowWeek()
 		},
 		deltask:function(id){
 			this.rwlist.forEach(function(item, index, arr) {
@@ -107,6 +242,7 @@ export default {
 			this.nowtask = taskid;
 			this.star = star;
 			this.ifswitch = ifswitch;
+			this.signIn = false;
 			this.formatTime(cdtime)
 		},
 		// 关闭计时弹层
@@ -114,6 +250,8 @@ export default {
 			console.log(this);
 			if(this.taskSuccess){
 				this.taskSuccess = false
+			}else if(this.signIn){
+				this.signIn = false
 			}else{
 				this.$refs.countDown.audiostop()
 			}
@@ -121,17 +259,19 @@ export default {
 			this.cdtime = false;
 			this.nowtask = '';
 			this.rwlist = [];
+			
 			this.init();
 		},
 		// 任务完成
-		timed:async function(minute){
+		timed:async function(minute,state){
 			console.log('秒数');
 			console.log(minute);
 			console.log('nowtask is');
 			console.log(this.nowtask);
 			var params = {
 				id:this.nowtask,
-				realDuration:minute
+				realDuration:minute,
+				state:state
 			};
 			await this.$api.showLoading(); // 显示loading
 			var taskend = await this.$api.postData(this.$api.webapi.TaskEnd, params);
@@ -207,6 +347,24 @@ export default {
 	background: $color-m;
 	font-size: 28upx;
 	padding: 5upx 20upx;
+	@include rowflex;
+	justify-content:space-between;
+	.selectCon{
+		
+	}
+	.signCon{
+		padding:1upx 20upx;
+		border-radius: 10upx;
+		background: #489cf0;
+		color:#fff;
+		image{
+			width:40upx;
+			height:40upx;
+			margin-right:20upx;
+		}
+		@include rowflex;
+		justify-content: flex-start;
+	}
 }
 .createBox {
 	width: 750upx;
@@ -274,5 +432,60 @@ export default {
 	@include rowflex;
 	justify-content: center;
 }
-
+.signin{
+	width: 660upx;
+	height:660upx;
+	@include colflex;
+	justify-content: center;
+	align-items: center;
+	background: #fff;
+	.signTitle{
+		width: 570upx;
+		height:80upx;
+		line-height: 80upx;
+		text-align: center;
+	}
+	.signList{
+		width:570upx;
+		height:360upx;
+		display: flex;
+		flex-wrap:wrap;
+		font-size: $fontsize-28;
+		.signItemCur{
+			width:126upx;
+			height:150upx;
+			border-radius: 6upx;
+			border:4upx solid #ffce00;
+			@include colflex;
+			justify-content: center;
+		}
+		.signItem{
+			width:126upx;
+			height:150upx;
+			border-radius: 6upx;
+			border:4upx solid #cccccc;
+			@include colflex;
+			justify-content: center;
+		}
+		.sItem{
+			height:60upx;
+			line-height: 60upx;
+			background: #ffce00;
+		}
+		.sItemCur{
+			height:60upx;
+			line-height: 60upx;
+			background: #ccc;
+		}
+	}
+	.signBtn{
+		width:320upx;
+		height:72upx;
+		line-height: 72upx;
+		text-align: center;
+		background: $color-m;
+		color: $color-36;
+		font-size: $fontsize-32;
+	}
+}
 </style>

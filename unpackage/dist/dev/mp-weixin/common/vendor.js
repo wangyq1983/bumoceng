@@ -7851,6 +7851,17 @@ var expval = {
   share: 50 };
 
 
+// 获得周几
+var getWeekDay = function getWeekDay() {
+  var myDate = new Date();
+  var days = myDate.getDay();
+  if (days == 0) {
+    return 7;
+  } else {
+    return days;
+  }
+};
+
 // 经验值对应称号
 var expTitle = function expTitle(exp) {
   if (exp >= 200 && exp < 1000) {
@@ -8097,7 +8108,8 @@ var formatTime = function formatTime(date) {
   secToTime: secToTime,
   addExp: addExp,
   starAdjust: starAdjust,
-  expval: expval };exports.default = _default;
+  expval: expval,
+  getWeekDay: getWeekDay };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),

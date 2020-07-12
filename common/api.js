@@ -76,6 +76,17 @@ var expval = {
 	share:50,
 }
 
+// 获得周几
+const getWeekDay = () =>{
+	var myDate = new Date();
+	var days = myDate.getDay();
+	if(days == 0){
+		return 7
+	}else{
+		return days
+	}
+}
+
 // 经验值对应称号
 const expTitle = (exp) => {
 	if(exp >= 200 && exp < 1000){
@@ -322,5 +333,6 @@ export default {
 	secToTime,
 	addExp,
 	starAdjust,
-	expval
+	expval,
+	getWeekDay
 }

@@ -176,7 +176,7 @@
 					clearInterval(this.timeouter);
 					let allDuration = this.toSeconds(0,this.hour,this.minute,this.second) + this.timeoutSeconds;
 					console.log(allDuration);
-					this.$emit("on-complete",allDuration);
+					this.$emit("on-complete",allDuration,4);
 				}else{
 					// 规定时间内完成
 					
@@ -186,7 +186,7 @@
 					console.log(this.toSeconds(0,this.h,this.i,this.s));
 					let realDuration = this.toSeconds(0,this.hour,this.minute,this.second) - this.toSeconds(0,this.h,this.i,this.s);
 					console.log(realDuration)
-					this.$emit("on-complete",realDuration);
+					this.$emit("on-complete",realDuration,3);
 				}
 			},
 			

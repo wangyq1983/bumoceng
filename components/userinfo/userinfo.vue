@@ -18,14 +18,14 @@
 				<view class="cjword">成就:23</view>
 			</view>
 		</view>
-		<view class="actionTest">
+		<!-- <view class="actionTest">
 			<view class="" @tap="storetap">
 				store test
 			</view>
 			<view class="" @tap="storagetap">
 				storagetest
 			</view>
-		</view>
+		</view> -->
 	</view>
 </template>
 
