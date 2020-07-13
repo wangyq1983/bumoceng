@@ -192,6 +192,10 @@ var _default =
     this.icon = uni.getStorageSync('avatarUrl') ? uni.getStorageSync('avatarUrl') : '';
     this.name = uni.getStorageSync('nickName') ? uni.getStorageSync('nickName') : '';
     this.level = uni.getStorageSync('level') ? uni.getStorageSync('level') : 0;
+
+    this.levelnum = uni.getStorageSync('progress') ? uni.getStorageSync('progress') : 0;
+    this.star = uni.getStorageSync('starNum') ? uni.getStorageSync('starNum') : 0;
+
     console.log(this.icon);
     console.log(this.name);
     console.log('------------------------------------');

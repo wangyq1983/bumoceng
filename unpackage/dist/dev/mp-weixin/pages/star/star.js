@@ -217,6 +217,12 @@ var _default =
                       icon: 'none',
                       duration: 1500 });
 
+                    setTimeout(function () {
+                      uni.navigateTo({
+                        url: '/pages/starhistory/starhistory' });
+
+                    }, 1500);
+
                   }
                 }_context.next = 16;break;case 15:
 

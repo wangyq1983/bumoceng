@@ -171,7 +171,6 @@ export default {
 					duration:1500
 				})
 			}
-			
 		},
 		nowWeek:function(){
 			var d = new Date();

@@ -6,12 +6,12 @@
 				<view class="username">{{ name }}</view>
 				<view class="starBox">
 					<image src="/static/star.png" mode=""></image>
-					<view class="starCount">22</view>
+					<view class="starCount">{{ star }}</view>
 				</view>
 			</view>
 			<view class="levelBox">
 				<view class="levelTip">Lv{{ level }}</view>
-				<view class="levelProgress"><view class="progressCount" style="width: 50%;"></view></view>
+				<view class="levelProgress"><view class="progressCount" :style="{ width: levelnum + '%' }"></view></view>
 			</view>
 			<view class="chengjiuBox">
 				<image src="/static/cj_icon.png"></image>
@@ -43,26 +43,26 @@ export default {
 	},
 	methods: {
 		//获取用户信息
-		getUser:async function(){
+		getUser: async function() {
 			await this.$api.showLoading(); // 显示loading
 			var userRes = await this.$api.getData(this.$api.webapi.userInfo);
 			await this.$api.hideLoading(); // 等待请求数据成功后，隐藏loading
 			if (this.$api.reshook(userRes)) {
-				console.log('userinfo is')
-				console.log(userRes)
+				console.log('userinfo is');
+				console.log(userRes);
 			}
 		},
 		storetap() {
-			console.log('storetap')
-			this.$store.commit('addLevel',1);
+			console.log('storetap');
+			this.$store.commit('addLevel', 1);
 			// this.$emit('close');
 		},
 		storagetap() {
-			console.log('storagetap')
+			console.log('storagetap');
 			uni.setStorage({
 				key: 'level',
 				data: uni.getStorageSync('level') + 1
-			})
+			});
 			// this.$emit('click');
 		}
 	},
@@ -76,6 +76,10 @@ export default {
 		this.icon = uni.getStorageSync('avatarUrl') ? uni.getStorageSync('avatarUrl') : '';
 		this.name = uni.getStorageSync('nickName') ? uni.getStorageSync('nickName') : '';
 		this.level = uni.getStorageSync('level') ? uni.getStorageSync('level') : 0;
+
+		this.levelnum = uni.getStorageSync('progress') ? uni.getStorageSync('progress') : 0;
+		this.star = uni.getStorageSync('starNum') ? uni.getStorageSync('starNum') : 0;
+
 		console.log(this.icon);
 		console.log(this.name);
 		console.log('------------------------------------');
@@ -173,16 +177,16 @@ export default {
 	font-size: $fontsize-24;
 	color: $color-36;
 }
-.actionTest{
+.actionTest {
 	position: fixed;
-	right:0;
-	top:30upx;
+	right: 0;
+	top: 30upx;
 	z-index: 999;
 }
-.actionTest view{
-	margin:10upx;
+.actionTest view {
+	margin: 10upx;
 	background: #333;
 	color: #fff;
-	padding:10upx;
+	padding: 10upx;
 }
 </style>

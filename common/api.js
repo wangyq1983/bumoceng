@@ -180,9 +180,25 @@ const getUserinfo = async() => {
 		console.log('userinfo is')
 		console.log(userRes)
 		// userRes字段  currentExperience  、  totalExperienceForCurrentLevel
+		var expProgress = parseInt((userRes.data.userLevelInfo.currentExperience / userRes.data.userLevelInfo.totalExperienceForCurrentLevel)*100); 
+		console.log('====================================================================================================================================')
+		console.log('currentExperience');
+		console.log(userRes.data.userLevelInfo.currentExperience);
+		console.log('totalExperienceForCurrentLevel');
+		console.log(userRes.data.userLevelInfo.totalExperienceForCurrentLevel);
+		console.log('exp Progress is = ');
+		console.log(expProgress)
 		uni.setStorage({
 			key: 'level',
 			data: userRes.data.userLevelInfo.level
+		});
+		uni.setStorage({
+			key: 'progress',
+			data: expProgress
+		})
+		uni.setStorage({
+			key: 'starNum',
+			data: userRes.data.starSummary.totalCount
 		});
 	}else{
 		uni.showToast({

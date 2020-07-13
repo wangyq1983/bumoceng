@@ -71,7 +71,10 @@
 							<image src="/static/menustar.png" mode=""></image> 
 						</view>
 					</view>
-					<view :class="(items.isExchange)?'shixian shixianend':'shixian isshixian'" @tap="exchangeBtn" :data-info = "items">
+					<view v-if="items.isExchange" class="shixian shixianend" @tap="exchangeBtn" :data-info = "items">
+						已实现
+					</view>
+					<view v-if="!items.isExchange" class="shixian isshixian" @tap="exchangeBtn" :data-info = "items">
 						实现
 					</view>
 				</view>

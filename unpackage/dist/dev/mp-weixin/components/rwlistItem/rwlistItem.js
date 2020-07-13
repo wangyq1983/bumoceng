@@ -155,6 +155,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 var _default =
 {
   data: function data() {
@@ -163,19 +169,19 @@ var _default =
       zhiliangCur: null,
       items: [
       {
-        value: 120,
+        value: 1,
         name: '优' },
 
       {
-        value: 100,
+        value: 2,
         name: '良' },
 
       {
-        value: 80,
+        value: 3,
         name: '中' },
 
       {
-        value: 50,
+        value: 4,
         name: '差' }] };
 
 
@@ -210,18 +216,46 @@ var _default =
       console.log(e.currentTarget.dataset.time);
       this.$emit('on-cdtime', e.currentTarget.dataset.time, this.itemcon.id, this.itemcon.starNumber, this.itemcon.completionSwitch);
     },
-    zhiliangEvent: function zhiliangEvent() {var _this2 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {var realstar;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:if (!(
+    zhiliangEvent: function zhiliangEvent() {var _this2 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {var params, utask, zhiliangpoint, realstar;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:if (!(
                 _this2.itemcon.state == 1)) {_context.next = 4;break;}
                 uni.showToast({
                   title: '任务未完成,不能评价完成质量',
                   icon: 'none',
-                  duration: 1500 });_context.next = 10;break;case 4:
+                  duration: 1500 });_context.next = 22;break;case 4:
 
 
-                realstar = _this2.itemcon.starNumber * 0.01 * _this2.zhiliangCur;_context.next = 7;return (
-                  _this2.$api.addExp(_this2.$api.expval.endtask));case 7:_context.next = 9;return (
-                  _this2.$api.starAdjust(realstar, '任务完成'));case 9:
-                _this2.$emit('on-zhiliang', realstar, _this2.$api.expval.endtask);case 10:case "end":return _context.stop();}}}, _callee);}))();
+                params = {
+                  id: _this2.itemcon.id,
+                  // completionSwitch
+                  // completionCheck
+                  completion: _this2.zhiliangCur };_context.next = 7;return (
+
+
+                  _this2.$api.showLoading());case 7:_context.next = 9;return (
+                  _this2.$api.postData(_this2.$api.webapi.uTask, params));case 9:utask = _context.sent;_context.next = 12;return (
+                  _this2.$api.hideLoading());case 12:
+
+                if (_this2.zhiliangCur == 1) {
+                  // 优
+                  zhiliangpoint = 120;
+                }
+                if (_this2.zhiliangCur == 2) {
+                  // 良
+                  zhiliangpoint = 100;
+                }
+                if (_this2.zhiliangCur == 3) {
+                  // 中
+                  zhiliangpoint = 80;
+                }
+                if (_this2.zhiliangCur == 4) {
+                  // 差
+                  zhiliangpoint = 50;
+                }
+
+                realstar = _this2.itemcon.starNumber * 0.01 * zhiliangpoint;_context.next = 19;return (
+                  _this2.$api.addExp(_this2.$api.expval.endtask));case 19:_context.next = 21;return (
+                  _this2.$api.starAdjust(realstar, '任务完成'));case 21:
+                _this2.$emit('on-zhiliang', realstar, _this2.$api.expval.endtask);case 22:case "end":return _context.stop();}}}, _callee);}))();
 
     },
     delAction: function delAction() {
