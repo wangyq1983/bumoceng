@@ -1,6 +1,8 @@
 {
   "usingComponents": {
     "mask": "/components/mask/mask",
-    "userinfo": "/components/userinfo/userinfo"
+    "userinfo": "/components/userinfo/userinfo",
+    "uni-swipe-action": "/components/uni-swipe-action/uni-swipe-action",
+    "uni-swipe-action-item": "/components/uni-swipe-action-item/uni-swipe-action-item"
   }
 }

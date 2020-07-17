@@ -61,6 +61,12 @@ var webapi = {
 	// 奖励兑换
 	rewardOk: webhost + 'star/exchange/exchange',
 	
+	// 删除兑换记录
+	rewardDelete:webhost + 'star/exchange/delete',
+	
+	// 统计图表chart
+	charts: webhost + 'job/uchart',
+	
 	// 签到
 	signin:webhost + 'sign/in',
 	 

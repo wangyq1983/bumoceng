@@ -112,7 +112,8 @@ export default {
 					id:this.itemcon.id,
 					// completionSwitch
 					// completionCheck
-					completion:this.zhiliangCur
+					completion:this.zhiliangCur,
+					completionCheck:true
 				}
 				
 				await this.$api.showLoading(); // 显示loading
