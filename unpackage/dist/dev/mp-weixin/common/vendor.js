@@ -760,7 +760,7 @@ function initData(vueOptions, context) {
     try {
       data = data.call(context); // 支持 Vue.prototype 上挂的数据
     } catch (e) {
-      if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
+      if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
         console.warn('根据 Vue 的 data 函数初始化小程序 data 失败，请尽量确保 data 函数中不访问 vm 对象，否则可能影响首次数据渲染速度。', data);
       }
     }
@@ -2380,10 +2380,14 @@ var store = new _vuex.default.Store({
     nickname: "",
     token: "",
     userid: "",
-    level: 1,
+    level: 0, // 等级
+    progress: 0, // 经验进度
+    starNum: 0, // 星数
+    cjNum: 0, // 成就点数
     openid: null,
     testvuex: false,
     colorIndex: 0,
+    signList: [], //签到列表
     colorList: ['#FF0000', '#00FF00', '#0000FF'] },
 
   mutations: {
@@ -2413,6 +2417,30 @@ var store = new _vuex.default.Store({
     },
     addLevel: function addLevel(state, num) {
       state.level = state.level + num;
+    },
+    changeLevel: function changeLevel(state, level) {
+      // 变更等级
+      state.level = level;
+      console.log('state_level is ========');
+      console.log(state.level);
+    },
+    changeProgress: function changeProgress(state, progress) {
+      // 进度条变更
+      state.progress = progress;
+      console.log('state_progerss is ========');
+      console.log(state.progress);
+    },
+    changeStar: function changeStar(state, star) {
+      // 星数变更
+      state.starNum = star;
+      console.log('state_starNum  is ========');
+      console.log(state.starNum);
+    },
+    changeCj: function changeCj(state, cj) {
+      state.cjNum = cj;
+    },
+    changesignList: function changesignList(state, list) {
+      state.signList = list;
     },
     setOpenid: function setOpenid(state, openid) {
       state.openid = openid;
@@ -3419,7 +3447,7 @@ var index_esm = {
 
 /***/ }),
 
-/***/ 174:
+/***/ 159:
 /*!********************************************************************************************!*\
   !*** D:/g工作/zilv/code/defaultmoban/defaultmoban/components/uni-swipe-action-item/mpwxs.js ***!
   \********************************************************************************************/
@@ -9077,7 +9105,7 @@ function type(obj) {
 
 function flushCallbacks$1(vm) {
     if (vm.__next_tick_callbacks && vm.__next_tick_callbacks.length) {
-        if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
+        if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
             var mpInstance = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:flushCallbacks[' + vm.__next_tick_callbacks.length + ']');
@@ -9098,14 +9126,14 @@ function nextTick$1(vm, cb) {
     //1.nextTick 之前 已 setData 且 setData 还未回调完成
     //2.nextTick 之前存在 render watcher
     if (!vm.__next_tick_pending && !hasRenderWatcher(vm)) {
-        if(Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:nextVueTick');
         }
         return nextTick(cb, vm)
     }else{
-        if(Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance$1 = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance$1.is || mpInstance$1.route) + '][' + vm._uid +
                 ']:nextMPTick');
@@ -9181,7 +9209,7 @@ var patch = function(oldVnode, vnode) {
     });
     var diffData = this.$shouldDiffData === false ? data : diff(data, mpData);
     if (Object.keys(diffData).length) {
-      if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
+      if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
         console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + this._uid +
           ']差量更新',
           JSON.stringify(diffData));
@@ -15009,17 +15037,24 @@ var getUserinfo = /*#__PURE__*/function () {var _ref = _asyncToGenerator( /*#__P
               console.log(userRes.data.userLevelInfo.totalExperienceForCurrentLevel);
               console.log('exp Progress is = ');
               console.log(expProgress);
+
               uni.setStorage({
                 key: 'level',
                 data: userRes.data.userLevelInfo.level });
+
+              _store.default.commit('changeLevel', userRes.data.userLevelInfo.level);
 
               uni.setStorage({
                 key: 'progress',
                 data: expProgress });
 
+              _store.default.commit('changeProgress', expProgress);
+
               uni.setStorage({
                 key: 'starNum',
                 data: userRes.data.starSummary.totalCount });
+
+              _store.default.commit('changeStar', userRes.data.starSummary.totalCount);
 
             } else {
               uni.showToast({
@@ -15051,6 +15086,7 @@ var starAdjust = /*#__PURE__*/function () {var _ref3 = _asyncToGenerator( /*#__P
               postData(webapi.star, params));case 3:starRes = _context3.sent;
             if (reshook(starRes)) {
               console.log(starRes);
+              getUserinfo();
             }case 5:case "end":return _context3.stop();}}}, _callee3);}));return function starAdjust(_x2, _x3) {return _ref3.apply(this, arguments);};}();
 
 

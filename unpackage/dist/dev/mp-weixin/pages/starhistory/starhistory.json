@@ -1,5 +1,6 @@
 {
   "usingComponents": {
-    "userinfo": "/components/userinfo/userinfo"
+    "userinfo": "/components/userinfo/userinfo",
+    "time-format": "/components/timeFormat/timeFormat"
   }
 }

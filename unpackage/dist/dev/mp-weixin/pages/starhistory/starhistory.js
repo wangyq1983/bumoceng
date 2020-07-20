@@ -95,6 +95,9 @@ __webpack_require__.r(__webpack_exports__);
 var components = {
   userinfo: function() {
     return __webpack_require__.e(/*! import() | components/userinfo/userinfo */ "components/userinfo/userinfo").then(__webpack_require__.bind(null, /*! @/components/userinfo/userinfo.vue */ 128))
+  },
+  timeFormat: function() {
+    return __webpack_require__.e(/*! import() | components/timeFormat/timeFormat */ "components/timeFormat/timeFormat").then(__webpack_require__.bind(null, /*! @/components/timeFormat/timeFormat.vue */ 164))
   }
 }
 var render = function() {
@@ -169,6 +172,14 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 var _default =
 {
   data: function data() {
@@ -184,6 +195,12 @@ var _default =
 
 
   methods: {
+    formatDate: function formatDate() {
+
+    },
+    formatTime: function formatTime() {
+
+    },
     init: function init() {var _this = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {var params, historylist;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:
                 params = {
                   from: 1,

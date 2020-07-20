@@ -100,10 +100,10 @@ var components = {
     return __webpack_require__.e(/*! import() | components/userinfo/userinfo */ "components/userinfo/userinfo").then(__webpack_require__.bind(null, /*! @/components/userinfo/userinfo.vue */ 128))
   },
   uniSwipeAction: function() {
-    return __webpack_require__.e(/*! import() | components/uni-swipe-action/uni-swipe-action */ "components/uni-swipe-action/uni-swipe-action").then(__webpack_require__.bind(null, /*! @/components/uni-swipe-action/uni-swipe-action.vue */ 164))
+    return __webpack_require__.e(/*! import() | components/uni-swipe-action/uni-swipe-action */ "components/uni-swipe-action/uni-swipe-action").then(__webpack_require__.bind(null, /*! @/components/uni-swipe-action/uni-swipe-action.vue */ 149))
   },
   uniSwipeActionItem: function() {
-    return Promise.all(/*! import() | components/uni-swipe-action-item/uni-swipe-action-item */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/uni-swipe-action-item/uni-swipe-action-item")]).then(__webpack_require__.bind(null, /*! @/components/uni-swipe-action-item/uni-swipe-action-item.vue */ 169))
+    return Promise.all(/*! import() | components/uni-swipe-action-item/uni-swipe-action-item */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/uni-swipe-action-item/uni-swipe-action-item")]).then(__webpack_require__.bind(null, /*! @/components/uni-swipe-action-item/uni-swipe-action-item.vue */ 154))
   }
 }
 var render = function() {
@@ -198,78 +198,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 var _default =
 {
   data: function data() {
@@ -278,96 +206,120 @@ var _default =
       rewardList: [],
       creward: false,
       rewardcon: '',
-      starcon: '',
-      options1: [{
-        text: '删除',
-        style: {
-          backgroundColor: '#F00' } }] };
-
-
+      starcon: '' };
 
   },
   onLoad: function onLoad() {
     this.init();
   },
   methods: {
-    bindClick: function bindClick(e) {
-      uni.showToast({
-        title: "\u70B9\u51FB\u4E86".concat(e.content.text, "\u6309\u94AE"),
-        icon: 'none' });
-
-    },
-    exchangeBtn: function exchangeBtn(e) {var _this = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {var item, params, rewardOkRes;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:
-                console.log(e.currentTarget.dataset.info.isExchange);
-                item = e.currentTarget.dataset.info;if (
-                e.currentTarget.dataset.info.isExchange) {_context.next = 12;break;}
+    bindClick: function bindClick(e) {var _this = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {var params, rewardDelRes;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:
+                console.log(e.content.id);
                 params = {
-                  id: item.id,
-                  consumeCount: item.consumeCount,
-                  description: item.description };_context.next = 6;return (
+                  id: e.content.id };_context.next = 4;return (
 
-
-                  _this.$api.showLoading());case 6:_context.next = 8;return (
-                  _this.$api.postData(_this.$api.webapi.rewardOk, params));case 8:rewardOkRes = _context.sent;_context.next = 11;return (
-                  _this.$api.hideLoading());case 11: // 等待请求数据成功后，隐藏loading
-                if (_this.$api.reshook(rewardOkRes, _this.$mp.page.route)) {
-                  if (rewardOkRes.resultCode == 0) {
+                  _this.$api.showLoading());case 4:_context.next = 6;return (
+                  _this.$api.postData(_this.$api.webapi.rewardDelete, params));case 6:rewardDelRes = _context.sent;_context.next = 9;return (
+                  _this.$api.hideLoading());case 9: // 等待请求数据成功后，隐藏loading
+                if (_this.$api.reshook(rewardDelRes, _this.$mp.page.route)) {
+                  if (rewardDelRes.resultCode == 0) {
                     uni.showToast({
                       title: '操作成功！',
                       icon: 'none',
                       duration: 1500 });
 
                     _this.init();
-
-                    // 是否要跟新用户信息相关星？
-
                   }
-                }case 12:case "end":return _context.stop();}}}, _callee);}))();
+                }case 10:case "end":return _context.stop();}}}, _callee);}))();
+    },
+    exchangeBtn: function exchangeBtn(e) {var _this2 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee2() {var item, params, rewardOkRes;return _regenerator.default.wrap(function _callee2$(_context2) {while (1) {switch (_context2.prev = _context2.next) {case 0:
+                console.log(e.currentTarget.dataset.info.isExchange);
+                item = e.currentTarget.dataset.info;if (
+                e.currentTarget.dataset.info.isExchange) {_context2.next = 17;break;}
+                params = {
+                  id: item.id,
+                  consumeCount: item.consumeCount,
+                  description: item.description };_context2.next = 6;return (
+
+
+                  _this2.$api.showLoading());case 6:_context2.next = 8;return (
+                  _this2.$api.postData(_this2.$api.webapi.rewardOk, params));case 8:rewardOkRes = _context2.sent;_context2.next = 11;return (
+                  _this2.$api.hideLoading());case 11:if (!
+                _this2.$api.reshook(rewardOkRes, _this2.$mp.page.route)) {_context2.next = 17;break;}if (!(
+                rewardOkRes.resultCode == 0)) {_context2.next = 17;break;}
+                uni.showToast({
+                  title: '操作成功！',
+                  icon: 'none',
+                  duration: 1500 });
+
+
+
+                // 是否要更新用户信息相关星？
+                _context2.next = 16;return _this2.$api.starAdjust(-item.consumeCount, item.description);case 16:
+
+                _this2.init();case 17:case "end":return _context2.stop();}}}, _callee2);}))();
+
+
 
     },
-    createReward: function createReward() {var _this2 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee2() {var StarCount, params, cRewardRes;return _regenerator.default.wrap(function _callee2$(_context2) {while (1) {switch (_context2.prev = _context2.next) {case 0:
-                StarCount = Number(_this2.starcon);if (!(
-                Number.isInteger(StarCount) && StarCount !== 0)) {_context2.next = 13;break;}
+    createReward: function createReward() {var _this3 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee3() {var StarCount, params, cRewardRes;return _regenerator.default.wrap(function _callee3$(_context3) {while (1) {switch (_context3.prev = _context3.next) {case 0:
+                StarCount = Number(_this3.starcon);if (!(
+                Number.isInteger(StarCount) && StarCount !== 0)) {_context3.next = 13;break;}
                 params = {
-                  description: _this2.rewardcon,
-                  consumeCount: StarCount };_context2.next = 5;return (
+                  description: _this3.rewardcon,
+                  consumeCount: StarCount };_context3.next = 5;return (
 
-                  _this2.$api.showLoading());case 5:_context2.next = 7;return (
-                  _this2.$api.postData(_this2.$api.webapi.creward, params));case 7:cRewardRes = _context2.sent;_context2.next = 10;return (
-                  _this2.$api.hideLoading());case 10: // 等待请求数据成功后，隐藏loading
-                if (_this2.$api.reshook(cRewardRes, _this2.$mp.page.route)) {
+                  _this3.$api.showLoading());case 5:_context3.next = 7;return (
+                  _this3.$api.postData(_this3.$api.webapi.creward, params));case 7:cRewardRes = _context3.sent;_context3.next = 10;return (
+                  _this3.$api.hideLoading());case 10: // 等待请求数据成功后，隐藏loading
+                if (_this3.$api.reshook(cRewardRes, _this3.$mp.page.route)) {
                   if (cRewardRes.resultCode == 0) {
-                    _this2.creward = false;
+                    _this3.creward = false;
                     uni.showToast({
                       title: '操作成功！',
                       icon: 'none',
                       duration: 1500 });
 
-                    _this2.init();
+                    _this3.init();
                   }
-                }_context2.next = 14;break;case 13:
+                }_context3.next = 14;break;case 13:
 
                 uni.showToast({
                   title: '星数量请输入整数',
                   icon: 'none',
-                  duration: 1500 });case 14:case "end":return _context2.stop();}}}, _callee2);}))();
+                  duration: 1500 });case 14:case "end":return _context3.stop();}}}, _callee3);}))();
 
 
     },
-    init: function init() {var _this3 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee3() {var params, rewardlist;return _regenerator.default.wrap(function _callee3$(_context3) {while (1) {switch (_context3.prev = _context3.next) {case 0:
+    init: function init() {var _this4 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee4() {var params, rewardlist, that;return _regenerator.default.wrap(function _callee4$(_context4) {while (1) {switch (_context4.prev = _context4.next) {case 0:
                 params = {
                   from: 1,
-                  count: _this3.dataStep };_context3.next = 3;return (
+                  count: _this4.dataStep };_context4.next = 3;return (
 
-                  _this3.$api.showLoading());case 3:_context3.next = 5;return (
-                  _this3.$api.getData(_this3.$api.webapi.rewardList, params));case 5:rewardlist = _context3.sent;_context3.next = 8;return (
-                  _this3.$api.hideLoading());case 8: // 等待请求数据成功后，隐藏loading
-                if (_this3.$api.reshook(rewardlist, _this3.$mp.page.route)) {
+                  _this4.$api.showLoading());case 3:_context4.next = 5;return (
+                  _this4.$api.getData(_this4.$api.webapi.rewardList, params));case 5:rewardlist = _context4.sent;_context4.next = 8;return (
+                  _this4.$api.hideLoading());case 8: // 等待请求数据成功后，隐藏loading
+                if (_this4.$api.reshook(rewardlist, _this4.$mp.page.route)) {
                   if (rewardlist.resultCode == 0) {
-                    _this3.rewardList = rewardlist.data;
+                    _this4.rewardList = rewardlist.data;
                   }
+                  that = _this4;
+                  _this4.rewardList.forEach(function (item, index, arr) {
+                    var switchAc = {
+                      delarr: [
+                      {
+                        text: '删除',
+                        style: {
+                          backgroundColor: '#F00' },
+
+                        id: item.id }] };
+
+
+
+                    var newitem = Object.assign(item, switchAc);
+                  });
                   console.log(rewardlist);
-                }case 9:case "end":return _context3.stop();}}}, _callee3);}))();
+                }case 9:case "end":return _context4.stop();}}}, _callee4);}))();
     },
     addReward: function addReward() {
       this.creward = true;

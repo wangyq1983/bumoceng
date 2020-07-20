@@ -143,20 +143,29 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 var _default =
 {
   data: function data() {
     return {
       icon: uni.getStorageSync('avatarUrl') ? uni.getStorageSync('avatarUrl') : '', //头像
       name: uni.getStorageSync('nickName') ? uni.getStorageSync('nickName') : '', //昵称
-      level: 0, //等级
-      levelnum: '', //经验数量
-      star: '', // 星数量
+      level: this.$store.state.level ? this.$store.state.level : uni.getStorageSync('level'), //等级
+      levelnum: this.$store.state.progress ? this.$store.state.progress : uni.getStorageSync('progress'), //经验数量
+      star: this.$store.state.starNum ? this.$store.state.starNum : uni.getStorageSync('starNum'), // 星数量
       cjnum: '' // 成就数量
     };
   },
+  computed: {
+    level1: function level1() {
+      return this.$store.state.level ? this.$store.state.level : uni.getStorageSync('level');
+    },
+    levelnum1: function levelnum1() {
+      return this.$store.state.progress ? this.$store.state.progress : uni.getStorageSync('progress');
+    },
+    star1: function star1() {
+      return this.$store.state.starNum ? this.$store.state.starNum : uni.getStorageSync('starNum');
+    } },
+
   methods: {
     //获取用户信息
     getUser: function () {var _getUser = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {var userRes;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:_context.next = 2;return (
@@ -166,21 +175,9 @@ var _default =
                 if (this.$api.reshook(userRes)) {
                   console.log('userinfo is');
                   console.log(userRes);
-                }case 8:case "end":return _context.stop();}}}, _callee, this);}));function getUser() {return _getUser.apply(this, arguments);}return getUser;}(),
+                }case 8:case "end":return _context.stop();}}}, _callee, this);}));function getUser() {return _getUser.apply(this, arguments);}return getUser;}() },
 
-    storetap: function storetap() {
-      console.log('storetap');
-      this.$store.commit('addLevel', 1);
-      // this.$emit('close');
-    },
-    storagetap: function storagetap() {
-      console.log('storagetap');
-      uni.setStorage({
-        key: 'level',
-        data: uni.getStorageSync('level') + 1 });
 
-      // this.$emit('click');
-    } },
 
   created: function created() {
     console.log('created');
@@ -191,14 +188,14 @@ var _default =
     // this.getUser()
     this.icon = uni.getStorageSync('avatarUrl') ? uni.getStorageSync('avatarUrl') : '';
     this.name = uni.getStorageSync('nickName') ? uni.getStorageSync('nickName') : '';
-    this.level = uni.getStorageSync('level') ? uni.getStorageSync('level') : 0;
+    // this.level = uni.getStorageSync('level') ? uni.getStorageSync('level') : 0;
 
-    this.levelnum = uni.getStorageSync('progress') ? uni.getStorageSync('progress') : 0;
-    this.star = uni.getStorageSync('starNum') ? uni.getStorageSync('starNum') : 0;
+    // this.levelnum = uni.getStorageSync('progress') ? uni.getStorageSync('progress') : 0;
+    // this.star = uni.getStorageSync('starNum') ? uni.getStorageSync('starNum') : 0;
 
-    console.log(this.icon);
-    console.log(this.name);
-    console.log('------------------------------------');
+    // console.log(this.icon);
+    // console.log(this.name);
+    // console.log('------------------------------------');
   } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 

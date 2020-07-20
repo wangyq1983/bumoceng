@@ -233,8 +233,8 @@ page {
           justify-content: flex-start;
   font-size: 30rpx;
   border-bottom: 2rpx solid #cacaca;
-  padding-top: 40rpx;
-  padding-bottom: 40rpx;
+  padding-top: 30rpx;
+  padding-bottom: 30rpx;
 }
 .iconbg {
   width: 120rpx;

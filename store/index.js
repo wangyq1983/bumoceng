@@ -12,10 +12,14 @@ const store = new Vuex.Store({
 		nickname:"",
 		token:"",
 		userid:"",
-		level:1,
+		level:0,  // 等级
+		progress:0,  // 经验进度
+		starNum:0,  // 星数
+		cjNum:0,  // 成就点数
 		openid: null,
 		testvuex: false,
 		colorIndex: 0,
+		signList:[], //签到列表
 		colorList: ['#FF0000', '#00FF00', '#0000FF']
 	},
 	mutations: {
@@ -45,6 +49,30 @@ const store = new Vuex.Store({
 		},
 		addLevel(state,num){
 			state.level = state.level + num
+		},
+		changeLevel(state,level){
+			// 变更等级
+			state.level = level;
+			console.log('state_level is ========')
+			console.log(state.level)
+		},
+		changeProgress(state,progress){
+			// 进度条变更
+			state.progress = progress;
+			console.log('state_progerss is ========')
+			console.log(state.progress)
+		},
+		changeStar(state,star){
+			// 星数变更
+			state.starNum = star;
+			console.log('state_starNum  is ========')
+			console.log(state.starNum)
+		},
+		changeCj(state,cj){
+			state.cjNum = cj
+		},
+		changesignList(state,list){
+			state.signList = list
 		},
 		setOpenid(state, openid) {
 			state.openid = openid

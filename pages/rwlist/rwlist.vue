@@ -5,12 +5,13 @@
 				<uniCountdown @on-complete = 'timed' :showmask = 'cdtime' :show-day="false" :show-hour="showhour" :hour="hourTask" :minute="minuteTask" :second="secondTask" ref = "countDown"></uniCountdown>
 			</view>
 			<successdata :starNum = 'star' :expType = 'exptype' v-if="taskSuccess"></successdata>
+		
 			<view class="signin" v-if="signIn">
 				<view class="signTitle">
 					一周签到
 				</view>
 				<view class="signList">
-					<view :class="(nowweekday == items.day)?'signItemCur':'signItem'" v-for="items in signList" :key="items.weekday">
+					<view :class="(nowweekday == items.day)?'signItemCur':'signItem'" v-for="items in listsign" :key="items.weekday">
 						<view :class="(nowweekday == items.day)?'sItem':'sItemCur'">
 							{{items.day}}
 						</view>
@@ -38,6 +39,14 @@
 		</mask>
 		
 		<userinfo></userinfo>
+		<!-- <view class="actionTest">
+			<view class="" @tap="storetap">
+				store test
+			</view>
+			<view class="" @tap="storagetap">
+				storagetest
+			</view>
+		</view> -->
 		<view class="timeSelect">
 			<view class="selectCon">
 				{{datetime}}
@@ -87,6 +96,7 @@ export default {
 			star:null,
 			exptype:null,
 			ifswitch:false,
+			signid:'',
 			signIn:false,
 			signList:[
 				{
@@ -120,6 +130,11 @@ export default {
 			],
 			nowweekday:''
 		};
+	},
+	computed:{
+		listsign:function(){
+			return this.$store.state.signList
+		}
 	},
 	components:{
 		uniCountdown
@@ -162,6 +177,10 @@ export default {
 				await this.$api.hideLoading(); // 等待请求数据成功后，隐藏loading
 				if (this.$api.reshook(signRes, this.$mp.page.route)) {
 					console.log(signRes);
+					if(signRes.resultCode == 0){
+						// 签到成功增加经验
+						await this.$api.addExp(nowexp);
+					}
 					this.closemask();
 				}
 			}else{
@@ -199,6 +218,7 @@ export default {
 			})
 			console.log(newArr);
 			this.signList = newArr;
+			this.$store.commit('changesignList', this.signList);
 			console.log('签到查询');
 			console.log(signget);
 			this.signIn = true;
@@ -287,6 +307,7 @@ export default {
 					}else{
 						await this.$api.addExp(this.$api.expval.endtask);
 						await this.$api.starAdjust(this.star,'任务完成');
+						// await this.$api.getUserinfo()
 						this.taskSuccess = true;
 						this.nowtask = '';
 						this.exptype = this.$api.expval.endtask
@@ -333,7 +354,20 @@ export default {
 					url: '/pages/createother/createother'
 				});
 			}
-		}
+		},
+		// storetap() {
+		// 	console.log('storetap');
+		// 	this.$store.commit('addLevel', 1);
+		// 	// this.$emit('close');
+		// },
+		// storagetap() {
+		// 	console.log('storagetap');
+		// 	uni.setStorage({
+		// 		key: 'level',
+		// 		data: uni.getStorageSync('level') + 1
+		// 	});
+		// 	// this.$emit('click');
+		// }
 	}
 };
 </script>
@@ -431,6 +465,7 @@ export default {
 	@include rowflex;
 	justify-content: center;
 }
+
 .signin{
 	width: 660upx;
 	height:660upx;

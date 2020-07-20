@@ -167,7 +167,7 @@
 	}
 
 	.uni-swipe_content {
-		flex: 1;
+		width: 100%;
 		position: relative;
 	}
 
@@ -187,7 +187,7 @@
 		flex-shrink: 0;
 		/* #endif */
 		/* #ifdef APP-NVUE */
-		flex: 1;
+width:100%;
 		/* #endif */
 		font-size: 14px;
 		background-color: #fff;

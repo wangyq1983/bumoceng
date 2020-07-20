@@ -206,7 +206,7 @@ var canvaColumn = null;
 var canvaColumn1 = null;
 var canvasObj = {};
 var Column = { categories: [], series: [] };
-var Column1 = { durationList: [], realDurationList: [] };var _default =
+var Column1 = { categories: [], durationList: [] };var _default =
 {
   data: function data() {
     return {
@@ -215,7 +215,6 @@ var Column1 = { durationList: [], realDurationList: [] };var _default =
       cHeight: 120,
       pixelRatio: 1,
       serverData: {
-        // categories: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
         categories: ['7-1', '7-2', '7-3', '7-5', '7-9', '7-11', '7-15'],
         series: [
         {
@@ -232,11 +231,11 @@ var Column1 = { durationList: [], realDurationList: [] };var _default =
         durationList: [
         {
           name: '计划完成时间(分钟)',
-          data: [15, 50, 45, 70, 37, 43, 34] },
+          data: [] },
 
         {
           name: '实际完成时间(分钟)',
-          data: [9, 45, 22, 55, 23, 42, 31],
+          data: [],
           color: '#ffce00' }] } };
 
 
@@ -262,34 +261,51 @@ var Column1 = { durationList: [], realDurationList: [] };var _default =
     this.getServerData();
   },
   methods: {
+    secToMin: function secToMin(sec) {
+      var minute = parseInt(sec / 60);
+      return minute;
+    },
     menutap: function menutap(e) {
       console.log(e.currentTarget.dataset.val);
       this.menutab = e.currentTarget.dataset.val;
       if (this.menutab == 1) {
-        this.initChart();
+        this.initChart(this.serverData.categories, this.serverData.series);
       } else {
-        this.initChart1();
+        this.initChart1(this.serverData.durationList[0], this.serverData.durationList[1]);
       }
     },
-    initChart: function initChart() {
-      Column.categories = this.serverData.categories;
-      Column.series = this.serverData.series;
+    initChart: function initChart(c, s) {
+      Column.categories = c;
+      Column.series = s;
+      Column.series[0].color = '#3c8ceb';
+      Column.series[1].color = '#ffce00';
       this.showColumn('canvasColumn', Column);
     },
-    initChart1: function initChart1() {
-      Column1.durationList = this.serverData.durationList;
-      Column1.realDurationList = this.serverData.realDurationList;
+    initChart1: function initChart1(c) {
+
+      Column1.categories = c;
       this.showColumn1('canvasColumn1', Column1);
     },
-    getServerData: function () {var _getServerData = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {var chartRes;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:_context.next = 2;return (
-                  this.$api.showLoading());case 2:_context.next = 4;return (
-                  this.$api.getData(this.$api.webapi.charts));case 4:chartRes = _context.sent;_context.next = 7;return (
-                  this.$api.hideLoading());case 7: // 等待请求数据成功后，隐藏loading
+    getServerData: function () {var _getServerData = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {var that, chartRes;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:
+                that = this;_context.next = 3;return (
+                  this.$api.showLoading());case 3:_context.next = 5;return (
+                  this.$api.getData(this.$api.webapi.charts));case 5:chartRes = _context.sent;_context.next = 8;return (
+                  this.$api.hideLoading());case 8: // 等待请求数据成功后，隐藏loading
                 if (chartRes.resultCode == 0) {
                   console.log(chartRes);
                 }
-                this.initChart();
-                this.initChart1();case 10:case "end":return _context.stop();}}}, _callee, this);}));function getServerData() {return _getServerData.apply(this, arguments);}return getServerData;}(),
+                this.serverData.categories = chartRes.data.categories;
+                this.serverData.series = chartRes.data.series;
+                this.serverData.durationList[0].data = chartRes.data.durationList; //计划时间
+
+                chartRes.data.realDurationList.forEach(function (item, index, arr) {
+                  arr[index] = that.secToMin(item);
+                });
+
+                this.serverData.durationList[1].data = chartRes.data.realDurationList; //实际时间
+
+                this.initChart(this.serverData.categories, this.serverData.series);
+                this.initChart1(this.serverData.categories);case 16:case "end":return _context.stop();}}}, _callee, this);}));function getServerData() {return _getServerData.apply(this, arguments);}return getServerData;}(),
 
     gotoItem: function gotoItem(e) {
       var menutype = e.currentTarget.dataset.type;

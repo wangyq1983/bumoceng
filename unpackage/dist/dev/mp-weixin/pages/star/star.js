@@ -208,7 +208,7 @@ var _default =
                   reason: this.starliyou };_context.next = 7;return (
 
                   this.$api.showLoading());case 7:_context.next = 9;return (
-                  this.$api.postData(this.$api.webapi.star, params));case 9:starRes = _context.sent;_context.next = 12;return (
+                  this.$api.starAdjust(starNum, this.starliyou));case 9:starRes = _context.sent;_context.next = 12;return (
                   this.$api.hideLoading());case 12: // 等待请求数据成功后，隐藏loading
                 if (this.$api.reshook(starRes, this.$mp.page.route)) {
                   if (starRes.resultCode == 0) {
@@ -216,6 +216,9 @@ var _default =
                       title: '操作成功！',
                       icon: 'none',
                       duration: 1500 });
+
+
+
 
                     setTimeout(function () {
                       uni.navigateTo({

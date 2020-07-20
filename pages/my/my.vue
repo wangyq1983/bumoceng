@@ -15,7 +15,7 @@
 		</view>
 
 		<view class="scenelist">
-			<view class="titlebox">功能列表</view>
+			<!-- <view class="titlebox">功能列表</view> -->
 			<!-- 星愿奖励 -->
 			<view class="proItem" @tap="gotoItem" data-type="jl">
 				<view class="iconbg iconjl">
@@ -70,7 +70,7 @@ var canvaColumn = null;
 var canvaColumn1 = null;
 var canvasObj = {};
 let Column = { categories: [], series: [] };
-let Column1 = { durationList: [], realDurationList: [] };
+let Column1 = { categories:[], durationList: [] };
 export default {
 	data() {
 		return {
@@ -79,7 +79,6 @@ export default {
 			cHeight: 120,
 			pixelRatio: 1,
 			serverData: {
-				// categories: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
 				categories: ['7-1', '7-2', '7-3', '7-5', '7-9', '7-11', '7-15'],
 				series: [
 					{
@@ -96,11 +95,11 @@ export default {
 				durationList: [
 					{
 						name: '计划完成时间(分钟)',
-						data: [15, 50, 45,70, 37, 43, 34]
+						data: []
 					},
 					{
 						name: '实际完成时间(分钟)',
-						data: [9,45,22,55,23,42,31],
+						data: [],
 						color: '#ffce00'					}
 				]
 			}
@@ -126,34 +125,51 @@ export default {
 		this.getServerData();
 	},
 	methods: {
+		secToMin:function(sec){
+			let minute = parseInt(sec/60);
+			return minute;
+		},
 		menutap: function(e) {
 			console.log(e.currentTarget.dataset.val);
 			this.menutab = e.currentTarget.dataset.val;
 			if (this.menutab == 1) {
-				this.initChart();
+				this.initChart(this.serverData.categories,this.serverData.series);
 			} else {
-				this.initChart1();
+				this.initChart1(this.serverData.durationList[0],this.serverData.durationList[1]);
 			}
 		},
-		initChart: function() {
-			Column.categories = this.serverData.categories;
-			Column.series = this.serverData.series;
+		initChart: function(c,s) {
+			Column.categories = c;
+			Column.series = s;
+			Column.series[0].color = '#3c8ceb';
+			Column.series[1].color = '#ffce00';
 			this.showColumn('canvasColumn', Column);
 		},
-		initChart1: function() {
-			Column1.durationList = this.serverData.durationList;
-			Column1.realDurationList = this.serverData.realDurationList;
+		initChart1: function(c) {
+
+			Column1.categories = c;
 			this.showColumn1('canvasColumn1', Column1);
 		},
 		getServerData: async function() {
+			var that = this;
 			await this.$api.showLoading(); // 显示loading
 			var chartRes = await this.$api.getData(this.$api.webapi.charts);
 			await this.$api.hideLoading(); // 等待请求数据成功后，隐藏loading
 			if (chartRes.resultCode == 0) {
 				console.log(chartRes);
 			}
-			this.initChart();
-			this.initChart1();
+			this.serverData.categories = chartRes.data.categories;
+			this.serverData.series = chartRes.data.series;
+			this.serverData.durationList[0].data = chartRes.data.durationList;  //计划时间
+
+			chartRes.data.realDurationList.forEach(function(item,index,arr){
+				arr[index] = that.secToMin(item)
+			});
+
+			this.serverData.durationList[1].data = chartRes.data.realDurationList;   //实际时间
+			
+			this.initChart(this.serverData.categories,this.serverData.series);
+			this.initChart1(this.serverData.categories);
 		},
 		gotoItem: function(e) {
 			let menutype = e.currentTarget.dataset.type;
@@ -292,8 +308,8 @@ export default {
 	justify-content: flex-start;
 	font-size: $fontsize-30;
 	border-bottom: 2upx solid #cacaca;
-	padding-top: 40upx;
-	padding-bottom: 40upx;
+	padding-top: 30upx;
+	padding-bottom: 30upx;
 }
 .iconbg {
 	width: 120upx;

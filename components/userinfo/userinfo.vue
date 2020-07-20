@@ -6,26 +6,24 @@
 				<view class="username">{{ name }}</view>
 				<view class="starBox">
 					<image src="/static/star.png" mode=""></image>
-					<view class="starCount">{{ star }}</view>
+					<view class="starCount">{{ star1 }}</view>
+				</view>
+				<view class="chengjiuBox">
+					
+					<image src="/static/cj_icon.png"></image>
+					<view class="cjword">成就：23</view>
 				</view>
 			</view>
 			<view class="levelBox">
-				<view class="levelTip">Lv{{ level }}</view>
-				<view class="levelProgress"><view class="progressCount" :style="{ width: levelnum + '%' }"></view></view>
+				<view class="levelTip">Lv{{ level1 }}</view>
+				<view class="levelProgress"><view class="progressCount" :style="{ width: levelnum1 + '%' }"></view></view>
+				<view class="">
+					{{levelnum1}}
+				</view>
 			</view>
-			<view class="chengjiuBox">
-				<image src="/static/cj_icon.png"></image>
-				<view class="cjword">成就:23</view>
-			</view>
+			
 		</view>
-		<!-- <view class="actionTest">
-			<view class="" @tap="storetap">
-				store test
-			</view>
-			<view class="" @tap="storagetap">
-				storagetest
-			</view>
-		</view> -->
+		
 	</view>
 </template>
 
@@ -35,11 +33,22 @@ export default {
 		return {
 			icon: uni.getStorageSync('avatarUrl') ? uni.getStorageSync('avatarUrl') : '', //头像
 			name: uni.getStorageSync('nickName') ? uni.getStorageSync('nickName') : '', //昵称
-			level: 0, //等级
-			levelnum: '', //经验数量
-			star: '', // 星数量
+			level: this.$store.state.level ? this.$store.state.level : uni.getStorageSync('level'), //等级
+			levelnum: this.$store.state.progress ? this.$store.state.progress : uni.getStorageSync('progress'), //经验数量
+			star: this.$store.state.starNum? this.$store.state.starNum : uni.getStorageSync('starNum'), // 星数量
 			cjnum: '' // 成就数量
 		};
+	},
+	computed:{
+		level1:function(){
+			return this.$store.state.level ? this.$store.state.level : uni.getStorageSync('level')
+		},
+		levelnum1:function(){
+			return this.$store.state.progress ? this.$store.state.progress : uni.getStorageSync('progress')
+		},
+		star1:function(){
+			return this.$store.state.starNum? this.$store.state.starNum : uni.getStorageSync('starNum')
+		}
 	},
 	methods: {
 		//获取用户信息
@@ -51,21 +60,9 @@ export default {
 				console.log('userinfo is');
 				console.log(userRes);
 			}
-		},
-		storetap() {
-			console.log('storetap');
-			this.$store.commit('addLevel', 1);
-			// this.$emit('close');
-		},
-		storagetap() {
-			console.log('storagetap');
-			uni.setStorage({
-				key: 'level',
-				data: uni.getStorageSync('level') + 1
-			});
-			// this.$emit('click');
 		}
 	},
+	
 	created() {
 		console.log('created');
 		console.log('------------------------------------');
@@ -75,14 +72,14 @@ export default {
 		// this.getUser()
 		this.icon = uni.getStorageSync('avatarUrl') ? uni.getStorageSync('avatarUrl') : '';
 		this.name = uni.getStorageSync('nickName') ? uni.getStorageSync('nickName') : '';
-		this.level = uni.getStorageSync('level') ? uni.getStorageSync('level') : 0;
+		// this.level = uni.getStorageSync('level') ? uni.getStorageSync('level') : 0;
 
-		this.levelnum = uni.getStorageSync('progress') ? uni.getStorageSync('progress') : 0;
-		this.star = uni.getStorageSync('starNum') ? uni.getStorageSync('starNum') : 0;
+		// this.levelnum = uni.getStorageSync('progress') ? uni.getStorageSync('progress') : 0;
+		// this.star = uni.getStorageSync('starNum') ? uni.getStorageSync('starNum') : 0;
 
-		console.log(this.icon);
-		console.log(this.name);
-		console.log('------------------------------------');
+		// console.log(this.icon);
+		// console.log(this.name);
+		// console.log('------------------------------------');
 	}
 };
 </script>
@@ -90,24 +87,24 @@ export default {
 <style lang="scss">
 .userbox {
 	width: 700upx;
-	height: 150upx;
+	height: 110upx;
 	padding: 20upx 15upx;
 }
 .usericon {
-	width: 136upx;
-	height: 136upx;
+	width: 96upx;
+	height: 96upx;
 	float: left;
 }
 .usericon image {
-	width: 132upx;
-	height: 132upx;
+	width: 92upx;
+	height: 92upx;
 	border-radius: 168upx;
 	border: 8upx solid #ffffff;
 	box-shadow: 0upx 0upx 15upx #c0c0c0;
 }
 .userinfo {
-	width: 540upx;
-	height: 120upx;
+	width: 560upx;
+	height: 90upx;
 	padding-left: 20upx;
 	padding-top: 8upx;
 	float: right;
@@ -167,6 +164,7 @@ export default {
 .chengjiuBox {
 	@include rowflex;
 	justify-content: flex-start;
+	margin-left:50upx;
 }
 .chengjiuBox image {
 	width: 20upx;
@@ -177,16 +175,5 @@ export default {
 	font-size: $fontsize-24;
 	color: $color-36;
 }
-.actionTest {
-	position: fixed;
-	right: 0;
-	top: 30upx;
-	z-index: 999;
-}
-.actionTest view {
-	margin: 10upx;
-	background: #333;
-	color: #fff;
-	padding: 10upx;
-}
+
 </style>

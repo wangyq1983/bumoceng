@@ -224,6 +224,15 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
+
+
+
+
+
+
 {
   data: function data() {
     return {
@@ -241,6 +250,7 @@ __webpack_require__.r(__webpack_exports__);
       star: null,
       exptype: null,
       ifswitch: false,
+      signid: '',
       signIn: false,
       signList: [
       {
@@ -275,6 +285,11 @@ __webpack_require__.r(__webpack_exports__);
       nowweekday: '' };
 
   },
+  computed: {
+    listsign: function listsign() {
+      return this.$store.state.signList;
+    } },
+
   components: {
     uniCountdown: uniCountdown },
 
@@ -307,22 +322,26 @@ __webpack_require__.r(__webpack_exports__);
                   }
                 });
                 console.log(nowexp);if (
-                signed) {_context.next = 16;break;}
+                signed) {_context.next = 21;break;}
                 params = {
                   experience: nowexp };_context.next = 8;return (
 
                   this.$api.showLoading());case 8:_context.next = 10;return (
                   this.$api.postData(this.$api.webapi.signin, params));case 10:signRes = _context.sent;_context.next = 13;return (
-                  this.$api.hideLoading());case 13: // 等待请求数据成功后，隐藏loading
-                if (this.$api.reshook(signRes, this.$mp.page.route)) {
-                  console.log(signRes);
-                  this.closemask();
-                }_context.next = 17;break;case 16:
+                  this.$api.hideLoading());case 13:if (!
+                this.$api.reshook(signRes, this.$mp.page.route)) {_context.next = 19;break;}
+                console.log(signRes);if (!(
+                signRes.resultCode == 0)) {_context.next = 18;break;}_context.next = 18;return (
+
+                  this.$api.addExp(nowexp));case 18:
+
+                this.closemask();case 19:_context.next = 22;break;case 21:
+
 
                 uni.showToast({
                   title: '已经签到过了',
                   icon: 'none',
-                  duration: 1500 });case 17:case "end":return _context.stop();}}}, _callee, this);}));function signOk(_x) {return _signOk.apply(this, arguments);}return signOk;}(),
+                  duration: 1500 });case 22:case "end":return _context.stop();}}}, _callee, this);}));function signOk(_x) {return _signOk.apply(this, arguments);}return signOk;}(),
 
 
 
@@ -353,11 +372,12 @@ __webpack_require__.r(__webpack_exports__);
                 });
                 console.log(newArr);
                 this.signList = newArr;
+                this.$store.commit('changesignList', this.signList);
                 console.log('签到查询');
                 console.log(signget);
                 this.signIn = true;
                 this.cdtime = true;
-                this.nowWeek();case 14:case "end":return _context2.stop();}}}, _callee2, this);}));function signget() {return _signget.apply(this, arguments);}return signget;}(),
+                this.nowWeek();case 15:case "end":return _context2.stop();}}}, _callee2, this);}));function signget() {return _signget.apply(this, arguments);}return signget;}(),
 
     deltask: function deltask(id) {
       this.rwlist.forEach(function (item, index, arr) {
@@ -441,6 +461,7 @@ __webpack_require__.r(__webpack_exports__);
 
                   this.$api.addExp(this.$api.expval.endtask));case 21:_context3.next = 23;return (
                   this.$api.starAdjust(this.star, '任务完成'));case 23:
+                // await this.$api.getUserinfo()
                 this.taskSuccess = true;
                 this.nowtask = '';
                 this.exptype = this.$api.expval.endtask;case 26:case "end":return _context3.stop();}}}, _callee3, this);}));function timed(_x2, _x3) {return _timed.apply(this, arguments);}return timed;}(),
@@ -487,7 +508,21 @@ __webpack_require__.r(__webpack_exports__);
           url: '/pages/createother/createother' });
 
       }
-    } } };exports.default = _default;
+    }
+    // storetap() {
+    // 	console.log('storetap');
+    // 	this.$store.commit('addLevel', 1);
+    // 	// this.$emit('close');
+    // },
+    // storagetap() {
+    // 	console.log('storagetap');
+    // 	uni.setStorage({
+    // 		key: 'level',
+    // 		data: uni.getStorageSync('level') + 1
+    // 	});
+    // 	// this.$emit('click');
+    // }
+  } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),

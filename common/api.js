@@ -194,18 +194,25 @@ const getUserinfo = async() => {
 		console.log(userRes.data.userLevelInfo.totalExperienceForCurrentLevel);
 		console.log('exp Progress is = ');
 		console.log(expProgress)
+		
 		uni.setStorage({
 			key: 'level',
 			data: userRes.data.userLevelInfo.level
 		});
+		store.commit('changeLevel', userRes.data.userLevelInfo.level)
+		
 		uni.setStorage({
 			key: 'progress',
 			data: expProgress
 		})
+		store.commit('changeProgress', expProgress)
+		
 		uni.setStorage({
 			key: 'starNum',
 			data: userRes.data.starSummary.totalCount
 		});
+		store.commit('changeStar', userRes.data.starSummary.totalCount)
+		
 	}else{
 		uni.showToast({
 			title:'用户信息获取失败',
@@ -236,6 +243,7 @@ const starAdjust = async(star,reason) =>{
 	var starRes = await postData(webapi.star,params);
 	if(reshook(starRes)){
 		console.log(starRes);
+		getUserinfo()
 	}
 }
 

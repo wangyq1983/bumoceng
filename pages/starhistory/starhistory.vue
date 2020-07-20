@@ -4,7 +4,11 @@
 		<view class="userbor"></view>
 		<view class="menuguide">查看历史记录</view>
 		<view class="cu-timeline" v-for="items in historyList" :key="items.id">
-			<view class="cu-time">{{items.createDate}}</view>
+			<view class="cu-time">
+				<timeFormat :timedate = "items.createDate" :type = "1">
+					
+				</timeFormat>
+			</view>
 			<view class="cu-item" v-for="item in items.starInfo">
 				<view class="addicon" v-if="item.adjustCount > 0">
 					+
@@ -14,7 +18,11 @@
 				</view>
 				<view :class="(item.adjustCount > 0) ? 'content addbg' : 'bg-blue content jianbg'">
 					<view class="con1">
-						<text>22:22</text>
+						
+							<timeFormat :timedate = "item.updateDate" :type = "2">
+								
+							</timeFormat>
+						
 						<image src="/static/menustar.png" mode=""></image>
 						<view class="" v-if="item.adjustCount > 0">
 							增加{{item.adjustCount}}
@@ -48,6 +56,12 @@ export default {
 		
 	},
 	methods: {
+		formatDate(){
+			
+		},
+		formatTime(){
+			
+		},
 		async init(){
 			var params = {
 				from:1,
