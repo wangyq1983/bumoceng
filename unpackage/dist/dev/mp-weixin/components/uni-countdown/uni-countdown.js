@@ -299,10 +299,14 @@ var innerAudioContext = uni.getBackgroundAudioManager();var _default =
         this.timeOver();
         console.log('经历秒数是');
         console.log('hour is' + this.h + 'minute is' + this.i + 'seconds is' + this.s);
+
+        console.log(this.toSeconds(0, this.hour, this.minute, this.second));
+        console.log('-');
         console.log(this.toSeconds(0, this.h, this.i, this.s));
+        console.log('=');
         var realDuration = this.toSeconds(0, this.hour, this.minute, this.second) - this.toSeconds(0, this.h, this.i, this.s);
         console.log(realDuration);
-        this.$emit("on-complete", realDuration, 3);
+        this.$emit("on-complete", realDuration >= 0 ? realDuration : 0, 3);
       }
     },
 

@@ -71,7 +71,10 @@ var webapi = {
 	signin:webhost + 'sign/in',
 	 
 	// 签到查询
-	signget: webhost + 'sign/get'
+	signget: webhost + 'sign/get',
+	
+	// 签到清空
+	signclear: webhost + 'sign/clear'
 }
 
 // 经验值设置

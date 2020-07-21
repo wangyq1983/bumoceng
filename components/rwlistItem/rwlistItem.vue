@@ -1,10 +1,13 @@
 <template>
 	<view class="rwItem">
 		<view class="TitleBox">
-			<view v-if="itemcon.state == 1" class="rwState ongoing"></view>
-			<view v-if="itemcon.state == 3" class="rwState onend"></view>
-			<view v-if="itemcon.state == 4" class="rwState onfail"></view>
-			<view class="rwType">{{ itemcon.typeName }}</view>
+			<view v-if="itemcon.state == 1 && itemcon.flag == 1" class="rwState ongoing"></view>
+			<view v-if="itemcon.state == 3 && itemcon.flag == 1" class="rwState onend"></view>
+			<view v-if="itemcon.state == 4 && itemcon.flag == 1" class="rwState onfail"></view>
+			<view v-if="itemcon.state == 1 && itemcon.flag == 2" class="rwState ongoing1"></view>
+			<view v-if="itemcon.state == 3 && itemcon.flag == 2" class="rwState onend1"></view>
+			<view v-if="itemcon.state == 4 && itemcon.flag == 2" class="rwState onfail1"></view>
+			<view :class="itemcon.flag == 1 ? 'rwType':'rwType1'">{{ itemcon.typeName }}</view>
 			<view class="rwTitle">
 				<image src="/static/menustar.png" mode=""></image>
 				<view class="">{{ itemcon.starNumber }}</view>
@@ -13,7 +16,9 @@
 		</view>
 		<view class="rwInfo" v-if="itemcon.jobDescription">{{ itemcon.jobDescription }}</view>
 		<view class="rwAction">
-			<view v-if="itemcon.state == 1" class="rwBtn" @tap="beginTask" :data-time="itemcon.duration"><view class="startBtn">开始任务</view></view>
+			<view v-if="itemcon.state == 1 && itemcon.flag == 1" class="rwBtn" @tap="beginTask" :data-time="itemcon.duration"><view class="startBtn">开始任务</view></view>
+			<view v-if="itemcon.state == 1 && itemcon.flag == 2" class="rwBtn" @tap="beginTask" :data-time="itemcon.duration"><view class="startBtn1">开始任务</view></view>
+			
 			<view class="rwBtn" v-if="itemcon.state == 3"><view class="taskover">任务已完成</view></view>
 			<view class="rwBtn" v-if="itemcon.state == 4"><view class="taskover">任务已失败</view></view>
 			<view class="timebox">
@@ -40,7 +45,7 @@
 					<view class="">{{ item.name }}</view>
 				</label>
 			</radio-group>
-			<view class="zhiliangBtn" @tap="zhiliangEvent">确定</view>
+			<view :class="itemcon.flag == 1 ? 'zhiliangBtn' : 'zhiliangBtn1'" @tap="zhiliangEvent">确定</view>
 		</view>
 	</view>
 </template>
@@ -77,7 +82,7 @@ export default {
 	created() {
 		console.log('组件创建后，但还未挂载');
 		this.itemcon = this.info;
-		console.log(this.itemcon);
+		// console.log(this.itemcon);
 	},
 	computed: {
 		realtime() {
@@ -193,17 +198,34 @@ export default {
 	background-image: url(/static/tanhao.png);
 	background-size: 50upx 50upx;
 }
+.ongoing1 {
+	background-image: url(/static/tanhao1.png);
+	background-size: 50upx 50upx;
+}
 .onend {
 	background-image: url(/static/duihao.png);
+	background-size: 50upx 50upx;
+}
+.onend1 {
+	background-image: url(/static/duihao1.png);
 	background-size: 50upx 50upx;
 }
 .onfail {
 	background-image: url(/static/fail.png);
 	background-size: 50upx 50upx;
 }
+.onfail1 {
+	background-image: url(/static/fail1.png);
+	background-size: 50upx 50upx;
+}
 .rwType {
 	padding: 10upx;
 	color: $color-m;
+	font-size: $fontsize-28;
+}
+.rwType1 {
+	padding: 10upx;
+	color: $color-u-jl;
 	font-size: $fontsize-28;
 }
 .rwTitle {
@@ -246,6 +268,11 @@ export default {
 .startBtn {
 	background: $color-m;
 	padding: 10upx 20upx;
+}
+.startBtn1{
+	background: $color-u-jl;
+	padding: 10upx 20upx;
+	color: #fff;
 }
 .taskover {
 	background: $color-36;
@@ -296,6 +323,14 @@ export default {
 .zhiliangBtn {
 	background: $color-m;
 	color: $color-36;
+	font-size: $fontsize-28;
+	text-align: center;
+	padding: 8upx 26upx;
+	margin-left: 16upx;
+}
+.zhiliangBtn1 {
+	background: $color-u-jl;
+	color: #fff;
 	font-size: $fontsize-28;
 	text-align: center;
 	padding: 8upx 26upx;

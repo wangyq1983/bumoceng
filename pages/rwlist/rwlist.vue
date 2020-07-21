@@ -47,16 +47,33 @@
 				storagetest
 			</view>
 		</view> -->
-		<view class="timeSelect">
-			<view class="selectCon">
-				{{datetime}}
+		<view class="newsbox">
+			<image src="/static/news.png" mode=""></image>
+			<view class="">
+				暗示法撒旦法撒旦法撒旦撒打发斯蒂芬
 			</view>
+		</view>
+		<view class="timeSelect">
+			
+			<picker mode="date" :value="date" start="2020-07-01" :end="date" @change="DateChange">
+				<view class="selectCon">
+					<view class="">
+						{{date}}
+					</view>
+					<view class="arrow">
+					</view>
+				</view>
+			</picker>
+<!-- 			<view class="" @tap = "clearsign">
+				取消签到
+			</view> -->
 			<view class="signCon" @tap="signEvent">
 				<image src="/static/sign.png" mode=""></image>
 				<view>签到</view>
 			</view>
 			
 		</view>
+		
 		<view class="createBox" style="border-bottom: 10upx solid #e6e6e6;">
 			<view class="createTask zuoye" @tap="gotoCreate" data-type="zuoye">
 				<view class="taskbg zuoye1"></view>
@@ -99,6 +116,52 @@ export default {
 			signid:'',
 			signIn:false,
 			signList:[
+				
+			],
+			nowweekday:'',
+			date: '',
+		};
+	},
+	computed:{
+		listsign:function(){
+			return this.$store.state.signList
+		}
+	},
+	components:{
+		uniCountdown
+	},
+	onLoad: function(options) {
+		console.log('load');
+		//console.log(this.$mp.page.route)
+		// this.signget()
+		this.init();
+	},
+	onShow() {
+		console.log();
+		console.log('show');
+	},
+	methods: {
+		
+		DateChange:function(e) {
+			console.log(e)
+			this.date = e.detail.value;
+			this.renderList(1,this.dataStep,this.date)
+		},
+		daystate:function(e){
+			
+		},
+		clearsign:async function(){
+			await this.$api.getData(this.$api.webapi.signclear);
+		},
+		signEvent:function(){
+			this.signget()
+		},
+		signOk:async function(e){
+			var _this = this;
+			console.log(this.nowweekday);
+			var nowexp;
+			var signed;
+			var tempsign = [
 				{
 					day:'周一',
 					exp:10
@@ -127,41 +190,8 @@ export default {
 					day:'周日',
 					exp:10
 				}
-			],
-			nowweekday:''
-		};
-	},
-	computed:{
-		listsign:function(){
-			return this.$store.state.signList
-		}
-	},
-	components:{
-		uniCountdown
-	},
-	onLoad: function(options) {
-		console.log('load');
-		//console.log(this.$mp.page.route)
-		// this.signget()
-		this.init();
-	},
-	onShow() {
-		console.log();
-		console.log('show');
-	},
-	methods: {
-		daystate:function(e){
-			
-		},
-		signEvent:function(){
-			this.signget()
-		},
-		signOk:async function(e){
-			var _this = this;
-			console.log(this.nowweekday);
-			var nowexp;
-			var signed;
-			this.signList.forEach(function(item,index,arr){
+			];
+			tempsign.forEach(function(item,index,arr){
 				if(item.day == _this.nowweekday){
 					nowexp = item.exp;
 					signed = item.isSigned
@@ -180,6 +210,11 @@ export default {
 					if(signRes.resultCode == 0){
 						// 签到成功增加经验
 						await this.$api.addExp(nowexp);
+						uni.showToast({
+							title:'签到成功',
+							icon:'none',
+							duration:1500
+						})
 					}
 					this.closemask();
 				}
@@ -207,20 +242,51 @@ export default {
 		signget:async function(){
 			var _this = this;
 			var newArr = [];
+			var tempsign = [
+				{
+					day:'周一',
+					exp:10
+				},
+				{
+					day:'周二',
+					exp:20
+				},
+				{
+					day:'周三',
+					exp:10
+				},
+				{
+					day:'周四',
+					exp:20
+				},
+				{
+					day:'周五',
+					exp:30
+				},
+				{
+					day:'周六',
+					exp:10
+				},
+				{
+					day:'周日',
+					exp:10
+				}
+			]
 			var signget = await this.$api.getData(this.$api.webapi.signget);
 			// this.signList;
 			console.log(this.signList)
 			signget.data.forEach(function(item,index,arr){
-				console.log(_this.signList[index])
-				var newitem = Object.assign(item,_this.signList[index]);
+				console.log(tempsign[index])
+				var newitem = Object.assign(item,tempsign[index]);
 				console.log(newitem)
 				newArr.push(newitem)
 			})
 			console.log(newArr);
-			this.signList = newArr;
-			this.$store.commit('changesignList', this.signList);
+			// this.signList = newArr;
+			
+			this.$store.commit('changesignList', newArr);
 			console.log('签到查询');
-			console.log(signget);
+			console.log(this.signList);
 			this.signIn = true;
 			this.cdtime = true;
 			this.nowWeek()
@@ -305,12 +371,20 @@ export default {
 						// this.cdtime = false;
 						this.closemask();
 					}else{
-						await this.$api.addExp(this.$api.expval.endtask);
-						await this.$api.starAdjust(this.star,'任务完成');
-						// await this.$api.getUserinfo()
-						this.taskSuccess = true;
-						this.nowtask = '';
-						this.exptype = this.$api.expval.endtask
+						if(state == 3){
+							await this.$api.addExp(this.$api.expval.endtask);
+							await this.$api.starAdjust(this.star,'任务完成');
+							// await this.$api.getUserinfo()
+							this.taskSuccess = true;
+							this.nowtask = '';
+							this.exptype = this.$api.expval.endtask
+						}
+						if(state == 4){
+							this.nowtask = '';
+							this.closemask();
+						}
+						
+						
 					}
 				}
 			}
@@ -321,26 +395,27 @@ export default {
 			console.log(this.rwlist)
 			var date = new Date();
 			console.log('当前日期')
-			this.datetime = this.$api.formatTime(date);
+			this.date = this.$api.formatTime(date);
 			console.log(this.$api.formatTime(date));
+			this.renderList(1,this.dataStep,this.date)
+		},
+		async renderList(from,count,dateTime){
 			var params = {
-				from: 1,
-				count: this.dataStep
+				from,
+				count,
+				dateTime
 			};
 			await this.$api.showLoading(); // 显示loading
 			var cjlist = await this.$api.getData(this.$api.webapi.TaskList, params);
 			await this.$api.hideLoading(); // 等待请求数据成功后，隐藏loading
 			if (this.$api.reshook(cjlist, this.$mp.page.route)) {
-				this.renderList(cjlist);
+				// this.renderList(cjlist);
+				if(cjlist.resultCode == 0){
+					this.rwlist = cjlist.data
+				}
 			}
 		},
-		renderList(res) {
-			// state  状态：1 创建完成，2 开始（未使用该状态），3 完成，4 超时
-			if(res.resultCode == 0){
-				this.rwlist = res.data
-			}
-			console.log(res);
-		},
+		
 		gotoCreate: function(e) {
 			let rwtype = e.currentTarget.dataset.type;
 			console.log(e.currentTarget.dataset.type);
@@ -383,16 +458,24 @@ export default {
 	@include rowflex;
 	justify-content:space-between;
 	.selectCon{
-		
+		width:256upx;
+		height:60upx;
+		line-height: 60upx;
+		border: 4upx solid #848484;
+		padding:0 20upx;
+		@include rowflex;
+		justify-content: space-between;
 	}
 	.signCon{
+		height:58upx;
 		padding:1upx 20upx;
 		border-radius: 10upx;
-		background: #489cf0;
-		color:#fff;
+		background-image: linear-gradient(#736427, #221e0c);
+		color: $color-m;
+		font-size: $fontsize-30;
 		image{
-			width:40upx;
-			height:40upx;
+			width:36upx;
+			height:36upx;
 			margin-right:20upx;
 		}
 		@include rowflex;
@@ -520,6 +603,23 @@ export default {
 		background: $color-m;
 		color: $color-36;
 		font-size: $fontsize-32;
+	}
+}
+.newsbox{
+	width:730upx;
+	height:40upx;
+	line-height: 40upx;
+	padding:10upx;
+	background: #E8F4D9;
+	font-size: $fontsize-24;
+	color: #666;
+	@include rowflex;
+	justify-content: flex-start;
+	image{
+		width:30upx;
+		height:30upx;
+		margin-right:16upx;
+		opacity: 0.3;
 	}
 }
 </style>

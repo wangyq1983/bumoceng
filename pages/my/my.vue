@@ -286,7 +286,6 @@ export default {
 	width: 750upx;
 	height: 300upx;
 	@include borderbottom;
-	background: url('/static/table.png') no-repeat;
 	background-size: 750upx 300upx;
 	@include userbor;
 }

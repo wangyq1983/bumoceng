@@ -197,6 +197,13 @@ page {
   color: #363636;
   font-size: 32rpx;
 }
+.arrow {
+  width: 0;
+  height: 0;
+  border-left: 10rpx solid transparent;
+  border-right: 10rpx solid transparent;
+  border-top: 13rpx solid #848484;
+}
 .typetip {
   width: 690rpx;
   padding: 30rpx;

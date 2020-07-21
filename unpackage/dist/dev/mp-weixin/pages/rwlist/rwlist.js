@@ -233,6 +233,23 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 {
   data: function data() {
     return {
@@ -252,37 +269,11 @@ __webpack_require__.r(__webpack_exports__);
       ifswitch: false,
       signid: '',
       signIn: false,
-      signList: [
-      {
-        day: '周一',
-        exp: 10 },
-
-      {
-        day: '周二',
-        exp: 20 },
-
-      {
-        day: '周三',
-        exp: 10 },
-
-      {
-        day: '周四',
-        exp: 20 },
-
-      {
-        day: '周五',
-        exp: 30 },
-
-      {
-        day: '周六',
-        exp: 10 },
-
-      {
-        day: '周日',
-        exp: 10 }],
+      signList: [],
 
 
-      nowweekday: '' };
+      nowweekday: '',
+      date: '' };
 
   },
   computed: {
@@ -304,44 +295,88 @@ __webpack_require__.r(__webpack_exports__);
     console.log('show');
   },
   methods: {
+
+    DateChange: function DateChange(e) {
+      console.log(e);
+      this.date = e.detail.value;
+      this.renderList(1, this.dataStep, this.date);
+    },
     daystate: function daystate(e) {
 
     },
+    clearsign: function () {var _clearsign = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:_context.next = 2;return (
+                  this.$api.getData(this.$api.webapi.signclear));case 2:case "end":return _context.stop();}}}, _callee, this);}));function clearsign() {return _clearsign.apply(this, arguments);}return clearsign;}(),
+
     signEvent: function signEvent() {
       this.signget();
     },
-    signOk: function () {var _signOk = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee(e) {var _this, nowexp, signed, params, signRes;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:
+    signOk: function () {var _signOk = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee2(e) {var _this, nowexp, signed, tempsign, params, signRes;return _regenerator.default.wrap(function _callee2$(_context2) {while (1) {switch (_context2.prev = _context2.next) {case 0:
                 _this = this;
                 console.log(this.nowweekday);
 
 
-                this.signList.forEach(function (item, index, arr) {
+                tempsign = [
+                {
+                  day: '周一',
+                  exp: 10 },
+
+                {
+                  day: '周二',
+                  exp: 20 },
+
+                {
+                  day: '周三',
+                  exp: 10 },
+
+                {
+                  day: '周四',
+                  exp: 20 },
+
+                {
+                  day: '周五',
+                  exp: 30 },
+
+                {
+                  day: '周六',
+                  exp: 10 },
+
+                {
+                  day: '周日',
+                  exp: 10 }];
+
+
+                tempsign.forEach(function (item, index, arr) {
                   if (item.day == _this.nowweekday) {
                     nowexp = item.exp;
                     signed = item.isSigned;
                   }
                 });
                 console.log(nowexp);if (
-                signed) {_context.next = 21;break;}
+                signed) {_context2.next = 23;break;}
                 params = {
-                  experience: nowexp };_context.next = 8;return (
+                  experience: nowexp };_context2.next = 9;return (
 
-                  this.$api.showLoading());case 8:_context.next = 10;return (
-                  this.$api.postData(this.$api.webapi.signin, params));case 10:signRes = _context.sent;_context.next = 13;return (
-                  this.$api.hideLoading());case 13:if (!
-                this.$api.reshook(signRes, this.$mp.page.route)) {_context.next = 19;break;}
+                  this.$api.showLoading());case 9:_context2.next = 11;return (
+                  this.$api.postData(this.$api.webapi.signin, params));case 11:signRes = _context2.sent;_context2.next = 14;return (
+                  this.$api.hideLoading());case 14:if (!
+                this.$api.reshook(signRes, this.$mp.page.route)) {_context2.next = 21;break;}
                 console.log(signRes);if (!(
-                signRes.resultCode == 0)) {_context.next = 18;break;}_context.next = 18;return (
+                signRes.resultCode == 0)) {_context2.next = 20;break;}_context2.next = 19;return (
 
-                  this.$api.addExp(nowexp));case 18:
+                  this.$api.addExp(nowexp));case 19:
+                uni.showToast({
+                  title: '签到成功',
+                  icon: 'none',
+                  duration: 1500 });case 20:
 
-                this.closemask();case 19:_context.next = 22;break;case 21:
+
+                this.closemask();case 21:_context2.next = 24;break;case 23:
 
 
                 uni.showToast({
                   title: '已经签到过了',
                   icon: 'none',
-                  duration: 1500 });case 22:case "end":return _context.stop();}}}, _callee, this);}));function signOk(_x) {return _signOk.apply(this, arguments);}return signOk;}(),
+                  duration: 1500 });case 24:case "end":return _context2.stop();}}}, _callee2, this);}));function signOk(_x) {return _signOk.apply(this, arguments);}return signOk;}(),
 
 
 
@@ -358,26 +393,57 @@ __webpack_require__.r(__webpack_exports__);
 
       this.nowweekday = weekList[d.getDay()];
     },
-    signget: function () {var _signget = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee2() {var _this, newArr, signget;return _regenerator.default.wrap(function _callee2$(_context2) {while (1) {switch (_context2.prev = _context2.next) {case 0:
+    signget: function () {var _signget = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee3() {var _this, newArr, tempsign, signget;return _regenerator.default.wrap(function _callee3$(_context3) {while (1) {switch (_context3.prev = _context3.next) {case 0:
                 _this = this;
-                newArr = [];_context2.next = 4;return (
-                  this.$api.getData(this.$api.webapi.signget));case 4:signget = _context2.sent;
+                newArr = [];
+                tempsign = [
+                {
+                  day: '周一',
+                  exp: 10 },
+
+                {
+                  day: '周二',
+                  exp: 20 },
+
+                {
+                  day: '周三',
+                  exp: 10 },
+
+                {
+                  day: '周四',
+                  exp: 20 },
+
+                {
+                  day: '周五',
+                  exp: 30 },
+
+                {
+                  day: '周六',
+                  exp: 10 },
+
+                {
+                  day: '周日',
+                  exp: 10 }];_context3.next = 5;return (
+
+
+                  this.$api.getData(this.$api.webapi.signget));case 5:signget = _context3.sent;
                 // this.signList;
                 console.log(this.signList);
                 signget.data.forEach(function (item, index, arr) {
-                  console.log(_this.signList[index]);
-                  var newitem = Object.assign(item, _this.signList[index]);
+                  console.log(tempsign[index]);
+                  var newitem = Object.assign(item, tempsign[index]);
                   console.log(newitem);
                   newArr.push(newitem);
                 });
                 console.log(newArr);
-                this.signList = newArr;
-                this.$store.commit('changesignList', this.signList);
+                // this.signList = newArr;
+
+                this.$store.commit('changesignList', newArr);
                 console.log('签到查询');
-                console.log(signget);
+                console.log(this.signList);
                 this.signIn = true;
                 this.cdtime = true;
-                this.nowWeek();case 15:case "end":return _context2.stop();}}}, _callee2, this);}));function signget() {return _signget.apply(this, arguments);}return signget;}(),
+                this.nowWeek();case 15:case "end":return _context3.stop();}}}, _callee3, this);}));function signget() {return _signget.apply(this, arguments);}return signget;}(),
 
     deltask: function deltask(id) {
       this.rwlist.forEach(function (item, index, arr) {
@@ -436,7 +502,7 @@ __webpack_require__.r(__webpack_exports__);
       this.init();
     },
     // 任务完成
-    timed: function () {var _timed = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee3(minute, state) {var params, taskend;return _regenerator.default.wrap(function _callee3$(_context3) {while (1) {switch (_context3.prev = _context3.next) {case 0:
+    timed: function () {var _timed = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee4(minute, state) {var params, taskend;return _regenerator.default.wrap(function _callee4$(_context4) {while (1) {switch (_context4.prev = _context4.next) {case 0:
                 console.log('秒数');
                 console.log(minute);
                 console.log('nowtask is');
@@ -444,57 +510,66 @@ __webpack_require__.r(__webpack_exports__);
                 params = {
                   id: this.nowtask,
                   realDuration: minute,
-                  state: state };_context3.next = 7;return (
+                  state: state };_context4.next = 7;return (
 
-                  this.$api.showLoading());case 7:_context3.next = 9;return (
-                  this.$api.postData(this.$api.webapi.TaskEnd, params));case 9:taskend = _context3.sent;_context3.next = 12;return (
+                  this.$api.showLoading());case 7:_context4.next = 9;return (
+                  this.$api.postData(this.$api.webapi.TaskEnd, params));case 9:taskend = _context4.sent;_context4.next = 12;return (
                   this.$api.hideLoading());case 12:if (!
-                this.$api.reshook(taskend, this.$mp.page.route)) {_context3.next = 26;break;}
+                this.$api.reshook(taskend, this.$mp.page.route)) {_context4.next = 28;break;}
                 console.log(taskend);if (!(
-                taskend.resultCode == 0)) {_context3.next = 26;break;}if (!
-                this.ifswitch) {_context3.next = 19;break;}
+                taskend.resultCode == 0)) {_context4.next = 28;break;}if (!
+                this.ifswitch) {_context4.next = 19;break;}
                 //await this.$api.addExp(this.$api.expval.endtask)
                 //this.taskSuccess = true;
                 // this.nowtask = '';
                 // this.cdtime = false;
-                this.closemask();_context3.next = 26;break;case 19:_context3.next = 21;return (
+                this.closemask();_context4.next = 28;break;case 19:if (!(
 
-                  this.$api.addExp(this.$api.expval.endtask));case 21:_context3.next = 23;return (
-                  this.$api.starAdjust(this.star, '任务完成'));case 23:
+                state == 3)) {_context4.next = 27;break;}_context4.next = 22;return (
+                  this.$api.addExp(this.$api.expval.endtask));case 22:_context4.next = 24;return (
+                  this.$api.starAdjust(this.star, '任务完成'));case 24:
                 // await this.$api.getUserinfo()
                 this.taskSuccess = true;
                 this.nowtask = '';
-                this.exptype = this.$api.expval.endtask;case 26:case "end":return _context3.stop();}}}, _callee3, this);}));function timed(_x2, _x3) {return _timed.apply(this, arguments);}return timed;}(),
+                this.exptype = this.$api.expval.endtask;case 27:
+
+                if (state == 4) {
+                  this.nowtask = '';
+                  this.closemask();
+                }case 28:case "end":return _context4.stop();}}}, _callee4, this);}));function timed(_x2, _x3) {return _timed.apply(this, arguments);}return timed;}(),
 
 
 
 
-    init: function init() {var _this2 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee4() {var date, params, cjlist;return _regenerator.default.wrap(function _callee4$(_context4) {while (1) {switch (_context4.prev = _context4.next) {case 0:
+
+
+    init: function init() {var _this2 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee5() {var date;return _regenerator.default.wrap(function _callee5$(_context5) {while (1) {switch (_context5.prev = _context5.next) {case 0:
                 console.log('init run');
                 console.log(_this2.dataStep);
                 console.log(_this2.rwlist);
                 date = new Date();
                 console.log('当前日期');
-                _this2.datetime = _this2.$api.formatTime(date);
+                _this2.date = _this2.$api.formatTime(date);
                 console.log(_this2.$api.formatTime(date));
+                _this2.renderList(1, _this2.dataStep, _this2.date);case 8:case "end":return _context5.stop();}}}, _callee5);}))();
+    },
+    renderList: function renderList(from, count, dateTime) {var _this3 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee6() {var params, cjlist;return _regenerator.default.wrap(function _callee6$(_context6) {while (1) {switch (_context6.prev = _context6.next) {case 0:
                 params = {
-                  from: 1,
-                  count: _this2.dataStep };_context4.next = 10;return (
+                  from: from,
+                  count: count,
+                  dateTime: dateTime };_context6.next = 3;return (
 
-                  _this2.$api.showLoading());case 10:_context4.next = 12;return (
-                  _this2.$api.getData(_this2.$api.webapi.TaskList, params));case 12:cjlist = _context4.sent;_context4.next = 15;return (
-                  _this2.$api.hideLoading());case 15: // 等待请求数据成功后，隐藏loading
-                if (_this2.$api.reshook(cjlist, _this2.$mp.page.route)) {
-                  _this2.renderList(cjlist);
-                }case 16:case "end":return _context4.stop();}}}, _callee4);}))();
+                  _this3.$api.showLoading());case 3:_context6.next = 5;return (
+                  _this3.$api.getData(_this3.$api.webapi.TaskList, params));case 5:cjlist = _context6.sent;_context6.next = 8;return (
+                  _this3.$api.hideLoading());case 8: // 等待请求数据成功后，隐藏loading
+                if (_this3.$api.reshook(cjlist, _this3.$mp.page.route)) {
+                  // this.renderList(cjlist);
+                  if (cjlist.resultCode == 0) {
+                    _this3.rwlist = cjlist.data;
+                  }
+                }case 9:case "end":return _context6.stop();}}}, _callee6);}))();
     },
-    renderList: function renderList(res) {
-      // state  状态：1 创建完成，2 开始（未使用该状态），3 完成，4 超时
-      if (res.resultCode == 0) {
-        this.rwlist = res.data;
-      }
-      console.log(res);
-    },
+
     gotoCreate: function gotoCreate(e) {
       var rwtype = e.currentTarget.dataset.type;
       console.log(e.currentTarget.dataset.type);

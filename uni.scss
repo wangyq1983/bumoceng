@@ -214,3 +214,11 @@ page {
 	color: $color-36;
 	font-size: $fontsize-32;
 }
+
+.arrow{
+	width: 0;
+	height: 0;
+	border-left: 10upx solid transparent;
+	border-right: 10upx solid transparent;
+	border-top:13upx solid #848484;
+}

@@ -5,14 +5,14 @@
 		<view class="menuguide"><view class="">总排行</view></view>
 
 		<view class="phlist">
-			<view class="phitem">
+			<view class="phitem" v-for="(items,index) in phlist">
 				<view class="phNum">1</view>
-				<image src="/static/1.jpg" mode=""></image>
+				<image :src="items.avatarUrl" mode=""></image>
 				<view class="phinfo">
 					<view class="phname">王玉强</view>
-					<view class="phlevel">Lv1</view>
+					<view class="phlevel">Lv{{items.userLevelInfo.level}}</view>
 				</view>
-				<view class="">2小时</view>
+				<view class="">{{items.realDurationSumZh}}</view>
 			</view>
 		</view>
 	</view>
@@ -22,7 +22,13 @@
 export default {
 	data() {
 		return {
-			dataStep:50
+			dataStep:50,
+			phlist:[
+				
+			],
+			phlistWeek:[
+				
+			]
 		};
 	},
 	onLoad() {
@@ -30,6 +36,9 @@ export default {
 	},
 	methods: {
 		async init(){
+			//  rankType  
+			//  summaryRank 总排行
+			//  weekRank  周排行
 			var params = {
 				from: 1,
 				count: this.dataStep,
@@ -40,6 +49,7 @@ export default {
 			await this.$api.hideLoading(); // 等待请求数据成功后，隐藏loading
 			if (this.$api.reshook(ranklist, this.$mp.page.route)) {
 				console.log(ranklist)
+				this.phlist = ranklist.data
 			}
 		}
 	}

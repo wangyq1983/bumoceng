@@ -161,6 +161,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 var _default =
 {
   data: function data() {
@@ -193,7 +198,7 @@ var _default =
   created: function created() {
     console.log('组件创建后，但还未挂载');
     this.itemcon = this.info;
-    console.log(this.itemcon);
+    // console.log(this.itemcon);
   },
   computed: {
     realtime: function realtime() {
