@@ -1,0 +1,1 @@
+<view class="nodata"><view style="margin-top:60rpx;margin-botto:50rpx;"><image class="nodataImg" src="/static/nodata.jpg"></image></view><view class="nodataTxt">{{wordinfo}}</view></view>

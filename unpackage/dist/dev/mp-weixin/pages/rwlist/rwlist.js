@@ -115,6 +115,12 @@ var components = {
   },
   rwlistItem: function() {
     return __webpack_require__.e(/*! import() | components/rwlistItem/rwlistItem */ "components/rwlistItem/rwlistItem").then(__webpack_require__.bind(null, /*! @/components/rwlistItem/rwlistItem.vue */ 135))
+  },
+  nodata: function() {
+    return __webpack_require__.e(/*! import() | components/nodata/nodata */ "components/nodata/nodata").then(__webpack_require__.bind(null, /*! @/components/nodata/nodata.vue */ 142))
+  },
+  endLine: function() {
+    return __webpack_require__.e(/*! import() | components/endLine/endLine */ "components/endLine/endLine").then(__webpack_require__.bind(null, /*! @/components/endLine/endLine.vue */ 149))
   }
 }
 var render = function() {
@@ -152,7 +158,13 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _regenerator = _interopRequireDefault(__webpack_require__(/*! ./node_modules/@vue/babel-preset-app/node_modules/@babel/runtime/regenerator */ 10));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}var uniCountdown = function uniCountdown() {__webpack_require__.e(/*! require.ensure | components/uni-countdown/uni-countdown */ "components/uni-countdown/uni-countdown").then((function () {return resolve(__webpack_require__(/*! @/components/uni-countdown/uni-countdown.vue */ 142));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _regenerator = _interopRequireDefault(__webpack_require__(/*! ./node_modules/@vue/babel-preset-app/node_modules/@babel/runtime/regenerator */ 10));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}var uniCountdown = function uniCountdown() {__webpack_require__.e(/*! require.ensure | components/uni-countdown/uni-countdown */ "components/uni-countdown/uni-countdown").then((function () {return resolve(__webpack_require__(/*! @/components/uni-countdown/uni-countdown.vue */ 156));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
+
+
+
+
+
+
 
 
 
@@ -269,11 +281,13 @@ __webpack_require__.r(__webpack_exports__);
       ifswitch: false,
       signid: '',
       signIn: false,
-      signList: [],
 
 
       nowweekday: '',
-      date: '' };
+      date: '',
+      enddate: '',
+      isEmpty: 0,
+      isEnd: false };
 
   },
   computed: {
@@ -294,23 +308,37 @@ __webpack_require__.r(__webpack_exports__);
     console.log();
     console.log('show');
   },
+  onReachBottom: function () {var _onReachBottom = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {var params;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:
+              console.log('onReachBottom');
+              console.log(this.rwlist.length);
+              params = {
+                from: this.rwlist.length + 1,
+                count: this.dataStep };
+
+
+              if (this.isEnd !== true) {
+                this.renderList(this.rwlist.length + 1, this.dataStep, this.date);
+              }case 4:case "end":return _context.stop();}}}, _callee, this);}));function onReachBottom() {return _onReachBottom.apply(this, arguments);}return onReachBottom;}(),
+
   methods: {
 
     DateChange: function DateChange(e) {
       console.log(e);
       this.date = e.detail.value;
+      this.rwlist = [];
+      this.isEnd = false;
       this.renderList(1, this.dataStep, this.date);
     },
     daystate: function daystate(e) {
 
     },
-    clearsign: function () {var _clearsign = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:_context.next = 2;return (
-                  this.$api.getData(this.$api.webapi.signclear));case 2:case "end":return _context.stop();}}}, _callee, this);}));function clearsign() {return _clearsign.apply(this, arguments);}return clearsign;}(),
+    clearsign: function () {var _clearsign = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee2() {return _regenerator.default.wrap(function _callee2$(_context2) {while (1) {switch (_context2.prev = _context2.next) {case 0:_context2.next = 2;return (
+                  this.$api.getData(this.$api.webapi.signclear));case 2:case "end":return _context2.stop();}}}, _callee2, this);}));function clearsign() {return _clearsign.apply(this, arguments);}return clearsign;}(),
 
     signEvent: function signEvent() {
       this.signget();
     },
-    signOk: function () {var _signOk = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee2(e) {var _this, nowexp, signed, tempsign, params, signRes;return _regenerator.default.wrap(function _callee2$(_context2) {while (1) {switch (_context2.prev = _context2.next) {case 0:
+    signOk: function () {var _signOk = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee3(e) {var _this, nowexp, signed, tempsign, params, signRes;return _regenerator.default.wrap(function _callee3$(_context3) {while (1) {switch (_context3.prev = _context3.next) {case 0:
                 _this = this;
                 console.log(this.nowweekday);
 
@@ -352,31 +380,31 @@ __webpack_require__.r(__webpack_exports__);
                   }
                 });
                 console.log(nowexp);if (
-                signed) {_context2.next = 23;break;}
+                signed) {_context3.next = 22;break;}
                 params = {
-                  experience: nowexp };_context2.next = 9;return (
+                  experience: nowexp };_context3.next = 9;return (
 
-                  this.$api.showLoading());case 9:_context2.next = 11;return (
-                  this.$api.postData(this.$api.webapi.signin, params));case 11:signRes = _context2.sent;_context2.next = 14;return (
+                  this.$api.showLoading());case 9:_context3.next = 11;return (
+                  this.$api.postData(this.$api.webapi.signin, params));case 11:signRes = _context3.sent;_context3.next = 14;return (
                   this.$api.hideLoading());case 14:if (!
-                this.$api.reshook(signRes, this.$mp.page.route)) {_context2.next = 21;break;}
+                this.$api.reshook(signRes, this.$mp.page.route)) {_context3.next = 20;break;}
                 console.log(signRes);if (!(
-                signRes.resultCode == 0)) {_context2.next = 20;break;}_context2.next = 19;return (
+                signRes.resultCode == 0)) {_context3.next = 20;break;}_context3.next = 19;return (
 
                   this.$api.addExp(nowexp));case 19:
                 uni.showToast({
                   title: '签到成功',
                   icon: 'none',
-                  duration: 1500 });case 20:
+                  duration: 1500 });case 20:_context3.next = 23;break;case 22:
 
 
-                this.closemask();case 21:_context2.next = 24;break;case 23:
+
 
 
                 uni.showToast({
                   title: '已经签到过了',
                   icon: 'none',
-                  duration: 1500 });case 24:case "end":return _context2.stop();}}}, _callee2, this);}));function signOk(_x) {return _signOk.apply(this, arguments);}return signOk;}(),
+                  duration: 1500 });case 23:case "end":return _context3.stop();}}}, _callee3, this);}));function signOk(_x) {return _signOk.apply(this, arguments);}return signOk;}(),
 
 
 
@@ -393,7 +421,7 @@ __webpack_require__.r(__webpack_exports__);
 
       this.nowweekday = weekList[d.getDay()];
     },
-    signget: function () {var _signget = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee3() {var _this, newArr, tempsign, signget;return _regenerator.default.wrap(function _callee3$(_context3) {while (1) {switch (_context3.prev = _context3.next) {case 0:
+    signget: function () {var _signget = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee4() {var _this, newArr, tempsign, signget;return _regenerator.default.wrap(function _callee4$(_context4) {while (1) {switch (_context4.prev = _context4.next) {case 0:
                 _this = this;
                 newArr = [];
                 tempsign = [
@@ -423,12 +451,12 @@ __webpack_require__.r(__webpack_exports__);
 
                 {
                   day: '周日',
-                  exp: 10 }];_context3.next = 5;return (
+                  exp: 10 }];_context4.next = 5;return (
 
 
-                  this.$api.getData(this.$api.webapi.signget));case 5:signget = _context3.sent;
+                  this.$api.getData(this.$api.webapi.signget));case 5:signget = _context4.sent;
                 // this.signList;
-                console.log(this.signList);
+                // console.log(this.signList)
                 signget.data.forEach(function (item, index, arr) {
                   console.log(tempsign[index]);
                   var newitem = Object.assign(item, tempsign[index]);
@@ -440,10 +468,10 @@ __webpack_require__.r(__webpack_exports__);
 
                 this.$store.commit('changesignList', newArr);
                 console.log('签到查询');
-                console.log(this.signList);
+                // console.log(this.signList);
                 this.signIn = true;
                 this.cdtime = true;
-                this.nowWeek();case 15:case "end":return _context3.stop();}}}, _callee3, this);}));function signget() {return _signget.apply(this, arguments);}return signget;}(),
+                this.nowWeek();case 13:case "end":return _context4.stop();}}}, _callee4, this);}));function signget() {return _signget.apply(this, arguments);}return signget;}(),
 
     deltask: function deltask(id) {
       this.rwlist.forEach(function (item, index, arr) {
@@ -489,20 +517,30 @@ __webpack_require__.r(__webpack_exports__);
       console.log(this);
       if (this.taskSuccess) {
         this.taskSuccess = false;
+        this.showhour = false;
+        this.cdtime = false;
+        this.nowtask = '';
+        this.rwlist = [];
+
+        this.init();
       } else if (this.signIn) {
         this.signIn = false;
+        this.showhour = false;
+        this.cdtime = false;
+        this.nowtask = '';
       } else {
         this.$refs.countDown.audiostop();
-      }
-      this.showhour = false;
-      this.cdtime = false;
-      this.nowtask = '';
-      this.rwlist = [];
+        this.showhour = false;
+        this.cdtime = false;
+        this.nowtask = '';
+        this.rwlist = [];
 
-      this.init();
+        this.init();
+      }
+
     },
     // 任务完成
-    timed: function () {var _timed = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee4(minute, state) {var params, taskend;return _regenerator.default.wrap(function _callee4$(_context4) {while (1) {switch (_context4.prev = _context4.next) {case 0:
+    timed: function () {var _timed = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee5(minute, state) {var params, taskend;return _regenerator.default.wrap(function _callee5$(_context5) {while (1) {switch (_context5.prev = _context5.next) {case 0:
                 console.log('秒数');
                 console.log(minute);
                 console.log('nowtask is');
@@ -510,23 +548,23 @@ __webpack_require__.r(__webpack_exports__);
                 params = {
                   id: this.nowtask,
                   realDuration: minute,
-                  state: state };_context4.next = 7;return (
+                  state: state };_context5.next = 7;return (
 
-                  this.$api.showLoading());case 7:_context4.next = 9;return (
-                  this.$api.postData(this.$api.webapi.TaskEnd, params));case 9:taskend = _context4.sent;_context4.next = 12;return (
+                  this.$api.showLoading());case 7:_context5.next = 9;return (
+                  this.$api.postData(this.$api.webapi.TaskEnd, params));case 9:taskend = _context5.sent;_context5.next = 12;return (
                   this.$api.hideLoading());case 12:if (!
-                this.$api.reshook(taskend, this.$mp.page.route)) {_context4.next = 28;break;}
+                this.$api.reshook(taskend, this.$mp.page.route)) {_context5.next = 28;break;}
                 console.log(taskend);if (!(
-                taskend.resultCode == 0)) {_context4.next = 28;break;}if (!
-                this.ifswitch) {_context4.next = 19;break;}
+                taskend.resultCode == 0)) {_context5.next = 28;break;}if (!
+                this.ifswitch) {_context5.next = 19;break;}
                 //await this.$api.addExp(this.$api.expval.endtask)
                 //this.taskSuccess = true;
                 // this.nowtask = '';
                 // this.cdtime = false;
-                this.closemask();_context4.next = 28;break;case 19:if (!(
+                this.closemask();_context5.next = 28;break;case 19:if (!(
 
-                state == 3)) {_context4.next = 27;break;}_context4.next = 22;return (
-                  this.$api.addExp(this.$api.expval.endtask));case 22:_context4.next = 24;return (
+                state == 3)) {_context5.next = 27;break;}_context5.next = 22;return (
+                  this.$api.addExp(this.$api.expval.endtask));case 22:_context5.next = 24;return (
                   this.$api.starAdjust(this.star, '任务完成'));case 24:
                 // await this.$api.getUserinfo()
                 this.taskSuccess = true;
@@ -536,38 +574,48 @@ __webpack_require__.r(__webpack_exports__);
                 if (state == 4) {
                   this.nowtask = '';
                   this.closemask();
-                }case 28:case "end":return _context4.stop();}}}, _callee4, this);}));function timed(_x2, _x3) {return _timed.apply(this, arguments);}return timed;}(),
+                }case 28:case "end":return _context5.stop();}}}, _callee5, this);}));function timed(_x2, _x3) {return _timed.apply(this, arguments);}return timed;}(),
 
 
 
 
 
 
-    init: function init() {var _this2 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee5() {var date;return _regenerator.default.wrap(function _callee5$(_context5) {while (1) {switch (_context5.prev = _context5.next) {case 0:
+    init: function init() {var _this2 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee6() {var date;return _regenerator.default.wrap(function _callee6$(_context6) {while (1) {switch (_context6.prev = _context6.next) {case 0:
                 console.log('init run');
                 console.log(_this2.dataStep);
                 console.log(_this2.rwlist);
                 date = new Date();
                 console.log('当前日期');
                 _this2.date = _this2.$api.formatTime(date);
+                _this2.enddate = _this2.$api.formatTime(date);
                 console.log(_this2.$api.formatTime(date));
-                _this2.renderList(1, _this2.dataStep, _this2.date);case 8:case "end":return _context5.stop();}}}, _callee5);}))();
+                _this2.renderList(1, _this2.dataStep, _this2.date);case 9:case "end":return _context6.stop();}}}, _callee6);}))();
     },
-    renderList: function renderList(from, count, dateTime) {var _this3 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee6() {var params, cjlist;return _regenerator.default.wrap(function _callee6$(_context6) {while (1) {switch (_context6.prev = _context6.next) {case 0:
+    renderList: function renderList(from, count, dateTime) {var _this3 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee7() {var params, cjlist;return _regenerator.default.wrap(function _callee7$(_context7) {while (1) {switch (_context7.prev = _context7.next) {case 0:
                 params = {
                   from: from,
                   count: count,
-                  dateTime: dateTime };_context6.next = 3;return (
+                  dateTime: dateTime };_context7.next = 3;return (
 
-                  _this3.$api.showLoading());case 3:_context6.next = 5;return (
-                  _this3.$api.getData(_this3.$api.webapi.TaskList, params));case 5:cjlist = _context6.sent;_context6.next = 8;return (
+                  _this3.$api.showLoading());case 3:_context7.next = 5;return (
+                  _this3.$api.getData(_this3.$api.webapi.TaskList, params));case 5:cjlist = _context7.sent;_context7.next = 8;return (
                   _this3.$api.hideLoading());case 8: // 等待请求数据成功后，隐藏loading
                 if (_this3.$api.reshook(cjlist, _this3.$mp.page.route)) {
                   // this.renderList(cjlist);
                   if (cjlist.resultCode == 0) {
-                    _this3.rwlist = cjlist.data;
+                    if (cjlist.data.length == 0) {
+                      _this3.isEmpty = 1;
+                      _this3.isEnd = false;
+                      _this3.rwlist = cjlist.data;
+                    } else {
+                      _this3.isEmpty = 0;
+                      _this3.isEnd = cjlist.data.length < _this3.dataStep ? true : false;
+                      _this3.rwlist = _this3.rwlist.length == 0 ? cjlist.data : _this3.rwlist.concat(cjlist.data);
+                    }
+                    // this.rwlist = cjlist.data
                   }
-                }case 9:case "end":return _context6.stop();}}}, _callee6);}))();
+                }case 9:case "end":return _context7.stop();}}}, _callee7);}))();
     },
 
     gotoCreate: function gotoCreate(e) {

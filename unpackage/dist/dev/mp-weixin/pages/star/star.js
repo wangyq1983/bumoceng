@@ -201,38 +201,36 @@ var _default =
     saveEvent: function () {var _saveEvent = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {var StarCount, starNum, params, starRes;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:
                 StarCount = Number(this.inputstar);
                 console.log(StarCount);if (!(
-                Number.isInteger(StarCount) && StarCount !== 0)) {_context.next = 15;break;}
+                Number.isInteger(StarCount) && StarCount !== 0)) {_context.next = 20;break;}
                 starNum = this.changeType == 'add' ? StarCount : -Math.abs(StarCount);
                 params = {
                   adjustCount: starNum,
                   reason: this.starliyou };_context.next = 7;return (
 
                   this.$api.showLoading());case 7:_context.next = 9;return (
-                  this.$api.starAdjust(starNum, this.starliyou));case 9:starRes = _context.sent;_context.next = 12;return (
-                  this.$api.hideLoading());case 12: // 等待请求数据成功后，隐藏loading
-                if (this.$api.reshook(starRes, this.$mp.page.route)) {
-                  if (starRes.resultCode == 0) {
-                    uni.showToast({
-                      title: '操作成功！',
-                      icon: 'none',
-                      duration: 1500 });
+
+                  this.$api.postData(this.$api.webapi.star, params));case 9:starRes = _context.sent;_context.next = 12;return (
+                  this.$api.hideLoading());case 12:if (!
+                this.$api.reshook(starRes, this.$mp.page.route)) {_context.next = 18;break;}if (!(
+                starRes.resultCode == 0)) {_context.next = 18;break;}_context.next = 16;return (
+                  this.$api.getUserinfo());case 16:
+                uni.showToast({
+                  title: '操作成功！',
+                  icon: 'none',
+                  duration: 1500 });
+
+                setTimeout(function () {
+                  uni.navigateTo({
+                    url: '/pages/starhistory/starhistory' });
+
+                }, 1500);case 18:_context.next = 21;break;case 20:
 
 
-
-
-                    setTimeout(function () {
-                      uni.navigateTo({
-                        url: '/pages/starhistory/starhistory' });
-
-                    }, 1500);
-
-                  }
-                }_context.next = 16;break;case 15:
 
                 uni.showToast({
                   title: '星数量请输入整数',
                   icon: 'none',
-                  duration: 1500 });case 16:case "end":return _context.stop();}}}, _callee, this);}));function saveEvent() {return _saveEvent.apply(this, arguments);}return saveEvent;}() } };exports.default = _default;
+                  duration: 1500 });case 21:case "end":return _context.stop();}}}, _callee, this);}));function saveEvent() {return _saveEvent.apply(this, arguments);}return saveEvent;}() } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),

@@ -55,7 +55,7 @@
 		</view>
 		<view class="timeSelect">
 			
-			<picker mode="date" :value="date" start="2020-07-01" :end="date" @change="DateChange">
+			<picker mode="date" :value="date" start="2020-07-01" :end="enddate" @change="DateChange">
 				<view class="selectCon">
 					<view class="">
 						{{date}}
@@ -91,6 +91,12 @@
 			</view>
 		</view>
 		<rwlistItem v-for="items in rwlist" :key='items.id' :info = "items" @on-cdtime = "countTime" @on-zhiliang = "zhiliang" @on-del = "deltask"></rwlistItem>
+		<view v-if = "isEmpty == 1">
+		    <nodata wordinfo = "暂无任务"></nodata>
+		  </view>
+		  <view v-if="isEnd == true">
+		     <endLine></endLine>
+		  </view>
 	</view>
 </template>
 
@@ -115,11 +121,13 @@ export default {
 			ifswitch:false,
 			signid:'',
 			signIn:false,
-			signList:[
-				
-			],
+
+
 			nowweekday:'',
 			date: '',
+			enddate:'',
+			isEmpty: 0,
+			isEnd: false
 		};
 	},
 	computed:{
@@ -140,11 +148,25 @@ export default {
 		console.log();
 		console.log('show');
 	},
+	onReachBottom: async function(){
+		console.log('onReachBottom');
+		console.log(this.rwlist.length)
+		let params = {
+		      from: this.rwlist.length + 1,
+		      count: this.dataStep
+		    }
+			
+		    if (this.isEnd !== true) {
+		      this.renderList(this.rwlist.length + 1,this.dataStep,this.date)
+		    }
+	},
 	methods: {
 		
 		DateChange:function(e) {
 			console.log(e)
 			this.date = e.detail.value;
+			this.rwlist = [];
+			this.isEnd = false;
 			this.renderList(1,this.dataStep,this.date)
 		},
 		daystate:function(e){
@@ -216,7 +238,7 @@ export default {
 							duration:1500
 						})
 					}
-					this.closemask();
+					// this.closemask();
 				}
 			}else{
 				uni.showToast({
@@ -274,7 +296,7 @@ export default {
 			]
 			var signget = await this.$api.getData(this.$api.webapi.signget);
 			// this.signList;
-			console.log(this.signList)
+			// console.log(this.signList)
 			signget.data.forEach(function(item,index,arr){
 				console.log(tempsign[index])
 				var newitem = Object.assign(item,tempsign[index]);
@@ -286,7 +308,7 @@ export default {
 			
 			this.$store.commit('changesignList', newArr);
 			console.log('签到查询');
-			console.log(this.signList);
+			// console.log(this.signList);
 			this.signIn = true;
 			this.cdtime = true;
 			this.nowWeek()
@@ -334,18 +356,28 @@ export default {
 		closemask:function(){
 			console.log(this);
 			if(this.taskSuccess){
-				this.taskSuccess = false
+				this.taskSuccess = false;
+				this.showhour = false;
+				this.cdtime = false;
+				this.nowtask = '';
+				this.rwlist = [];
+				
+				this.init();
 			}else if(this.signIn){
-				this.signIn = false
+				this.signIn = false;
+				this.showhour = false;
+				this.cdtime = false;
+				this.nowtask = '';
 			}else{
-				this.$refs.countDown.audiostop()
+				this.$refs.countDown.audiostop();
+				this.showhour = false;
+				this.cdtime = false;
+				this.nowtask = '';
+				this.rwlist = [];
+				
+				this.init();
 			}
-			this.showhour = false;
-			this.cdtime = false;
-			this.nowtask = '';
-			this.rwlist = [];
 			
-			this.init();
 		},
 		// 任务完成
 		timed:async function(minute,state){
@@ -396,6 +428,7 @@ export default {
 			var date = new Date();
 			console.log('当前日期')
 			this.date = this.$api.formatTime(date);
+			this.enddate = this.$api.formatTime(date);
 			console.log(this.$api.formatTime(date));
 			this.renderList(1,this.dataStep,this.date)
 		},
@@ -411,7 +444,16 @@ export default {
 			if (this.$api.reshook(cjlist, this.$mp.page.route)) {
 				// this.renderList(cjlist);
 				if(cjlist.resultCode == 0){
-					this.rwlist = cjlist.data
+					if (cjlist.data.length == 0) {
+						this.isEmpty = 1;
+						this.isEnd = false;
+						this.rwlist = cjlist.data
+					    } else {
+					      this.isEmpty = 0;
+					      this.isEnd = (cjlist.data.length < this.dataStep) ? true : false;
+					      this.rwlist = (this.rwlist.length == 0) ? cjlist.data : this.rwlist.concat(cjlist.data)
+					    }
+					// this.rwlist = cjlist.data
 				}
 			}
 		},

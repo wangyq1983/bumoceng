@@ -1,9 +1,12 @@
 {
+  "onReachBottomDistance": 126,
   "usingComponents": {
     "mask": "/components/mask/mask",
     "successdata": "/components/successdata/successdata",
     "userinfo": "/components/userinfo/userinfo",
     "rwlist-item": "/components/rwlistItem/rwlistItem",
+    "nodata": "/components/nodata/nodata",
+    "end-line": "/components/endLine/endLine",
     "uni-countdown": "/components/uni-countdown/uni-countdown"
   }
 }

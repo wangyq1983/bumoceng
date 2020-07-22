@@ -20,13 +20,7 @@
 			<view class="">星愿奖励</view>
 		</view>
 		<view class="jllist">
-			<!-- <uni-swipe-action>
-				<uni-swipe-action-item :options="options1" @click="bindClick">
-					<view class="" style="width:750upx;height:200upx; background: #fff; position: relative;">
-						ABCDEFGHIJKLMNOPQRSTUVWXYZ
-					</view>
-				</uni-swipe-action-item>
-				</uni-swipe-action>	 -->
+			
 			<uni-swipe-action>
 				<uni-swipe-action-item :options="items.delarr" @click="bindClick" data-id="items.id" v-for="items in rewardList" :key="items.id">
 					<view class="jlitem" data-id="items.id">
@@ -45,7 +39,12 @@
 				</uni-swipe-action-item>
 			</uni-swipe-action>
 		</view>
-
+		<view v-if = "isEmpty == 1">
+		    <nodata wordinfo = "还没有添加星愿奖励哦"></nodata>
+		  </view>
+		  <view v-if="isEnd == true">
+		     <endLine></endLine>
+		  </view>
 		<view class="addxy" @tap="addReward">
 			<view class="addxyBtn"></view>
 			<view class="addxyBtn1"></view>
@@ -61,11 +60,25 @@ export default {
 			rewardList: [],
 			creward: false,
 			rewardcon: '',
-			starcon: ''
+			starcon: '',
+			isEmpty: 0,
+			isEnd: false
 		};
 	},
 	onLoad() {
 		this.init();
+	},
+	onReachBottom: async function(){
+		console.log('onReachBottom');
+		console.log(this.rewardList.length)
+		let params = {
+		      from: this.rewardList.length + 1,
+		      count: this.dataStep
+		    }
+			
+		    if (this.isEnd !== true) {
+		      this.renderReward(this.rewardList.length + 1,this.dataStep)
+		    }
 	},
 	methods: {
 		async bindClick(e) {
@@ -83,6 +96,7 @@ export default {
 						icon: 'none',
 						duration: 1500
 					});
+					this.rewardList = [];
 					this.init();
 				}
 			}
@@ -111,7 +125,7 @@ export default {
 
 						// 是否要更新用户信息相关星？
 						await this.$api.starAdjust(-item.consumeCount,item.description);
-						
+						this.rewardList = [];
 						this.init();
 					}
 				}
@@ -135,6 +149,7 @@ export default {
 							icon: 'none',
 							duration: 1500
 						});
+						this.rewardList = [];
 						this.init();
 					}
 				}
@@ -146,35 +161,53 @@ export default {
 				});
 			}
 		},
-		async init() {
+		async renderReward(from,count){
 			var params = {
-				from: 1,
-				count: this.dataStep
-			};
-			await this.$api.showLoading(); // 显示loading
-			var rewardlist = await this.$api.getData(this.$api.webapi.rewardList, params);
-			await this.$api.hideLoading(); // 等待请求数据成功后，隐藏loading
-			if (this.$api.reshook(rewardlist, this.$mp.page.route)) {
-				if (rewardlist.resultCode == 0) {
-					this.rewardList = rewardlist.data;
+					from,
+					count
+				};
+				await this.$api.showLoading(); // 显示loading
+				var rewardlist = await this.$api.getData(this.$api.webapi.rewardList, params);
+				await this.$api.hideLoading(); // 等待请求数据成功后，隐藏loading
+				if (this.$api.reshook(rewardlist, this.$mp.page.route)) {
+					if (rewardlist.resultCode == 0) {
+						if (rewardlist.data.length == 0) {
+							this.isEmpty = 1;
+							this.isEnd = false;
+							this.rewardList = rewardlist.data
+						    } else {
+						      this.isEmpty = 0;
+						      this.isEnd = (rewardlist.data.length < this.dataStep) ? true : false;
+							  console.log(this.rewardList)
+							  
+						      this.rewardList = (this.rewardList.length == 0) ? rewardlist.data : this.rewardList.concat(rewardlist.data)
+						    }
+						
+						console.log(this.rewardList)
+						
+						var that = this;
+						this.rewardList.forEach(function(item, index, arr) {
+							var switchAc = {
+								delarr: [
+									{
+										text: '删除',
+										style: {
+											backgroundColor: '#F00'
+										},
+										id: item.id
+									}
+								]
+							};
+							var newitem = Object.assign(item, switchAc);
+						});
+						console.log(this.rewardList);
+					}
+					
 				}
-				var that = this;
-				this.rewardList.forEach(function(item, index, arr) {
-					var switchAc = {
-						delarr: [
-							{
-								text: '删除',
-								style: {
-									backgroundColor: '#F00'
-								},
-								id: item.id
-							}
-						]
-					};
-					var newitem = Object.assign(item, switchAc);
-				});
-				console.log(rewardlist);
-			}
+			
+		},
+		async init() {
+			this.renderReward(1,this.dataStep)
 		},
 		addReward() {
 			this.creward = true;

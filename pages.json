@@ -2,7 +2,9 @@
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
 		{
 			"path": "pages/rwlist/rwlist",
-			"style": {}
+			"style": {
+				"onReachBottomDistance":126
+			}
 		},
 		{
 			"path": "pages/my/my",
@@ -32,7 +34,9 @@
         }
         ,{
             "path" : "pages/starjl/starjl",
-            "style" : {}
+            "style" : {
+				"onReachBottomDistance":126
+			}
         }
         ,{
             "path" : "pages/star/star",

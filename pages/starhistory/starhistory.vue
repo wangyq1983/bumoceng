@@ -3,13 +3,13 @@
 		<userinfo></userinfo>
 		<view class="userbor"></view>
 		<view class="menuguide">查看历史记录</view>
-		<view class="cu-timeline" v-for="items in historyList" :key="items.id">
+		<view class="cu-timeline" v-for="items in historyList" :key="items.createDate">
 			<view class="cu-time">
 				<timeFormat :timedate = "items.createDate" :type = "1">
 					
 				</timeFormat>
 			</view>
-			<view class="cu-item" v-for="item in items.starInfo">
+			<view class="cu-item" v-for="item in items.starInfo" :key = "item.id">
 				<view class="addicon" v-if="item.adjustCount > 0">
 					+
 				</view>
@@ -24,11 +24,12 @@
 							</timeFormat>
 						
 						<image src="/static/menustar.png" mode=""></image>
+						
 						<view class="" v-if="item.adjustCount > 0">
-							增加{{item.adjustCount}}
+							+{{item.adjustCount}}
 						</view>
-						<view class="" v-if="items.adjustCount < 0">
-							减少{{item.adjustCount}}
+						<view class="" v-if="item.adjustCount < 0">
+							{{item.adjustCount}}
 						</view>
 					</view>
 					<view class="con2">
@@ -56,12 +57,6 @@ export default {
 		
 	},
 	methods: {
-		formatDate(){
-			
-		},
-		formatTime(){
-			
-		},
 		async init(){
 			var params = {
 				from:1,

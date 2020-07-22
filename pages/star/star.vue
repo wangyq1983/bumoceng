@@ -72,24 +72,22 @@
 						reason:this.starliyou
 					}
 					await this.$api.showLoading(); // 显示loading
-					var starRes = await this.$api.starAdjust(starNum,this.starliyou);
+					// var starRes = await this.$api.starAdjust(starNum,this.starliyou);
+					var starRes = await this.$api.postData(this.$api.webapi.star,params);
 					await this.$api.hideLoading(); // 等待请求数据成功后，隐藏loading
 					if (this.$api.reshook(starRes, this.$mp.page.route)) {
 						if(starRes.resultCode == 0){
+							await this.$api.getUserinfo()
 							uni.showToast({
 								title:'操作成功！',
 								icon:'none',
 								duration:1500
 							})
-							
-							
-							
 							setTimeout(function(){
 								uni.navigateTo({
 									url:'/pages/starhistory/starhistory'
 								})
 							},1500)
-							
 						}
 					}
 				}else{
