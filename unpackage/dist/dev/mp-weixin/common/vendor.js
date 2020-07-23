@@ -2398,17 +2398,17 @@ var store = new _vuex.default.Store({
       state.nickname = res.weiChatAuthUser.nickName;
       state.token = res.token;
       // 仅做测试
-      state.level = 1;
+      //state.level = 1;
 
       var storgeName = ['avatarUrl', 'nickName', 'token', 'isLogin', 'userId'];
       var storgeVal = [res.weiChatAuthUser.avatarUrl, res.weiChatAuthUser.nickName, res.token, true, res.userId];
       for (var i = 0; i < storgeName.length; i++) {
-        uni.setStorage({
+        uni.setStorageSync({
           key: storgeName[i],
           data: storgeVal[i] });
 
       }
-      console.log('store state');
+      console.log('state_userInfo is');
       console.log(state.userInfo);
     },
     logout: function logout(state) {
@@ -14846,7 +14846,7 @@ function normalizeComponent (
 //var webhost = "https://task.vsclouds.com/";
 
 // 开发服务器
-var webhost = "http://jielongtest.vsclouds.com/8080/polly/";
+var webhost = "https://jielongtest.vsclouds.com/8080/polly/";
 
 // 接口列表
 var webapi = {
@@ -15027,45 +15027,61 @@ var postData = function postData(url, param) {
 var getUserinfo = /*#__PURE__*/function () {var _ref = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {var userRes, expProgress;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:_context.next = 2;return (
 
               getData(webapi.userInfo));case 2:userRes = _context.sent;
+            console.log('token is');
+            console.log(uni.getStorageSync("token"));
+            console.log('userinfo is');
+            console.log(userRes);if (!
+            reshook(userRes)) {_context.next = 25;break;}
 
-            if (reshook(userRes)) {
-              console.log('userinfo is');
-              console.log(userRes);
-              // userRes字段  currentExperience  、  totalExperienceForCurrentLevel
-              expProgress = parseInt(userRes.data.userLevelInfo.currentExperience / userRes.data.userLevelInfo.totalExperienceForCurrentLevel * 100);
-              console.log('====================================================================================================================================');
-              console.log('currentExperience');
-              console.log(userRes.data.userLevelInfo.currentExperience);
-              console.log('totalExperienceForCurrentLevel');
-              console.log(userRes.data.userLevelInfo.totalExperienceForCurrentLevel);
-              console.log('exp Progress is = ');
-              console.log(expProgress);
+            // userRes字段  currentExperience  、  totalExperienceForCurrentLevel
+            expProgress = parseInt(userRes.data.userLevelInfo.currentExperience / userRes.data.userLevelInfo.totalExperienceForCurrentLevel * 100);
+            console.log('====================================================================================================================================');
+            console.log('currentExperience');
+            console.log(userRes.data.userLevelInfo.currentExperience);
+            console.log('totalExperienceForCurrentLevel');
+            console.log(userRes.data.userLevelInfo.totalExperienceForCurrentLevel);
+            console.log('exp Progress is = ');
+            console.log(expProgress);
 
-              uni.setStorage({
-                key: 'level',
-                data: userRes.data.userLevelInfo.level });
+            uni.setStorage({
+              key: 'level',
+              data: userRes.data.userLevelInfo.level });
 
-              _store.default.commit('changeLevel', userRes.data.userLevelInfo.level);
+            _store.default.commit('changeLevel', userRes.data.userLevelInfo.level);
 
-              uni.setStorage({
-                key: 'progress',
-                data: expProgress });
+            uni.setStorage({
+              key: 'progress',
+              data: expProgress });
 
-              _store.default.commit('changeProgress', expProgress);
+            _store.default.commit('changeProgress', expProgress);
 
-              uni.setStorage({
-                key: 'starNum',
-                data: userRes.data.starSummary.totalCount });
+            uni.setStorage({
+              key: 'starNum',
+              data: userRes.data.starSummary.totalCount });
 
-              _store.default.commit('changeStar', userRes.data.starSummary.totalCount);
+            _store.default.commit('changeStar', userRes.data.starSummary.totalCount);return _context.abrupt("return",
+            true);case 25:
 
-            } else {
-              uni.showToast({
-                title: '用户信息获取失败',
-                icon: 'none',
-                duration: 1500 });
 
-            }case 4:case "end":return _context.stop();}}}, _callee);}));return function getUserinfo() {return _ref.apply(this, arguments);};}();
+            uni.showModal({
+              title: '用户信息获取失败',
+              content: uni.getStorageSync('token') ? uni.getStorageSync('token') : 'no token',
+              success: function success(res) {
+                if (res.confirm) {
+                  console.log(userRes);
+                  console.log('用户点击确定');
+                } else if (res.cancel) {
+                  console.log('用户点击取消');
+                }
+              } });
+
+            // uni.showToast({
+            // 	title:'用户信息获取失败',
+            // 	icon:'none',
+            // 	duration:1500
+            // })
+            return _context.abrupt("return", false);case 27:case "end":return _context.stop();}}}, _callee);}));return function getUserinfo() {return _ref.apply(this, arguments);};}();
+
 
 
 // 经验变化接口
@@ -15100,7 +15116,7 @@ var showLoading = function showLoading() {
       title: '加载中...',
       mask: true,
       success: function success(res) {
-        console.log('显示loading');
+        // console.log('显示loading')
         resolve(res);
       },
       fail: function fail(err) {
@@ -15114,13 +15130,13 @@ var showLoading = function showLoading() {
 var hideLoading = function hideLoading() {
   return new Promise(function (resolve) {
     uni.hideLoading();
-    console.log('隐藏loading');
+    // console.log('隐藏loading')
     resolve();
   });
 };
 
 var checkCode = function checkCode(code) {
-  console.log(code);
+  // console.log(code);
   if (code == 0) {
     return true;
   } else {

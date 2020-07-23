@@ -30,17 +30,17 @@ const store = new Vuex.Store({
 			state.nickname = res.weiChatAuthUser.nickName;
 			state.token = res.token;
 			// 仅做测试
-			state.level = 1;
+			//state.level = 1;
 			
 			var storgeName = ['avatarUrl','nickName','token','isLogin', 'userId'];
 			var storgeVal = [res.weiChatAuthUser.avatarUrl, res.weiChatAuthUser.nickName, res.token, true,res.userId];
 			for (var i = 0; i < storgeName.length; i++) {
-				uni.setStorage({
+				uni.setStorageSync({
 					key: storgeName[i],
 					data: storgeVal[i]
 				})
 			}
-			console.log('store state')
+			console.log('state_userInfo is')
 			console.log(state.userInfo)
 		},
 		logout(state) {

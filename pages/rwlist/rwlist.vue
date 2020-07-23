@@ -108,13 +108,14 @@ export default {
 			taskSuccess:false,
 			dataStep: 50,
 			rwlist: [],
-			cdtime:false,
+			cdtime:false,  
+			// cdtime:true,
 			taskTime:'',
 			minuteTask:'',
 			secondTask:'',
 			hourTask:'',
 			showhour:false,
-			nowtask:'',
+			nowtask:'',  // 真实状态下为 ""
 			datetime:'',
 			star:null,
 			exptype:null,
@@ -139,18 +140,17 @@ export default {
 		uniCountdown
 	},
 	onLoad: function(options) {
-		console.log('load');
+		// console.log('load');
 		//console.log(this.$mp.page.route)
 		// this.signget()
 		this.init();
 	},
 	onShow() {
-		console.log();
-		console.log('show');
+		// console.log('show');
 	},
 	onReachBottom: async function(){
-		console.log('onReachBottom');
-		console.log(this.rwlist.length)
+		// console.log('onReachBottom');
+		// console.log(this.rwlist.length)
 		let params = {
 		      from: this.rwlist.length + 1,
 		      count: this.dataStep
@@ -163,7 +163,7 @@ export default {
 	methods: {
 		
 		DateChange:function(e) {
-			console.log(e)
+			// console.log(e)
 			this.date = e.detail.value;
 			this.rwlist = [];
 			this.isEnd = false;
@@ -180,7 +180,7 @@ export default {
 		},
 		signOk:async function(e){
 			var _this = this;
-			console.log(this.nowweekday);
+			// console.log(this.nowweekday);
 			var nowexp;
 			var signed;
 			var tempsign = [
@@ -219,7 +219,7 @@ export default {
 					signed = item.isSigned
 				}
 			})
-			console.log(nowexp);
+			// console.log(nowexp);
 			if(!signed){
 				var params = {
 					experience:nowexp
@@ -228,7 +228,7 @@ export default {
 				var signRes = await this.$api.postData(this.$api.webapi.signin, params);
 				await this.$api.hideLoading(); // 等待请求数据成功后，隐藏loading
 				if (this.$api.reshook(signRes, this.$mp.page.route)) {
-					console.log(signRes);
+					// console.log(signRes);
 					if(signRes.resultCode == 0){
 						// 签到成功增加经验
 						await this.$api.addExp(nowexp);
@@ -298,16 +298,16 @@ export default {
 			// this.signList;
 			// console.log(this.signList)
 			signget.data.forEach(function(item,index,arr){
-				console.log(tempsign[index])
+				// console.log(tempsign[index])
 				var newitem = Object.assign(item,tempsign[index]);
-				console.log(newitem)
+				// console.log(newitem)
 				newArr.push(newitem)
 			})
-			console.log(newArr);
+			// console.log(newArr);
 			// this.signList = newArr;
 			
 			this.$store.commit('changesignList', newArr);
-			console.log('签到查询');
+			// console.log('签到查询');
 			// console.log(this.signList);
 			this.signIn = true;
 			this.cdtime = true;
@@ -319,7 +319,7 @@ export default {
 					arr.splice(index, 1);
 					// this.rwlist = arr
 				}
-				console.log(arr)
+				// console.log(arr)
 			});
 		},
 		zhiliang:function(star,exp){
@@ -344,8 +344,8 @@ export default {
 		//子组件点击开始任务触发
 		countTime:function(cdtime,taskid,star,ifswitch){
 			this.cdtime = true;
-			console.log(cdtime);
-			console.log(taskid)
+			// console.log(cdtime);
+			// console.log(taskid)
 			this.nowtask = taskid;
 			this.star = star;
 			this.ifswitch = ifswitch;
@@ -354,7 +354,7 @@ export default {
 		},
 		// 关闭计时弹层
 		closemask:function(){
-			console.log(this);
+			// console.log(this);
 			if(this.taskSuccess){
 				this.taskSuccess = false;
 				this.showhour = false;
@@ -381,10 +381,10 @@ export default {
 		},
 		// 任务完成
 		timed:async function(minute,state){
-			console.log('秒数');
-			console.log(minute);
-			console.log('nowtask is');
-			console.log(this.nowtask);
+			// console.log('秒数');
+			// console.log(minute);
+			// console.log('nowtask is');
+			// console.log(this.nowtask);
 			var params = {
 				id:this.nowtask,
 				realDuration:minute,
@@ -394,7 +394,7 @@ export default {
 			var taskend = await this.$api.postData(this.$api.webapi.TaskEnd, params);
 			await this.$api.hideLoading(); // 等待请求数据成功后，隐藏loading
 			if (this.$api.reshook(taskend, this.$mp.page.route)) {
-				console.log(taskend)
+				// console.log(taskend)
 				if(taskend.resultCode == 0){
 					if(this.ifswitch){
 						//await this.$api.addExp(this.$api.expval.endtask)
@@ -422,14 +422,10 @@ export default {
 			}
 		},
 		async init() {
-			console.log('init run')
-			console.log(this.dataStep)
-			console.log(this.rwlist)
+
 			var date = new Date();
-			console.log('当前日期')
 			this.date = this.$api.formatTime(date);
 			this.enddate = this.$api.formatTime(date);
-			console.log(this.$api.formatTime(date));
 			this.renderList(1,this.dataStep,this.date)
 		},
 		async renderList(from,count,dateTime){
@@ -460,7 +456,6 @@ export default {
 		
 		gotoCreate: function(e) {
 			let rwtype = e.currentTarget.dataset.type;
-			console.log(e.currentTarget.dataset.type);
 			if (rwtype == 'zuoye') {
 				uni.navigateTo({
 					url: '/pages/createrw/createrw'
@@ -586,9 +581,11 @@ export default {
 .cdlayer{
 	width: 720upx;
 	height:800upx;
-	background: #fff;
+	background: url("/static/timebg.jpg") no-repeat;
+	background-size: 720upx 800upx;
 	@include rowflex;
 	justify-content: center;
+	
 }
 
 .signin{

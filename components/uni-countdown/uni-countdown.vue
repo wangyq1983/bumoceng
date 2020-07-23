@@ -1,23 +1,26 @@
 <template>
 	<view class="uniwarp">
-		<view class="uni-countdown">
-			<text v-if="showDay" :style="{ borderColor: borderColor, color: color, backgroundColor: backgroundColor }" class="uni-countdown__number">{{ d }}</text>
-			<text v-if="showDay" :style="{ color: splitorColor }" class="uni-countdown__splitor">天</text>
-			<text v-if="showHour" :style="{ borderColor: borderColor, color: color, backgroundColor: backgroundColor }" class="uni-countdown__number">{{ h }}</text>
-			<text v-if="showHour" :style="{ color: splitorColor }" class="uni-countdown__splitor">{{ showColon ? ':' : '时' }}</text>
-			<text :style="{ borderColor: borderColor, color: color, backgroundColor: backgroundColor }" class="uni-countdown__number">{{ i }}</text>
-			<text :style="{ color: splitorColor }" class="uni-countdown__splitor">{{ showColon ? ':' : '分' }}</text>
-			<text :style="{ borderColor: borderColor, color: color, backgroundColor: backgroundColor }" class="uni-countdown__number">{{ s }}</text>
-			<text v-if="!showColon" :style="{ color: splitorColor }" class="uni-countdown__splitor">秒</text>
-		</view>
-		<view class="timeout" v-if="timeout">
-			<view>任务已超时</view>
-			<view class="">
-				超时 {{timeoutSeconds}} 秒
+		<view class="timeCir">
+			<view class="uni-countdown">
+				<text v-if="showDay" :style="{ color: color }" class="uni-countdown__number">{{ d }}</text>
+				<text v-if="showDay" :style="{ color: splitorColor }" class="uni-countdown__splitor">天</text>
+				<text v-if="showHour" :style="{  color: color,  }" class="uni-countdown__number">{{ h }}</text>
+				<text v-if="showHour" :style="{ color: splitorColor }" class="uni-countdown__splitor">{{ showColon ? ':' : '时' }}</text>
+				<text :style="{ color: color }" class="uni-countdown__number">{{ i }}</text>
+				<text :style="{ color: splitorColor }" class="uni-countdown__splitor">{{ showColon ? ':' : '分' }}</text>
+				<text :style="{color: color}" class="uni-countdown__number">{{ s }}</text>
+				<text v-if="!showColon" :style="{ color: splitorColor }" class="uni-countdown__splitor">秒</text>
+			</view>
+			<view class="timeout" v-if="timeout">
+				<view>任务已超时</view>
+				<view class="">
+					超时 {{timeoutSeconds}} 秒
+				</view>
 			</view>
 		</view>
+		
 		<view class="taskendBtn" @tap="taskover">
-			任务完成
+			{{txtBtn}}
 		</view>
 	</view>
 </template>
@@ -98,9 +101,19 @@
 				leftTime: 0,
 				seconds: 0,
 				realDuration:0,
+				btntext:"",
 				timeout:false,  // 是否超时
 				timeouter:null, // 超时计数器
 				timeoutSeconds:0 // 超时秒数
+			}
+		},
+		computed:{
+			txtBtn:function(){
+				if(this.timeout == false){
+					return "任务完成"
+				}else{
+					return "任务结束"
+				}
 			}
 		},
 		watch: {
@@ -127,7 +140,7 @@
 			audioplay:function(){
 				
 				innerAudioContext.title = '作业不磨蹭';
-				innerAudioContext.src = 'http://downsc.chinaz.net/files/download/sound1/201312/3939.mp3';
+				innerAudioContext.src = 'https://jielongtest.vsclouds.com/music/clock.mp3';
 				
 				innerAudioContext.onPlay(() => {//可以播放事件
 					console.log('开始播放');
@@ -142,7 +155,7 @@
 					console.log('播放结束')
 					// innerAudioContext.seek(2);
 					console.log('重新开始')
-					innerAudioContext.src = 'http://downsc.chinaz.net/files/download/sound1/201312/3939.mp3';
+					innerAudioContext.src = 'https://jielongtest.vsclouds.com/music/clock.mp3';
 					
 					//innerAudioContext.play()
 				})
@@ -275,9 +288,8 @@
 		display: flex;
 		/* #endif */
 		justify-content: center;
-		line-height: 48rpx;
 		padding: 5rpx;
-		font-size: 24rpx;
+		font-size: 100rpx;
 	}
 
 	.uni-countdown__number {
@@ -286,12 +298,9 @@
 		/* #endif */
 		justify-content: center;
 		align-items: center;
-		width: 52rpx;
-		height: 48rpx;
-		line-height: 48rpx;
+		font-size: 100rpx;
 		margin: 5rpx;
 		text-align: center;
-		font-size: 24rpx;
 	}
 	.taskendBtn{
 		width: 200upx;
@@ -303,6 +312,19 @@
 		margin-top:60upx;
 	}
 	.timeout{
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		font-size: 50rpx;
+		color:#f55459;
+	}
+	.timeCir{
+		width:472upx;
+		height:472upx;
+		border-radius: 400upx;
+		background: rgba(255,255,255,0.5);
+		border: 6upx solid #fff;
 		display: flex;
 		flex-direction: column;
 		justify-content: center;

@@ -214,6 +214,9 @@ var _default =
                                     _this.$api.showLoading());case 9:_context.next = 11;return (
                                     _this.$api.postData(_this.$api.webapi.uniLogin, params));case 11:loginres = _context.sent;_context.next = 14;return (
                                     _this.$api.hideLoading());case 14:
+
+
+
                                   if (_this.$api.reshook(loginres, '/pages/login/login')) {
                                     _this.loginSuccess(loginres, 'weixin');
                                   }case 15:case "end":return _context.stop();}}}, _callee);}));function success(_x2) {return _success2.apply(this, arguments);}return success;}() });case 3:case "end":return _context2.stop();}}}, _callee2);}));function success(_x) {return _success.apply(this, arguments);}return success;}() });
@@ -223,17 +226,44 @@ var _default =
 
     },
 
-    loginSuccess: function loginSuccess(res, platform) {var _this2 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee3() {return _regenerator.default.wrap(function _callee3$(_context3) {while (1) {switch (_context3.prev = _context3.next) {case 0:
+    loginSuccess: function loginSuccess(res, platform) {var _this2 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee4() {var storgeName, storgeVal, that, i;return _regenerator.default.wrap(function _callee4$(_context4) {while (1) {switch (_context4.prev = _context4.next) {case 0:
                 console.log(_this2.origin);
                 console.log('loginsuccess');
                 console.log(res.data);
-                _this2.$store.commit('login', res.data);_context3.next = 6;return (
+                // this.$store.commit('login',res.data);
+                storgeName = ['avatarUrl', 'nickName', 'isLogin', 'userId'];
+                storgeVal = [res.data.weiChatAuthUser.avatarUrl, res.data.weiChatAuthUser.nickName, true, res.data.userId];
+                that = _this2;
+                for (i = 0; i < storgeName.length; i++) {
+                  uni.setStorage({
+                    key: storgeName[i],
+                    data: storgeVal[i] });
 
-                  _this2.$api.getUserinfo());case 6:
+                }
+                uni.setStorage({
+                  key: 'token',
+                  data: res.data.token,
+                  success: function () {var _success3 = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee3() {var userinfo;return _regenerator.default.wrap(function _callee3$(_context3) {while (1) {switch (_context3.prev = _context3.next) {case 0:
+                              console.log('set token is = ');
+                              console.log(uni.getStorageSync("token"));_context3.next = 4;return (
+                                that.$api.getUserinfo());case 4:userinfo = _context3.sent;
+
+                              if (userinfo) {
+                                uni.reLaunch({
+                                  url: that.origin });
+
+                              } else {
+                                uni.showToast({
+                                  title: '获取用户信息失败',
+                                  icon: 'none',
+                                  duration: 2000 });
+
+                              }case 6:case "end":return _context3.stop();}}}, _callee3);}));function success() {return _success3.apply(this, arguments);}return success;}() });
 
 
-                uni.reLaunch({
-                  url: _this2.origin });
+
+
+
 
                 // if((this.origin.indexOf('pages/rwlist/rwlist') != -1) ||(this.origin.indexOf('pages/my/my') != -1)){
                 // 	uni.switchTab({
@@ -244,7 +274,7 @@ var _default =
                 // 		url:this.origin
                 // 	})
                 // }
-              case 7:case "end":return _context3.stop();}}}, _callee3);}))();
+              case 8:case "end":return _context4.stop();}}}, _callee4);}))();
     },
     //向后台更新信息
     updateUserInfo: function updateUserInfo() {

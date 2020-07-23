@@ -3,7 +3,7 @@ import store from '@/store'
 //var webhost = "https://task.vsclouds.com/";
 
 // 开发服务器
-var webhost = "http://jielongtest.vsclouds.com/8080/polly/";
+var webhost = "https://jielongtest.vsclouds.com/8080/polly/";
 
 // 接口列表
 var webapi = {
@@ -184,10 +184,12 @@ const postData = (url, param) => {
 const getUserinfo = async() => {
 	// 获取用户信息
 	var userRes = await getData(webapi.userInfo);
-	
+	console.log('token is');
+	console.log(uni.getStorageSync("token"))
+	console.log('userinfo is')
+	console.log(userRes)
 	if (reshook(userRes)) {
-		console.log('userinfo is')
-		console.log(userRes)
+		
 		// userRes字段  currentExperience  、  totalExperienceForCurrentLevel
 		var expProgress = parseInt((userRes.data.userLevelInfo.currentExperience / userRes.data.userLevelInfo.totalExperienceForCurrentLevel)*100); 
 		console.log('====================================================================================================================================')
@@ -215,13 +217,27 @@ const getUserinfo = async() => {
 			data: userRes.data.starSummary.totalCount
 		});
 		store.commit('changeStar', userRes.data.starSummary.totalCount)
-		
+		return true
 	}else{
-		uni.showToast({
-			title:'用户信息获取失败',
-			icon:'none',
-			duration:1500
+		
+		uni.showModal({
+		  title: '用户信息获取失败',
+		  content: uni.getStorageSync('token')?uni.getStorageSync('token'):'no token',
+		  success (res) {
+		    if (res.confirm) {
+				console.log(userRes)
+		      console.log('用户点击确定')
+		    } else if (res.cancel) {
+		      console.log('用户点击取消')
+		    }
+		  }
 		})
+		// uni.showToast({
+		// 	title:'用户信息获取失败',
+		// 	icon:'none',
+		// 	duration:1500
+		// })
+		return false
 	}
 }
 
@@ -257,7 +273,7 @@ const showLoading = () => {
 			title: '加载中...',
 			mask: true,
 			success(res) {
-				console.log('显示loading')
+				// console.log('显示loading')
 				resolve(res)
 			},
 			fail(err) {
@@ -271,13 +287,13 @@ const showLoading = () => {
 const hideLoading = () => {
 	return new Promise((resolve) => {
 		uni.hideLoading()
-		console.log('隐藏loading')
+		// console.log('隐藏loading')
 		resolve()
 	})
 }
 
 const checkCode = (code) => {
-	console.log(code);
+	// console.log(code);
 	if (code == 0) {
 		return true;
 	} else {

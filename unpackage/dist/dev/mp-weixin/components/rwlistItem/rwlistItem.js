@@ -196,7 +196,7 @@ var _default =
     info: Object },
 
   created: function created() {
-    console.log('组件创建后，但还未挂载');
+    // console.log('组件创建后，但还未挂载');
     this.itemcon = this.info;
     // console.log(this.itemcon);
   },

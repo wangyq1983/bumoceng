@@ -82,6 +82,9 @@ export default {
 							await _this.$api.showLoading(); // 显示loading
 							let loginres = await _this.$api.postData(_this.$api.webapi.uniLogin, params);
 							await _this.$api.hideLoading();
+							
+							
+							
 							if (_this.$api.reshook(loginres, '/pages/login/login')) {
 								_this.loginSuccess(loginres,'weixin');
 							}
@@ -95,14 +98,41 @@ export default {
 			console.log(this.origin)
 			console.log('loginsuccess');
 			console.log(res.data);
-			this.$store.commit('login',res.data);
-			
-			await this.$api.getUserinfo()
-			
-			
-			uni.reLaunch({
-					url:this.origin
+			// this.$store.commit('login',res.data);
+			var storgeName = ['avatarUrl','nickName','isLogin', 'userId'];
+			var storgeVal = [res.data.weiChatAuthUser.avatarUrl, res.data.weiChatAuthUser.nickName, true,res.data.userId];
+			var that = this;
+			for (var i = 0; i < storgeName.length; i++) {
+				uni.setStorage({
+					key: storgeName[i],
+					data: storgeVal[i]
+				})
+			}
+			uni.setStorage({
+				key:'token',
+				data:res.data.token,
+				success:async function (){
+					console.log('set token is = ');
+					console.log(uni.getStorageSync("token"))
+					var userinfo = await that.$api.getUserinfo()
+					
+					if(userinfo){
+						uni.reLaunch({
+								url:that.origin
+						})
+					}else{
+						uni.showToast({
+							title:'获取用户信息失败',
+							icon:'none',
+							duration:2000
+						})
+					}
+				}
 			})
+			
+			
+			
+			
 			// if((this.origin.indexOf('pages/rwlist/rwlist') != -1) ||(this.origin.indexOf('pages/my/my') != -1)){
 			// 	uni.switchTab({
 			// 		url:this.origin

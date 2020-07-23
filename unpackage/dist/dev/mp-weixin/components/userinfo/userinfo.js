@@ -182,9 +182,10 @@ var _default =
   created: function created() {
     console.log('created');
     console.log('------------------------------------');
+    console.log('this.$store is = ');
     console.log(this.$store);
+    console.log(this.$store.state);
     console.log(this.$store.state.userInfo);
-    console.log(this.$store.state.userInfo.avatar);
     // this.getUser()
     this.icon = uni.getStorageSync('avatarUrl') ? uni.getStorageSync('avatarUrl') : '';
     this.name = uni.getStorageSync('nickName') ? uni.getStorageSync('nickName') : '';
