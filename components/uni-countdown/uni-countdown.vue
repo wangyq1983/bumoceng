@@ -1,5 +1,8 @@
 <template>
 	<view class="uniwarp">
+		<view :class="(musicOn == true)?'musicBox switchOn rotate':'musicBox switchOff'" @tap = "musicEvent">
+			
+		</view>
 		<view class="timeCir">
 			<view class="uni-countdown">
 				<text v-if="showDay" :style="{ color: color }" class="uni-countdown__number">{{ d }}</text>
@@ -92,6 +95,7 @@
 		},
 		data() {
 			return {
+				musicOn:true,
 				timer: null,
 				syncFlag: false,
 				d: '00',
@@ -137,6 +141,15 @@
 			clearInterval(this.timer)
 		},
 		methods: {
+			musicEvent:function(){
+				this.musicOn = !this.musicOn;
+				if(this.musicOn == true){
+					this.audioplay()
+				}
+				if(this.musicOn == false){
+					this.audiostop()
+				}
+			},
 			audioplay:function(){
 				
 				innerAudioContext.title = '作业不磨蹭';
@@ -273,6 +286,47 @@
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
+		position: relative;
+	}
+	.musicBox{
+		width:72upx;
+		height: 72upx;
+		position: absolute;
+		top: -32upx;
+		right:-52upx;
+		z-index: 999999;
+	}
+	@keyframes rotate{
+	    0%{
+	        transform: rotate(0);
+	      }
+		25%{
+			transform:rotate(90deg);
+		}  
+	    50%{
+	    	transform:rotate(180deg);
+	    }
+	    75%{
+	    	transform:rotate(270deg);
+	    }
+		100%{
+	         transform: rotate(360deg);
+	    	}
+		}
+	 
+	.rotate{
+	    transition: 0.5s;
+	    transform-origin: 36upx 36upx;  
+	    animation: rotate 5s linear infinite;  /*开始动画后无限循环，用来控制rotate*/
+	}
+	.switchOn{
+		background: url("/static/musicOn.png") no-repeat;
+		background-size: 72upx 72upx;
+		
+	}
+	.switchOff{
+		background: url("/static/musicOff.png") no-repeat;
+		background-size: 72upx 72upx;
 	}
 	.uni-countdown {
 		/* #ifndef APP-NVUE */

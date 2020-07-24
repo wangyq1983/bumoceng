@@ -13,6 +13,75 @@
 	-webkit-box-align: center;
 	-webkit-align-items: center;
 	        align-items: center;
+	position: relative;
+}
+.musicBox.data-v-6cd74fee{
+	width:72rpx;
+	height: 72rpx;
+	position: absolute;
+	top: -32rpx;
+	right:-52rpx;
+	z-index: 999999;
+}
+@-webkit-keyframes rotate-data-v-6cd74fee{
+0%{
+        -webkit-transform: rotate(0);
+                transform: rotate(0);
+}
+25%{
+		-webkit-transform:rotate(90deg);
+		        transform:rotate(90deg);
+}
+50%{
+    	-webkit-transform:rotate(180deg);
+    	        transform:rotate(180deg);
+}
+75%{
+    	-webkit-transform:rotate(270deg);
+    	        transform:rotate(270deg);
+}
+100%{
+         -webkit-transform: rotate(360deg);
+                 transform: rotate(360deg);
+}
+}
+@keyframes rotate-data-v-6cd74fee{
+0%{
+        -webkit-transform: rotate(0);
+                transform: rotate(0);
+}
+25%{
+		-webkit-transform:rotate(90deg);
+		        transform:rotate(90deg);
+}
+50%{
+    	-webkit-transform:rotate(180deg);
+    	        transform:rotate(180deg);
+}
+75%{
+    	-webkit-transform:rotate(270deg);
+    	        transform:rotate(270deg);
+}
+100%{
+         -webkit-transform: rotate(360deg);
+                 transform: rotate(360deg);
+}
+}
+.rotate.data-v-6cd74fee{
+    -webkit-transition: 0.5s;
+    transition: 0.5s;
+    -webkit-transform-origin: 36rpx 36rpx;
+            transform-origin: 36rpx 36rpx;  
+    -webkit-animation: rotate-data-v-6cd74fee 5s linear infinite;  
+            animation: rotate-data-v-6cd74fee 5s linear infinite;  /*开始动画后无限循环，用来控制rotate*/
+}
+.switchOn.data-v-6cd74fee{
+	background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAE+klEQVRoQ82aaaiVVRSGn5cim8kGiSiNIMJMMBuoNOoSFqQNCkkDQvnDNPJXJtSfbj8isoIgIUXQfjQLaZqWQ2VUNBuWRQNEVDRbUlkUyYr39p3TueeeYe/vnu/igsN3uHdN797723utdx/RA4mI/YBLgAnAqQ1PAb8CvxUff98EvCzp9R6ExgFKSUQcDlwMXAZcC+yf6ehHYBvwArBK0t+Z9gPq2QAi4gRgMXANcFSZoC1sPjSIAsjPOT6zAETEzUXyBlGFfAmslHRnqvMkABFxBnA3MC3V8TD11km6IsVHVwARcSHwKHBcisMe6nwNnC/pi04+OwIokn+ph0mVcTVV0mvtDNsC2EeSr+U9QdJHrUC0BBARxwA/lBmuCm1agmgH4APgtAqTKeP6E2BW80wMARARDwHzy0QYAZstknx41mUQgIi4A+ivOJEbgHXAwpKxFkpaWsuxDiAijgTeA8ZWCGCjpOn2HxGHADuBEzPjfQVMkeTn/6VERNwC3JfpLFd9nqQVNaNhLNelkjyD/wGIiAOA7UUVmZtUqv5PwHhJfg5IRFwNPJ7qoEFvN3CSpF9qAG4ElpVwlGOyQtK8ZoOIeAdwqZIrcyWtqgF4GpiZ6yFTf7qkjcXInyPpjeK7QS3P9GX1tZJm1gB4WntVGrfKZYekSUXCc4D7AY/gs8Xfyux+e4FRGqGSob9WIkfEU8BVwHpJlze8D2WW0nQDKIM+d8YnSdoREeOAj4EDCwezJa1uAPF80Zqm+l9sAK42XTJXJc9JurRYKm6IHmwK1AwiZyYeNoB3gclVZQ/cJMnlibfNdiNcBxEROS/12wbwKXByhQDG+tSMiPFAy5K4cTlFhFkN98gpsscAvgWOTdEuobNa0uxi9BcB93bwsVXStIjw+/FnYqw/DGAPcHCiQa7aHEmPFABeBPo6ONggaUbmrvidAfwOuLCqQkZL2h0RPgNcKHaSDYBf8geApIYe+MwA3gLOyszeB58bDK9Vz6CX4BjgogY/jcvnduCuhBgmu9wNpsp2AzChdH2qhWv4drxNRMwAvIuYrWvcWdyUn5cRI1V1mwHcCixJtKiPaif9Aoj3/70RcTbwZqL/XLV+A/Ah4/WXIi7CspKJCPcY7jWqkD4DMLP8F+BnNxknyfRfkkTEEYAJguOTDPKUdkk6ulaNrgGuTLAflcMiR0SVfcYaSbNqANxor0wAsEBScuMTEd32/oSQbVXmS1peAzAa+BzwlHcSnxkTu/GVdlC8yOuHk2EHW2/fk70aGlkJV4k+SLrJWvNGkr5vpxgRBwFPFttpN39l/r9IkpuiQayEOX/v1ync//vAE5JMuQ+SiPB+fw8wtUxmCTbeRE6XNHAR0kxstarXu/n06Wke1c8zgUO7GQzz/4MO0lbU4uYRvMjIxbJM0oJGo1YAXI+bpTgl13vF+jslTWyO0Y6dzmkqKs677n6MJC/TQdLpgmNfAtEnyVeyQ6TbFdMU4NWRGuI2cdomP2QXauUgIswev1JRPdNpbL4Brms38jXDrreUNcWIeAaoE1EVz8oW4DZJZkw6SjIAeylIsLkV3iGY81/SeIHRUwAFCF+EuPjzxz/u6IXsKmh2Jz9wcZEqWTPQ6LS4UzAI98Fm9nJ6Wbv6B3jMHCmwWZJ/yZItpQE0R4qIc4ELCm7Tv2Q5rPj4exSklqtIk1t+bnLLmZ1xk8G/Jz7IOVl5cWEAAAAASUVORK5CYII=) no-repeat;
+	background-size: 72rpx 72rpx;
+}
+.switchOff.data-v-6cd74fee{
+	background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAF/UlEQVRoQ82aCcxcVRmGn1eNGwi4oSFWQTAkrQbjltSlrqyyCFg1taCyE5G4A8GlBiKBQIAAyq5IIoRda6lVgyhg1CioVSFNXCLBjSCKIlXR17yTc//cTu/8c+79/5Z+yWQmM995z/eee863nRHzILYfD+wJLAIWtt4FPAT8vbzy+VbgO5LyPmfJBIPE9tOBtwH7A/sBIdFHHgC+C6wBviDp330GN7q9Cdh+EfBBYBmw3ZBJO8b8IiQKkb/0wawmYHvrYniMf2afSXro/g64XNJnasdUEbB9MLACeHEt8Bz1LpR0bA3GVAK29yj7tAZvPnV+DrxJ0v2zgc5KwPZi4HvzadUArCWSbps0biIB268rXmLAnPM+ZJGkX3ahdhKwvSPwm3k3Yzjgn4CXSvrjOMQkAvcCz+sx36+AM4HT5tG1jk+fmPEWSf9p/7ARAdtfKcGph/18S9Lutk8BPtFnYE/dcyR9aCIB258u7rIn7kj9MGA18HVgt1kAlgP3Ae8Ejhkw0YGSbmrGzTwB288A7gKePwA0Q9ZJ2tX24cClEzBWS9onv9neCoirzHnrIz8B3ijprxnUJvCRso/7gI3rrkgUtZ0VOqAD6DhJFzTf2/78wKcws5VGBGw/EbizZJFzIbAe2Bl4CXAz8LgWWJK1BZL+3CLwLuCqARMmEXyhpIcaAkcDFw4A6hqSXOZw2+cCx7cUbpCUlGQDsf0j4OUD5l4q6bqGwDXA0gEgk4a8Cvgn8NWsVFEaTVie+MImMNk+CrhowNxfkvSehkAe67MHgEwa0rjVjwOnA3+TNEq9bR8CnADsIynZZ767sdQWfUx4FHiyNmG+c2CpvnKg10r6QDG2edoXSZpxo7aH7IK9QuDEEkH7sK/RbdxqCp8QWGv7BcA9WbkCcJCkrP5IbKc6S/ZbK0eEwLeBN9SO6Kk37jaPA84bw9hFUlKREMhhzqGulRUh8GPgZbUjeuqtl/SU1gpPSlO2kpRDHxI50DnYNXJZCKwDUuduKnmWpAdsbw8kq+ySfL+3pLtsvx84v9KYNSHwB+C5lQP6qn1T0syetv1Ia/+PY50t6cO29y5BsGauW0PgYeCpNdoDdA6TlG7DSGynzv3cBJybJb3VdlLyOJYaGRH4B5DEalPI1pIeLq56J0lfth0vtGvHZKuAxI240zTIamRE4IfAK2u0WzoptNPLSZmXw/ccYAfgzS2dmyQlFmTl8xR2KsHqNcDXJswX3D4BdUQg4O/tQeBaSe/o0re9b/Eg6dQtk3SV7fSQEnGzTU+QdMYAfz/JvBGBjwFnVBIYpcvTdAuR7On/2W77/l+30uy103Aqfj8pBFJgZP/VyGJJ369RbHQ6Vvs8Scfbvhg4sg9Wh+6rQyBN2eTxT6gAy0H8bYXeSMV26oKfjen/F8hWS7/p93NwIPdL2r7JRq8ADq0w7El9usi2TwI+24E7OuC2TwZOrZi3S2V0FhsCbweurQCqOgOt7ZNVTnevS46UdKnteLPcKfSVoyRd0hDYBsgBm9Z1TiR9xaQuWduCcpBXzmJVivOcv7jeK3taf4ek12ZMu6hPlhiPMU1i1NGSkoJ0iu24zKvLxcdseKdI+pTt1M9JIWpl5KLHCSwA7kjhXYESF3i+pHiSDaRE3bNm2Tpt/QfL1VTqg3TeamSNpL0axQ06c2M+uwYsOomeKUnznnz+abUDi96Vkg7t0WLZX9LM1uxqLX4D2L2nEXNVT2T/QXG5284CdqqkT7Z/7yKQVUw3IbnN5pJsn9uBjwLpUXXJKkmJHxvIpO50SsyUmluKxGHsISmtyOkEomF7SyHxL+Ddkq7vWs1pV0yPNYk4huWSci47peaSL/n5LZvxhrIxNIH1EEmz3tFNJdCg9XBz83FucseQ2mE8EdwIu5pAORe5AMlFxtA7hGnkfgqkdf7FaYrN770IFBK5CHlfedXWrtPsSWPrsmJ88q1q6U2gtaXir0Mk/1JZUpEIjhuV6J2Imvp4paTUCb1lMIHxmYrbfX1pUya7TUqRVz5H0gC4u7zyOX+5GV0TzUX+D12yIRSc/oTCAAAAAElFTkSuQmCC) no-repeat;
+	background-size: 72rpx 72rpx;
 }
 .uni-countdown.data-v-6cd74fee {
 

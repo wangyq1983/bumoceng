@@ -19,7 +19,6 @@
 							<view class="">
 								EXP经验
 							</view>
-							
 							<view class="">
 								+{{items.exp}}
 							</view>

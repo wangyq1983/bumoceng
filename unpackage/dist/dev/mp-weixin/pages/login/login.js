@@ -261,10 +261,6 @@ var _default =
                               }case 6:case "end":return _context3.stop();}}}, _callee3);}));function success() {return _success3.apply(this, arguments);}return success;}() });
 
 
-
-
-
-
                 // if((this.origin.indexOf('pages/rwlist/rwlist') != -1) ||(this.origin.indexOf('pages/my/my') != -1)){
                 // 	uni.switchTab({
                 // 		url:this.origin
@@ -274,8 +270,7 @@ var _default =
                 // 		url:this.origin
                 // 	})
                 // }
-              case 8:case "end":return _context4.stop();}}}, _callee4);}))();
-    },
+              case 8:case "end":return _context4.stop();}}}, _callee4);}))();},
     //向后台更新信息
     updateUserInfo: function updateUserInfo() {
       var _this = this;

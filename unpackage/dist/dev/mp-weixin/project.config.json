@@ -30,7 +30,7 @@
 		"userConfirmedUseCompilerModuleSwitch": false
 	},
 	"compileType": "miniprogram",
-	"libVersion": "2.12.0",
+	"libVersion": "",
 	"appid": "wx68fa52964aa56d13",
 	"projectname": "defaultmoban",
 	"simulatorType": "wechat",

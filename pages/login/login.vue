@@ -129,10 +129,6 @@ export default {
 					}
 				}
 			})
-			
-			
-			
-			
 			// if((this.origin.indexOf('pages/rwlist/rwlist') != -1) ||(this.origin.indexOf('pages/my/my') != -1)){
 			// 	uni.switchTab({
 			// 		url:this.origin
@@ -142,7 +138,6 @@ export default {
 			// 		url:this.origin
 			// 	})
 			// }
-			
 		},
 		//向后台更新信息
 		updateUserInfo() {
