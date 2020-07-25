@@ -282,7 +282,6 @@ __webpack_require__.r(__webpack_exports__);
       signid: '',
       signIn: false,
 
-
       nowweekday: '',
       date: '',
       enddate: '',
@@ -303,6 +302,7 @@ __webpack_require__.r(__webpack_exports__);
     //console.log(this.$mp.page.route)
     // this.signget()
     this.init();
+
   },
   onShow: function onShow() {
     // console.log('show');
@@ -581,7 +581,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
     init: function init() {var _this2 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee6() {var date;return _regenerator.default.wrap(function _callee6$(_context6) {while (1) {switch (_context6.prev = _context6.next) {case 0:
-
                 date = new Date();
                 _this2.date = _this2.$api.formatTime(date);
                 _this2.enddate = _this2.$api.formatTime(date);
@@ -612,7 +611,6 @@ __webpack_require__.r(__webpack_exports__);
                   }
                 }case 9:case "end":return _context7.stop();}}}, _callee7);}))();
     },
-
     gotoCreate: function gotoCreate(e) {
       var rwtype = e.currentTarget.dataset.type;
       if (rwtype == 'zuoye') {

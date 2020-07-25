@@ -16,16 +16,16 @@
 							{{items.day}}
 						</view>
 						<view class="">
-							<view class="">
+							<view class="expfont">
 								EXP经验
 							</view>
-							<view class="">
+							<view class="" style="font-size: 24upx; color: #ff7900;">
 								+{{items.exp}}
 							</view>
-							<view class="" v-if="items.isSigned == true">
+							<view class="yiqiandao" v-if="items.isSigned == true">
 								已签到
 							</view>
-							<view class="" v-if="items.isSigned == false">
+							<view class="weiqiandao" v-if="items.isSigned == false">
 								未签到
 							</view>
 						</view>
@@ -122,7 +122,6 @@ export default {
 			signid:'',
 			signIn:false,
 
-
 			nowweekday:'',
 			date: '',
 			enddate:'',
@@ -143,6 +142,7 @@ export default {
 		//console.log(this.$mp.page.route)
 		// this.signget()
 		this.init();
+		
 	},
 	onShow() {
 		// console.log('show');
@@ -421,7 +421,6 @@ export default {
 			}
 		},
 		async init() {
-
 			var date = new Date();
 			this.date = this.$api.formatTime(date);
 			this.enddate = this.$api.formatTime(date);
@@ -452,7 +451,6 @@ export default {
 				}
 			}
 		},
-		
 		gotoCreate: function(e) {
 			let rwtype = e.currentTarget.dataset.type;
 			if (rwtype == 'zuoye') {
@@ -589,48 +587,59 @@ export default {
 
 .signin{
 	width: 660upx;
-	height:660upx;
+	height:620upx;
+	padding:20upx 0;
 	@include colflex;
-	justify-content: center;
+	justify-content: space-around;
 	align-items: center;
 	background: #fff;
 	.signTitle{
-		width: 570upx;
+		width: 600upx;
 		height:80upx;
 		line-height: 80upx;
 		text-align: center;
+		font-weight: bold;
+		font-size: 32upx;
+		color:#fff;
+		background-image: linear-gradient(#ffa317, #ffce00);
 	}
 	.signList{
-		width:570upx;
-		height:360upx;
+		width:600upx;
+		height:390upx;
 		display: flex;
 		flex-wrap:wrap;
 		font-size: $fontsize-28;
 		.signItemCur{
 			width:126upx;
-			height:150upx;
-			border-radius: 6upx;
 			border:4upx solid #ffce00;
 			@include colflex;
-			justify-content: center;
+			justify-content:flex-start;
+			margin:5upx 8upx;
+			padding:0;
 		}
 		.signItem{
 			width:126upx;
-			height:150upx;
-			border-radius: 6upx;
-			border:4upx solid #cccccc;
+			border:4upx solid #f2f2f2;
 			@include colflex;
-			justify-content: center;
+			justify-content:flex-start;
+			margin:5upx 8upx;
 		}
 		.sItem{
-			height:60upx;
-			line-height: 60upx;
+			width:100%;
+			height:50upx;
+			line-height: 50upx;
 			background: #ffce00;
+			padding-left:10upx;
+			box-sizing: border-box;
 		}
 		.sItemCur{
-			height:60upx;
-			line-height: 60upx;
-			background: #ccc;
+			width:100%;
+			height:50upx;
+			line-height: 50upx;
+			background: #f2f2f2;
+			padding-left:10upx;
+			box-sizing: border-box;
+			color:#909090;
 		}
 	}
 	.signBtn{
@@ -641,6 +650,24 @@ export default {
 		background: $color-m;
 		color: $color-36;
 		font-size: $fontsize-32;
+	}
+	.expfont{
+		font-weight: bold;
+		color:#ffbe09
+	}
+	.yiqiandao{
+		margin-top: 10upx;
+		background: #ffce00;
+		padding:5upx;
+		font-size: 24upx;
+		color:#fff
+	}
+	.weiqiandao{
+		margin-top: 10upx;
+		background: #f2f2f2;
+		padding:5upx;
+		font-size: 24upx;
+		color:#909090;
 	}
 }
 .newsbox{
