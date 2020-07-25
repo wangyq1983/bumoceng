@@ -16,8 +16,8 @@
 		<userinfo></userinfo>
 		<view class="userbor"></view>
 		<view class="menuguide">
-			<view class="guideicon"></view>
-			<view class="">星愿奖励</view>
+			<!-- <view class="guideicon"></view> -->
+			<view class="left">星愿奖励</view>
 		</view>
 		<view class="jllist">
 			

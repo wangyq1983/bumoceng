@@ -181,6 +181,10 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 //
 //
 //
+//
+//
+//
+//
 var _default =
 {
   data: function data() {
@@ -202,11 +206,12 @@ var _default =
                   count: _this.dataStep };_context.next = 3;return (
 
                   _this.$api.showLoading());case 3:_context.next = 5;return (
-                  _this.$api.getData(_this.$api.webapi.starhistory, params));case 5:historylist = _context.sent;_context.next = 8;return (
-                  _this.$api.hideLoading());case 8: // 等待请求数据成功后，隐藏loading
-                if (_this.$api.reshook(historylist, _this.$mp.page.route)) {
-                  _this.historyList = historylist.data;
-                }case 9:case "end":return _context.stop();}}}, _callee);}))();
+                  _this.$api.getData(_this.$api.webapi.starhistory, params));case 5:historylist = _context.sent;if (!
+
+                _this.$api.reshook(historylist, _this.$mp.page.route)) {_context.next = 10;break;}_context.next = 9;return (
+                  _this.$api.hideLoading());case 9: // 等待请求数据成功后，隐藏loading
+                _this.historyList = historylist.data;case 10:case "end":return _context.stop();}}}, _callee);}))();
+
     } } };exports.default = _default;
 
 /***/ }),

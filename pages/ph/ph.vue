@@ -2,7 +2,7 @@
 	<view>
 		<userinfo></userinfo>
 		<view class="userbor"></view>
-		<view class="menuguide"><view class="">总排行</view></view>
+		<view class="menuguide"><view class="left">总排行</view></view>
 
 		<view class="phlist">
 			<view class="phitem" v-for="(items,index) in phlist">

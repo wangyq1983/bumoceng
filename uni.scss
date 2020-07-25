@@ -222,3 +222,33 @@ page {
 	border-right: 10upx solid transparent;
 	border-top:13upx solid #848484;
 }
+
+.menuguide{
+	@include userguide;
+	justify-content: space-between;
+	border-bottom:2upx solid #dedede;
+	.left{
+		padding-left: 20upx;
+		border-left:10upx solid #ffce00
+		// border-left:6upx solid #3c8ceb;
+	}
+	.right{
+		height:58upx;
+		line-height: 58upx;
+		padding:1upx 20upx;
+		border-radius: 10upx;
+		background-image: linear-gradient(#736427, #221e0c);
+		color: $color-m;
+		font-size: $fontsize-30;
+	}
+}
+.qingtong1{
+	background: #81a80a;
+	color: #fff;
+	font-size: 24upx;
+	margin-left:30upx;
+	padding:1upx 8upx;
+	height:32upx;
+	line-height: 32upx;
+	border-radius: 5upx;;
+}

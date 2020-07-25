@@ -2,7 +2,11 @@
 	<view>
 		<userinfo></userinfo>
 		<view class="userbor"></view>
-		<view class="menuguide">查看历史记录</view>
+		<view class="menuguide">
+			<view class="left">
+				查看历史记录
+			</view>
+			</view>
 		<view class="cu-timeline" v-for="items in historyList" :key="items.createDate">
 			<view class="cu-time">
 				<timeFormat :timedate = "items.createDate" :type = "1">
@@ -64,8 +68,9 @@ export default {
 			}
 			await this.$api.showLoading(); // 显示loading
 			var historylist = await this.$api.getData(this.$api.webapi.starhistory, params);
-			await this.$api.hideLoading(); // 等待请求数据成功后，隐藏loading
+			
 			if (this.$api.reshook(historylist, this.$mp.page.route)) {
+				await this.$api.hideLoading(); // 等待请求数据成功后，隐藏loading
 				this.historyList = historylist.data  
 			}
 		}

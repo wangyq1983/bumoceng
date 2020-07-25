@@ -15,10 +15,11 @@
 				</view>
 			</view>
 			<view class="levelBox">
+				
 				<view class="levelTip">Lv{{ level1 }}</view>
 				<view class="levelProgress"><view class="progressCount" :style="{ width: levelnum1 + '%' }"></view></view>
-				<view class="">
-					{{levelnum1}}
+				<view class="qingtong1">
+					青铜学生
 				</view>
 			</view>
 			
@@ -92,19 +93,22 @@ export default {
 	padding: 20upx 15upx;
 }
 .usericon {
-	width: 96upx;
-	height: 96upx;
+	width: 72upx;
+	height: 72upx;
 	float: left;
+	background: url("/static/hz_qingtong1.jpg") no-repeat;
+	background-size: 134upx 96upx;
+	padding:19upx 32upx 5upx 32upx;
 }
 .usericon image {
-	width: 92upx;
-	height: 92upx;
+	width: 72upx;
+	height: 72upx;
 	border-radius: 168upx;
-	border: 8upx solid #ffffff;
-	box-shadow: 0upx 0upx 15upx #c0c0c0;
+	// border: 8upx solid #ffffff;
+	// box-shadow: 0upx 0upx 15upx #c0c0c0;
 }
 .userinfo {
-	width: 560upx;
+	width: 540upx;
 	height: 90upx;
 	padding-left: 20upx;
 	padding-top: 8upx;

@@ -379,14 +379,14 @@ __webpack_require__.r(__webpack_exports__);
                   }
                 });
                 // console.log(nowexp);
-                if (signed) {_context3.next = 19;break;}
+                if (signed) {_context3.next = 20;break;}
                 params = {
                   experience: nowexp };_context3.next = 7;return (
 
                   this.$api.showLoading());case 7:_context3.next = 9;return (
                   this.$api.postData(this.$api.webapi.signin, params));case 9:signRes = _context3.sent;_context3.next = 12;return (
                   this.$api.hideLoading());case 12:if (!
-                this.$api.reshook(signRes, this.$mp.page.route)) {_context3.next = 17;break;}if (!(
+                this.$api.reshook(signRes, this.$mp.page.route)) {_context3.next = 18;break;}if (!(
 
                 signRes.resultCode == 0)) {_context3.next = 17;break;}_context3.next = 16;return (
 
@@ -394,16 +394,17 @@ __webpack_require__.r(__webpack_exports__);
                 uni.showToast({
                   title: '签到成功',
                   icon: 'none',
-                  duration: 1500 });case 17:_context3.next = 20;break;case 19:
+                  duration: 1500 });case 17:
 
 
-
-
+                this.signget();
+                // this.closemask();
+              case 18:_context3.next = 21;break;case 20:
 
                 uni.showToast({
                   title: '已经签到过了',
                   icon: 'none',
-                  duration: 1500 });case 20:case "end":return _context3.stop();}}}, _callee3, this);}));function signOk(_x) {return _signOk.apply(this, arguments);}return signOk;}(),
+                  duration: 1500 });case 21:case "end":return _context3.stop();}}}, _callee3, this);}));function signOk(_x) {return _signOk.apply(this, arguments);}return signOk;}(),
 
 
 

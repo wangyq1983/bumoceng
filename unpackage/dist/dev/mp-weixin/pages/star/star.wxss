@@ -225,6 +225,31 @@ page {
   -webkit-box-pack: justify;
   -webkit-justify-content: space-between;
           justify-content: space-between;
+  border-bottom: 2rpx solid #dedede;
+}
+.menuguide .left {
+  padding-left: 20rpx;
+  border-left: 10rpx solid #ffce00;
+}
+.menuguide .right {
+  height: 58rpx;
+  line-height: 58rpx;
+  padding: 1rpx 20rpx;
+  border-radius: 10rpx;
+  background-image: -webkit-linear-gradient(#736427, #221e0c);
+  background-image: linear-gradient(#736427, #221e0c);
+  color: #ffce00;
+  font-size: 30rpx;
+}
+.qingtong1 {
+  background: #81a80a;
+  color: #fff;
+  font-size: 24rpx;
+  margin-left: 30rpx;
+  padding: 1rpx 8rpx;
+  height: 32rpx;
+  line-height: 32rpx;
+  border-radius: 5rpx;
 }
 .starWarp {
   width: 690rpx;

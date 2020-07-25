@@ -49,7 +49,7 @@
 		<view class="newsbox">
 			<image src="/static/news.png" mode=""></image>
 			<view class="">
-				暗示法撒旦法撒旦法撒旦撒打发斯蒂芬
+				作业不磨蹭操作使用说明
 			</view>
 		</view>
 		<view class="timeSelect">
@@ -63,7 +63,7 @@
 					</view>
 				</view>
 			</picker>
-<!-- 			<view class="" @tap = "clearsign">
+			<!-- <view class="" @tap = "clearsign">
 				取消签到
 			</view> -->
 			<view class="signCon" @tap="signEvent">
@@ -237,6 +237,7 @@ export default {
 							duration:1500
 						})
 					}
+					this.signget()
 					// this.closemask();
 				}
 			}else{

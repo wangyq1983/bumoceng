@@ -4,10 +4,10 @@
 		<view class="userbor"></view>
 		<view class="menuguide">
 			
-			<view class="">
+			<view class="left">
 				星管理
 			</view>
-			<view class="" @tap="showhistory">
+			<view class="right" @tap="showhistory">
 				查看历史记录
 			</view>
 		</view>
@@ -104,10 +104,7 @@
 </script>
 
 <style lang="scss">
-.menuguide{
-	@include userguide;
-	justify-content: space-between;
-}
+
 .starWarp{
 	@include warpwidth;
 	@include warppadding;
