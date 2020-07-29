@@ -131,7 +131,8 @@ var _default =
 
   },
   props: {
-    wordinfo: String } };exports.default = _default;
+    wordinfo: String,
+    type: Number } };exports.default = _default;
 
 /***/ }),
 

@@ -319,6 +319,30 @@ __webpack_require__.r(__webpack_exports__);
                 this.renderList(this.rwlist.length + 1, this.dataStep, this.date);
               }case 2:case "end":return _context.stop();}}}, _callee, this);}));function onReachBottom() {return _onReachBottom.apply(this, arguments);}return onReachBottom;}(),
 
+  onShareTimeline: function onShareTimeline() {
+    console.log('分享到朋友圈');
+  },
+  onShareAppMessage: function onShareAppMessage() {
+    var jielongImg = '/static/timebg.jpg';
+    var jielongpath = '/pages/rwlist/rwlist';
+    return {
+      title: '123',
+      path: '/pages/rwlist/rwlist',
+      imageUrl: jielongImg,
+      success: function success(res) {
+        console.log("转发成功", res);
+        console.log(uni);
+        uni.showToast({
+          title: '转发成功',
+          icon: 'none',
+          duration: 1500 });
+
+      },
+      fail: function fail(res) {
+        // console.log("转发失败", res);
+      } };
+
+  },
   methods: {
 
     DateChange: function DateChange(e) {
@@ -455,23 +479,23 @@ __webpack_require__.r(__webpack_exports__);
 
 
                   this.$api.getData(this.$api.webapi.signget));case 5:signget = _context4.sent;
-                // this.signList;
-                // console.log(this.signList)
-                signget.data.forEach(function (item, index, arr) {
-                  // console.log(tempsign[index])
-                  var newitem = Object.assign(item, tempsign[index]);
-                  // console.log(newitem)
-                  newArr.push(newitem);
-                });
-                // console.log(newArr);
-                // this.signList = newArr;
+                if (this.$api.reshook(signget, this.$mp.page.route)) {
+                  signget.data.forEach(function (item, index, arr) {
+                    // console.log(tempsign[index])
+                    var newitem = Object.assign(item, tempsign[index]);
+                    // console.log(newitem)
+                    newArr.push(newitem);
+                  });
+                  // console.log(newArr);
+                  // this.signList = newArr;
 
-                this.$store.commit('changesignList', newArr);
-                // console.log('签到查询');
-                // console.log(this.signList);
-                this.signIn = true;
-                this.cdtime = true;
-                this.nowWeek();case 11:case "end":return _context4.stop();}}}, _callee4, this);}));function signget() {return _signget.apply(this, arguments);}return signget;}(),
+                  this.$store.commit('changesignList', newArr);
+                  // console.log('签到查询');
+                  // console.log(this.signList);
+                  this.signIn = true;
+                  this.cdtime = true;
+                  this.nowWeek();
+                }case 7:case "end":return _context4.stop();}}}, _callee4, this);}));function signget() {return _signget.apply(this, arguments);}return signget;}(),
 
     deltask: function deltask(id) {
       this.rwlist.forEach(function (item, index, arr) {

@@ -95,17 +95,33 @@ const getWeekDay = () =>{
 		return days
 	}
 }
-
+const honor = {
+	qt:"青铜学生",
+	by:"白银学民",
+	hj:"黄金学霸",
+	bj:"铂金学帝",
+	zs:"钻石学仙",
+	xs:"学神"
+}
 // 经验值对应称号
-const expTitle = (exp) => {
-	if(exp >= 200 && exp < 1000){
-		return '青铜'
+const expTitle = (level) => {
+	if(level >= 1 && level <= 2){
+		return honor.qt
 	}
-	if(exp >= 1000 && exp < 2000){
-		return '白银'
+	if(level >= 3 && level <= 4){
+		return honor.by
 	}
-	if(exp >= 2000 && exp < 5000){
-		return '黄金'
+	if(level >= 5 && level <= 6){
+		return honor.hj
+	}
+	if(level >= 7 && level <= 8){
+		return honor.bj
+	}
+	if(level >= 9 && level <= 10){
+		return honor.zs
+	}
+	if(level >10){
+		return honor.xs
 	}
 }
 
@@ -207,6 +223,12 @@ const getUserinfo = async() => {
 		store.commit('changeLevel', userRes.data.userLevelInfo.level)
 		
 		uni.setStorage({
+			key: 'honor',
+			data:expTitle(userRes.data.userLevelInfo.level)
+		})
+		store.commit('changeHonor', expTitle(userRes.data.userLevelInfo.level))
+		
+		uni.setStorage({
 			key: 'progress',
 			data: expProgress
 		})
@@ -217,6 +239,7 @@ const getUserinfo = async() => {
 			data: userRes.data.starSummary.totalCount
 		});
 		store.commit('changeStar', userRes.data.starSummary.totalCount)
+		
 		return true
 	}else{
 		
@@ -319,7 +342,13 @@ const reshook = (res, path) => {
 				url: '/pages/login/login?' + origin
 			})
 		}
-		
+		if(res.resultCode == 87014){
+		    uni.showToast({
+		      title: res.message,
+		      icon:"none",
+		      duration:1500
+		    })
+		  }
 	}
 	console.log('reshook')
 	console.log(res)
@@ -373,6 +402,7 @@ export default {
 	getData,
 	postData,
 	webapi,
+	honor,
 	reshook,
 	showLoading,
 	hideLoading,

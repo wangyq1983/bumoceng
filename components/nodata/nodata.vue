@@ -15,7 +15,8 @@
 			};
 		},
 		props: {
-			wordinfo: String
+			wordinfo: String,
+			type:Number
 		}
 	}
 </script>
@@ -35,6 +36,7 @@
 	.nodataTxt{
 	    font-size: 30rpx;
 	    text-align: center;
-	    color:#666;
+	    color:#363636;
+		font-weight: bold;
 	}
 </style>

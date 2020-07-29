@@ -144,10 +144,22 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 var _default =
 {
   data: function data() {
     return {
+      honorqt: this.$api.honor.qt,
+      honorby: this.$api.honor.by,
+      honorhj: this.$api.honor.hj,
+      honorbj: this.$api.honor.bj,
+      honorzs: this.$api.honor.zs,
+      honorxs: this.$api.honor.xs,
       icon: uni.getStorageSync('avatarUrl') ? uni.getStorageSync('avatarUrl') : '', //头像
       name: uni.getStorageSync('nickName') ? uni.getStorageSync('nickName') : '', //昵称
       level: this.$store.state.level ? this.$store.state.level : uni.getStorageSync('level'), //等级
@@ -165,6 +177,9 @@ var _default =
     },
     star1: function star1() {
       return this.$store.state.starNum ? this.$store.state.starNum : uni.getStorageSync('starNum');
+    },
+    honor1: function honor1() {
+      return this.$store.state.honor ? this.$store.state.honor : uni.getStorageSync('honor');
     } },
 
   methods: {

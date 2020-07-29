@@ -144,7 +144,7 @@ function queue(hooks, data) {
   for (var i = 0; i < hooks.length; i++) {
     var hook = hooks[i];
     if (promise) {
-      promise = Promise.then(wrapperHook(hook));
+      promise = Promise.resolve(wrapperHook(hook));
     } else {
       var res = hook(data);
       if (isPromise(res)) {
@@ -456,7 +456,9 @@ function processArgs(methodName, fromArgs) {var argsOption = arguments.length > 
           toArgs[keyOption.name ? keyOption.name : key] = keyOption.value;
         }
       } else if (CALLBACKS.indexOf(key) !== -1) {
-        toArgs[key] = processCallback(methodName, fromArgs[key], returnValue);
+        if (isFn(fromArgs[key])) {
+          toArgs[key] = processCallback(methodName, fromArgs[key], returnValue);
+        }
       } else {
         if (!keepFromArgs) {
           toArgs[key] = fromArgs[key];
@@ -571,10 +573,6 @@ var extraApi = /*#__PURE__*/Object.freeze({
 
 
 var getEmitter = function () {
-  if (typeof getUniEmitter === 'function') {
-    /* eslint-disable no-undef */
-    return getUniEmitter;
-  }
   var Emitter;
   return function getUniEmitter() {
     if (!Emitter) {
@@ -661,6 +659,8 @@ Component = function Component() {var options = arguments.length > 0 && argument
 var PAGE_EVENT_HOOKS = [
 'onPullDownRefresh',
 'onReachBottom',
+'onAddToFavorites',
+'onShareTimeline',
 'onShareAppMessage',
 'onPageScroll',
 'onResize',
@@ -760,7 +760,7 @@ function initData(vueOptions, context) {
     try {
       data = data.call(context); // 支持 Vue.prototype 上挂的数据
     } catch (e) {
-      if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
+      if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
         console.warn('根据 Vue 的 data 函数初始化小程序 data 失败，请尽量确保 data 函数中不访问 vm 对象，否则可能影响首次数据渲染速度。', data);
       }
     }
@@ -947,7 +947,18 @@ function getExtraValue(vm, dataPathsArray) {
       var propPath = dataPathArray[1];
       var valuePath = dataPathArray[3];
 
-      var vFor = dataPath ? vm.__get_value(dataPath, context) : context;
+      var vFor;
+      if (Number.isInteger(dataPath)) {
+        vFor = dataPath;
+      } else if (!dataPath) {
+        vFor = context;
+      } else if (typeof dataPath === 'string' && dataPath) {
+        if (dataPath.indexOf('#s#') === 0) {
+          vFor = dataPath.substr(3);
+        } else {
+          vFor = vm.__get_value(dataPath, context);
+        }
+      }
 
       if (Number.isInteger(vFor)) {
         context = value;
@@ -997,6 +1008,12 @@ function processEventExtra(vm, extra, event) {
         } else {
           if (dataPath === '$event') {// $event
             extraObj['$' + index] = event;
+          } else if (dataPath === 'arguments') {
+            if (event.detail && event.detail.__args__) {
+              extraObj['$' + index] = event.detail.__args__;
+            } else {
+              extraObj['$' + index] = [event];
+            }
           } else if (dataPath.indexOf('$event.') === 0) {// $event.target.value
             extraObj['$' + index] = vm.__get_value(dataPath.replace('$event.', ''), event);
           } else {
@@ -1077,6 +1094,15 @@ function isMatchEventType(eventType, optType) {
 
 }
 
+function getContextVm(vm) {
+  var $parent = vm.$parent;
+  // 父组件是 scoped slots 或者其他自定义组件时继续查找
+  while ($parent && $parent.$parent && ($parent.$options.generic || $parent.$parent.$options.generic || $parent.$scope._$vuePid)) {
+    $parent = $parent.$parent;
+  }
+  return $parent && $parent.$parent;
+}
+
 function handleEvent(event) {var _this = this;
   event = wrapper$1(event);
 
@@ -1109,12 +1135,8 @@ function handleEvent(event) {var _this = this;
         var methodName = eventArray[0];
         if (methodName) {
           var handlerCtx = _this.$vm;
-          if (
-          handlerCtx.$options.generic &&
-          handlerCtx.$parent &&
-          handlerCtx.$parent.$parent)
-          {// mp-weixin,mp-toutiao 抽象节点模拟 scoped slots
-            handlerCtx = handlerCtx.$parent.$parent;
+          if (handlerCtx.$options.generic) {// mp-weixin,mp-toutiao 抽象节点模拟 scoped slots
+            handlerCtx = getContextVm(handlerCtx) || handlerCtx;
           }
           if (methodName === '$emit') {
             handlerCtx.$emit.apply(handlerCtx,
@@ -1164,7 +1186,9 @@ var hooks = [
 'onShow',
 'onHide',
 'onError',
-'onPageNotFound'];
+'onPageNotFound',
+'onThemeChange',
+'onUnhandledRejection'];
 
 
 function parseBaseApp(vm, _ref3)
@@ -1498,7 +1522,7 @@ var uni = {};
 if (typeof Proxy !== 'undefined' && "mp-weixin" !== 'app-plus') {
   uni = new Proxy({}, {
     get: function get(target, name) {
-      if (target[name]) {
+      if (hasOwn(target, name)) {
         return target[name];
       }
       if (baseApi[name]) {
@@ -2379,6 +2403,7 @@ var store = new _vuex.default.Store({
     avatar: "",
     nickname: "",
     token: "",
+    honor: "",
     userid: "",
     level: 0, // 等级
     progress: 0, // 经验进度
@@ -2435,6 +2460,9 @@ var store = new _vuex.default.Store({
       state.starNum = star;
       console.log('state_starNum  is ========');
       console.log(state.starNum);
+    },
+    changeHonor: function changeHonor(state, honor) {
+      state.honor = honor;
     },
     changeCj: function changeCj(state, cj) {
       state.cjNum = cj;
@@ -4282,13 +4310,7 @@ var uid = 0;
  * directives subscribing to it.
  */
 var Dep = function Dep () {
-  // fixed by xxxxxx (nvue vuex)
-  /* eslint-disable no-undef */
-  if(typeof SharedObject !== 'undefined'){
-    this.id = SharedObject.uid++;
-  } else {
-    this.id = uid++;
-  }
+  this.id = uid++;
   this.subs = [];
 };
 
@@ -4325,7 +4347,7 @@ Dep.prototype.notify = function notify () {
 // can be evaluated at a time.
 // fixed by xxxxxx (nvue shared vuex)
 /* eslint-disable no-undef */
-Dep.SharedObject = typeof SharedObject !== 'undefined' ? SharedObject : {};
+Dep.SharedObject = {};
 Dep.SharedObject.target = null;
 Dep.SharedObject.targetStack = [];
 
@@ -9105,7 +9127,7 @@ function type(obj) {
 
 function flushCallbacks$1(vm) {
     if (vm.__next_tick_callbacks && vm.__next_tick_callbacks.length) {
-        if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
+        if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
             var mpInstance = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:flushCallbacks[' + vm.__next_tick_callbacks.length + ']');
@@ -9126,14 +9148,14 @@ function nextTick$1(vm, cb) {
     //1.nextTick 之前 已 setData 且 setData 还未回调完成
     //2.nextTick 之前存在 render watcher
     if (!vm.__next_tick_pending && !hasRenderWatcher(vm)) {
-        if(Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:nextVueTick');
         }
         return nextTick(cb, vm)
     }else{
-        if(Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance$1 = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance$1.is || mpInstance$1.route) + '][' + vm._uid +
                 ']:nextMPTick');
@@ -9175,6 +9197,15 @@ function cloneWithData(vm) {
     ret[key] = vm[key];
     return ret
   }, ret);
+
+  // vue-composition-api
+  var rawBindings = vm.__secret_vfa_state__ && vm.__secret_vfa_state__.rawBindings;
+  if (rawBindings) {
+    Object.keys(rawBindings).forEach(function (key) {
+      ret[key] = vm[key];
+    });
+  }
+  
   //TODO 需要把无用数据处理掉，比如 list=>l0 则 list 需要移除，否则多传输一份数据
   Object.assign(ret, vm.$mp.data || {});
   if (
@@ -9209,7 +9240,7 @@ var patch = function(oldVnode, vnode) {
     });
     var diffData = this.$shouldDiffData === false ? data : diff(data, mpData);
     if (Object.keys(diffData).length) {
-      if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
+      if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
         console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + this._uid +
           ']差量更新',
           JSON.stringify(diffData));
@@ -9379,7 +9410,7 @@ function getTarget(obj, path) {
   return getTarget(obj[key], parts.slice(1).join('.'))
 }
 
-function internalMixin(Vue ) {
+function internalMixin(Vue) {
 
   Vue.config.errorHandler = function(err, vm, info) {
     Vue.util.warn(("Error in " + info + ": \"" + (err.toString()) + "\""), vm);
@@ -9527,7 +9558,10 @@ var LIFECYCLE_HOOKS$1 = [
     'onShow',
     'onHide',
     'onUniNViewMessage',
+    'onPageNotFound',
+    'onThemeChange',
     'onError',
+    'onUnhandledRejection',
     //Page
     'onLoad',
     // 'onShow',
@@ -9537,6 +9571,8 @@ var LIFECYCLE_HOOKS$1 = [
     'onPullDownRefresh',
     'onReachBottom',
     'onTabItemTap',
+    'onAddToFavorites',
+    'onShareTimeline',
     'onShareAppMessage',
     'onResize',
     'onPageScroll',
@@ -14938,17 +14974,33 @@ var getWeekDay = function getWeekDay() {
     return days;
   }
 };
+var honor = {
+  qt: "青铜学生",
+  by: "白银学民",
+  hj: "黄金学霸",
+  bj: "铂金学帝",
+  zs: "钻石学仙",
+  xs: "学神" };
 
 // 经验值对应称号
-var expTitle = function expTitle(exp) {
-  if (exp >= 200 && exp < 1000) {
-    return '青铜';
+var expTitle = function expTitle(level) {
+  if (level >= 1 && level <= 2) {
+    return honor.qt;
   }
-  if (exp >= 1000 && exp < 2000) {
-    return '白银';
+  if (level >= 3 && level <= 4) {
+    return honor.by;
   }
-  if (exp >= 2000 && exp < 5000) {
-    return '黄金';
+  if (level >= 5 && level <= 6) {
+    return honor.hj;
+  }
+  if (level >= 7 && level <= 8) {
+    return honor.bj;
+  }
+  if (level >= 9 && level <= 10) {
+    return honor.zs;
+  }
+  if (level > 10) {
+    return honor.xs;
   }
 };
 
@@ -15031,7 +15083,7 @@ var getUserinfo = /*#__PURE__*/function () {var _ref = _asyncToGenerator( /*#__P
             console.log(uni.getStorageSync("token"));
             console.log('userinfo is');
             console.log(userRes);if (!
-            reshook(userRes)) {_context.next = 25;break;}
+            reshook(userRes)) {_context.next = 27;break;}
 
             // userRes字段  currentExperience  、  totalExperienceForCurrentLevel
             expProgress = parseInt(userRes.data.userLevelInfo.currentExperience / userRes.data.userLevelInfo.totalExperienceForCurrentLevel * 100);
@@ -15050,6 +15102,12 @@ var getUserinfo = /*#__PURE__*/function () {var _ref = _asyncToGenerator( /*#__P
             _store.default.commit('changeLevel', userRes.data.userLevelInfo.level);
 
             uni.setStorage({
+              key: 'honor',
+              data: expTitle(userRes.data.userLevelInfo.level) });
+
+            _store.default.commit('changeHonor', expTitle(userRes.data.userLevelInfo.level));
+
+            uni.setStorage({
               key: 'progress',
               data: expProgress });
 
@@ -15060,7 +15118,8 @@ var getUserinfo = /*#__PURE__*/function () {var _ref = _asyncToGenerator( /*#__P
               data: userRes.data.starSummary.totalCount });
 
             _store.default.commit('changeStar', userRes.data.starSummary.totalCount);return _context.abrupt("return",
-            true);case 25:
+
+            true);case 27:
 
 
             uni.showModal({
@@ -15080,7 +15139,7 @@ var getUserinfo = /*#__PURE__*/function () {var _ref = _asyncToGenerator( /*#__P
             // 	icon:'none',
             // 	duration:1500
             // })
-            return _context.abrupt("return", false);case 27:case "end":return _context.stop();}}}, _callee);}));return function getUserinfo() {return _ref.apply(this, arguments);};}();
+            return _context.abrupt("return", false);case 29:case "end":return _context.stop();}}}, _callee);}));return function getUserinfo() {return _ref.apply(this, arguments);};}();
 
 
 
@@ -15162,7 +15221,13 @@ var reshook = function reshook(res, path) {
         url: '/pages/login/login?' + origin });
 
     }
+    if (res.resultCode == 87014) {
+      uni.showToast({
+        title: res.message,
+        icon: "none",
+        duration: 1500 });
 
+    }
   }
   console.log('reshook');
   console.log(res);
@@ -15216,6 +15281,7 @@ var formatTime = function formatTime(date) {
   getData: getData,
   postData: postData,
   webapi: webapi,
+  honor: honor,
   reshook: reshook,
   showLoading: showLoading,
   hideLoading: hideLoading,

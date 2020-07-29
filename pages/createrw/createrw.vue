@@ -281,17 +281,20 @@ export default {
 			
 		},
 		createSuccess(res){
-			console.log(res)
-			uni.showToast({
+			console.log(res);
+			if(res.resultCode == 0){
+				uni.showToast({
 				title:"任务创建成功！",
 				icon:'none',
-				duration:2000
+				duration:1500
 			});
 			setTimeout(function(){
 				uni.reLaunch({
 					url:'/pages/rwlist/rwlist'
 				})
-			},2000)
+			},1550)
+			}
+			
 		},
 		typeselect:function(e){
 			console.log(e.currentTarget.dataset.value)

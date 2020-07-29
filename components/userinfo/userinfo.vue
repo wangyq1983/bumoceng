@@ -1,6 +1,12 @@
 <template>
 	<view class="userbox">
-		<view class="usericon"><image :src="icon"></image></view>
+		
+		<view class="usericon userHonor1" v-if="honor1 == honorqt"><image :src="icon"></image></view>
+		<view class="usericon userHonor2" v-if="honor1 == honorby"><image :src="icon"></image></view>
+		<view class="usericon userHonor3" v-if="honor1 == honorhj"><image :src="icon"></image></view>
+		<view class="usericon userHonor4" v-if="honor1 == honorbj"><image :src="icon"></image></view>
+		<view class="usericon userHonor5" v-if="honor1 == honorzs"><image :src="icon"></image></view>
+		<view class="usericon userHonor6" v-if="honor1 == honorxs"><image :src="icon"></image></view>
 		<view class="userinfo">
 			<view class="usernameBox">
 				<view class="username">{{ name }}</view>
@@ -19,7 +25,7 @@
 				<view class="levelTip">Lv{{ level1 }}</view>
 				<view class="levelProgress"><view class="progressCount" :style="{ width: levelnum1 + '%' }"></view></view>
 				<view class="qingtong1">
-					青铜学生
+					{{honor1}}
 				</view>
 			</view>
 			
@@ -32,6 +38,12 @@
 export default {
 	data() {
 		return {
+			honorqt:this.$api.honor.qt,
+			honorby:this.$api.honor.by,
+			honorhj:this.$api.honor.hj,
+			honorbj:this.$api.honor.bj,
+			honorzs:this.$api.honor.zs,
+			honorxs:this.$api.honor.xs,
 			icon: uni.getStorageSync('avatarUrl') ? uni.getStorageSync('avatarUrl') : '', //头像
 			name: uni.getStorageSync('nickName') ? uni.getStorageSync('nickName') : '', //昵称
 			level: this.$store.state.level ? this.$store.state.level : uni.getStorageSync('level'), //等级
@@ -49,6 +61,9 @@ export default {
 		},
 		star1:function(){
 			return this.$store.state.starNum? this.$store.state.starNum : uni.getStorageSync('starNum')
+		},
+		honor1:function(){
+			return this.$store.state.honor? this.$store.state.honor : uni.getStorageSync('honor')
 		}
 	},
 	methods: {
@@ -96,9 +111,31 @@ export default {
 	width: 72upx;
 	height: 72upx;
 	float: left;
+	padding:19upx 32upx 5upx 32upx;
+}
+.userHonor1{
 	background: url("/static/hz_qingtong1.jpg") no-repeat;
 	background-size: 134upx 96upx;
-	padding:19upx 32upx 5upx 32upx;
+}
+.userHonor2{
+	background: url("/static/hz_baiyin2.jpg") no-repeat;
+	background-size: 134upx 96upx;
+}
+.userHonor3{
+	background: url("/static/hz_huangjin3.jpg") no-repeat;
+	background-size: 134upx 96upx;
+}
+.userHonor4{
+	background: url("/static/hz_bojin4.jpg") no-repeat;
+	background-size: 134upx 96upx;
+}
+.userHonor5{
+	background: url("/static/hz_zuanshi5.jpg") no-repeat;
+	background-size: 134upx 96upx;
+}
+.userHonor6{
+	background: url("/static/hz_xueshen6.jpg") no-repeat;
+	background-size: 134upx 96upx;
 }
 .usericon image {
 	width: 72upx;

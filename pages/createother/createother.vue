@@ -73,9 +73,8 @@ export default {
 	methods: {
 		// 参数校验
 		paramsVer:function(params){
-			console.log('ver')
-			console.log(params)
-			// this.$api.trim()
+			console.log('ver');
+			console.log(params);
 			if(params.typeName == ''){
 				uni.showToast({
 					title:'请选择类别,类别不可为空!',
@@ -243,7 +242,8 @@ export default {
 			
 		},
 		createSuccess(res){
-			console.log(res)
+			console.log(res);
+			if(res.re)
 			uni.showToast({
 				title:"任务创建成功！",
 				icon:'none',

@@ -91,7 +91,7 @@
 		</view>
 		<rwlistItem v-for="items in rwlist" :key='items.id' :info = "items" @on-cdtime = "countTime" @on-zhiliang = "zhiliang" @on-del = "deltask"></rwlistItem>
 		<view v-if = "isEmpty == 1">
-		    <nodata wordinfo = "暂无任务"></nodata>
+		    <nodata wordinfo = "今天还没有创建任务, 赶快行动起来吧" type = "1"></nodata>
 		  </view>
 		  <view v-if="isEnd == true">
 		     <endLine></endLine>
@@ -158,6 +158,30 @@ export default {
 		    if (this.isEnd !== true) {
 		      this.renderList(this.rwlist.length + 1,this.dataStep,this.date)
 		    }
+	},
+	onShareTimeline(){
+		console.log('分享到朋友圈')
+	},
+	onShareAppMessage(){
+		var jielongImg = '/static/timebg.jpg';
+		var jielongpath = '/pages/rwlist/rwlist';
+		return {
+		  title: '123',
+		  path: '/pages/rwlist/rwlist',
+		  imageUrl: jielongImg,
+		  success: (res) => {
+			console.log("转发成功", res);
+			console.log(uni)
+			uni.showToast({
+				title:'转发成功',
+				icon:'none',
+				duration:1500
+			})
+		  },
+		  fail: (res) => {
+			// console.log("转发失败", res);
+		  }
+		}
 	},
 	methods: {
 		
@@ -295,23 +319,23 @@ export default {
 				}
 			]
 			var signget = await this.$api.getData(this.$api.webapi.signget);
-			// this.signList;
-			// console.log(this.signList)
-			signget.data.forEach(function(item,index,arr){
-				// console.log(tempsign[index])
-				var newitem = Object.assign(item,tempsign[index]);
-				// console.log(newitem)
-				newArr.push(newitem)
-			})
-			// console.log(newArr);
-			// this.signList = newArr;
-			
-			this.$store.commit('changesignList', newArr);
-			// console.log('签到查询');
-			// console.log(this.signList);
-			this.signIn = true;
-			this.cdtime = true;
-			this.nowWeek()
+			if (this.$api.reshook(signget, this.$mp.page.route)) {
+				signget.data.forEach(function(item,index,arr){
+					// console.log(tempsign[index])
+					var newitem = Object.assign(item,tempsign[index]);
+					// console.log(newitem)
+					newArr.push(newitem)
+				})
+				// console.log(newArr);
+				// this.signList = newArr;
+				
+				this.$store.commit('changesignList', newArr);
+				// console.log('签到查询');
+				// console.log(this.signList);
+				this.signIn = true;
+				this.cdtime = true;
+				this.nowWeek()
+			}
 		},
 		deltask:function(id){
 			this.rwlist.forEach(function(item, index, arr) {

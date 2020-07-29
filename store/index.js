@@ -11,6 +11,7 @@ const store = new Vuex.Store({
 		avatar:"",
 		nickname:"",
 		token:"",
+		honor:"",
 		userid:"",
 		level:0,  // 等级
 		progress:0,  // 经验进度
@@ -67,6 +68,9 @@ const store = new Vuex.Store({
 			state.starNum = star;
 			console.log('state_starNum  is ========')
 			console.log(state.starNum)
+		},
+		changeHonor(state,honor){
+			state.honor = honor;
 		},
 		changeCj(state,cj){
 			state.cjNum = cj

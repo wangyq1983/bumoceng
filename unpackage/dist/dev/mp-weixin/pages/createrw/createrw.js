@@ -418,16 +418,19 @@ var _default =
 
     createSuccess: function createSuccess(res) {
       console.log(res);
-      uni.showToast({
-        title: "任务创建成功！",
-        icon: 'none',
-        duration: 2000 });
+      if (res.resultCode == 0) {
+        uni.showToast({
+          title: "任务创建成功！",
+          icon: 'none',
+          duration: 1500 });
 
-      setTimeout(function () {
-        uni.reLaunch({
-          url: '/pages/rwlist/rwlist' });
+        setTimeout(function () {
+          uni.reLaunch({
+            url: '/pages/rwlist/rwlist' });
 
-      }, 2000);
+        }, 1550);
+      }
+
     },
     typeselect: function typeselect(e) {
       console.log(e.currentTarget.dataset.value);
