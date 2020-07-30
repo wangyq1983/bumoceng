@@ -10,7 +10,13 @@
 					<image :src="items.avatarUrl" mode=""></image>
 					<view class="phinfo">
 						<view class="phname">{{ items.nickName }}</view>
-						<view class="phlevel">Lv{{ items.userLevelInfo.level }}</view>
+						<view class="phdj">
+							<view class="phlevel">Lv{{ items.userLevelInfo.level }}</view>
+							<view class="ph_hon">
+								{{items.honor}}
+							</view>
+						</view>
+						
 					</view>
 				</view>
 
@@ -19,29 +25,35 @@
 		</view>
 		<view class="curUser">
 			<view class="phbox">
-				<image :src="curIcon" mode=""></image>
-				<view class="phcon">
-					<view class="curph">
-						<view class="">
-							{{curNickname}}
+				<view class="ph1">
+					<image :src="curIcon" mode=""></image>
+					<view class="phcon">
+						<view class="curph">
+							<view class="">
+								{{curNickname}}
+							</view>
+							<view class="">
+								level{{curLevel}}
+							</view>
+							<view class="">
+								{{curhonor}}
+							</view>
 						</view>
-						<view class="">
-							level{{curLevel}}
-						</view>
-						<view class="">
-							{{curhonor}}
-						</view>
-					</view>
-					<view class="curpm">
-						<view class="">
-							排名 3 暂无排名
+						<view class="curpm">
+							<view class="" v-if="curData.ranking > 0">
+								排名 {{curData.ranking}} 
+							</view>
+							<view class="" v-else>
+								暂无排名
+							</view>
 						</view>
 					</view>
 				</view>
-				<view class="timebox"></view>
-			</view>
-			<view class="">
 				
+				
+			</view>
+			<view class="timebox" style="color:#ffce00">
+				{{curData.realDurationSumZh}}
 			</view>
 		</view>
 	</view>
@@ -57,7 +69,8 @@ export default {
 			curIcon: uni.getStorageSync('avatarUrl'),
 			curNickname:uni.getStorageSync('nickName'),
 			curLevel:uni.getStorageSync('level'),
-			curhonor:uni.getStorageSync('honor')
+			curhonor:uni.getStorageSync('honor'),
+			curData:''
 		};
 	},
 	onLoad() {
@@ -68,6 +81,7 @@ export default {
 			//  rankType
 			//  summaryRank 总排行
 			//  weekRank  周排行
+			var that = this;
 			var params = {
 				from: 1,
 				count: this.dataStep,
@@ -78,7 +92,23 @@ export default {
 			await this.$api.hideLoading(); // 等待请求数据成功后，隐藏loading
 			if (this.$api.reshook(ranklist, this.$mp.page.route)) {
 				console.log(ranklist);
-				this.phlist = ranklist.data;
+				
+				ranklist.data.rankList.forEach(function(item,index,arr){
+					console.log(item)
+					var arr = []
+					var honor = {
+						honor:that.$api.expTitle(item.userLevelInfo.level)
+					}
+					var newInfo = Object.assign(item,honor);
+					console.log(newInfo)
+					console.log(index)
+					console.log(arr)
+					arr.push(newInfo)
+					
+				})
+				console.log(ranklist.data)
+				this.phlist = ranklist.data.rankList;
+				this.curData = ranklist.data.userRankInfo;
 			}
 		}
 	}
@@ -94,6 +124,7 @@ export default {
 	@include colflex;
 	justify-content: flex-start;
 	align-items: flex-start;
+	margin-bottom: 130upx;
 }
 .phitem {
 	@include rowflex;
@@ -104,7 +135,7 @@ export default {
 }
 .phbox {
 	@include rowflex;
-	justify-content: flex-start;
+	justify-content: space-between;
 }
 .phitem image {
 	width: 72upx;
@@ -120,15 +151,30 @@ export default {
 	font-weight: bold;
 	color: #363636;
 }
+.ph_hon{
+	font-size: 28upx;
+	// background: #ffce00;
+	color: #363636;
+}
 .phinfo {
-	@include rowflex;
+	@include colflex;
+	justify-content: flex-start;
+	align-items: flex-start;
+	.phname{
+		margin-bottom: 6upx;
+		font-size: 28upx;
+	}
 	.phlevel {
 		background: $color-36;
 		color: $color-m;
 		font-size: $fontsize-22;
-		margin-left: 20upx;
+		margin-right: 20upx;
 		padding: 0 10upx;
 		border-radius: 6upx;
+	}
+	.phdj{
+		@include rowflex;
+		justify-content: flex-start;
 	}
 }
 .timebox {
@@ -176,6 +222,9 @@ export default {
 			color:$color-m
 		}
 	}
-	
+	.ph1{
+		@include rowflex;
+		justify-content: flex-start;
+	}
 }
 </style>

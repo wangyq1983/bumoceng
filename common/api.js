@@ -413,5 +413,6 @@ export default {
 	addExp,
 	starAdjust,
 	expval,
-	getWeekDay
+	getWeekDay,
+	expTitle
 }

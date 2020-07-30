@@ -251,6 +251,56 @@ page {
   line-height: 32rpx;
   border-radius: 5rpx;
 }
+.baiyin2 {
+  background: #8da1ba;
+  color: #fff;
+  font-size: 24rpx;
+  margin-left: 30rpx;
+  padding: 1rpx 8rpx;
+  height: 32rpx;
+  line-height: 32rpx;
+  border-radius: 5rpx;
+}
+.huangjin3 {
+  background: #ff8a00;
+  color: #fff;
+  font-size: 24rpx;
+  margin-left: 30rpx;
+  padding: 1rpx 8rpx;
+  height: 32rpx;
+  line-height: 32rpx;
+  border-radius: 5rpx;
+}
+.bojin4 {
+  background: #6396d7;
+  color: #fff;
+  font-size: 24rpx;
+  margin-left: 30rpx;
+  padding: 1rpx 8rpx;
+  height: 32rpx;
+  line-height: 32rpx;
+  border-radius: 5rpx;
+}
+.zuanshi5 {
+  background: #1e81f9;
+  color: #fff;
+  font-size: 24rpx;
+  margin-left: 30rpx;
+  padding: 1rpx 8rpx;
+  height: 32rpx;
+  line-height: 32rpx;
+  border-radius: 5rpx;
+}
+.xueshen6 {
+  background: #921fec;
+  color: #fff;
+  font-size: 24rpx;
+  margin-left: 30rpx;
+  padding: 1rpx 8rpx;
+  height: 32rpx;
+  line-height: 32rpx;
+  border-radius: 5rpx;
+}
 .logintop {
   width: 750rpx;
   height: 350rpx;

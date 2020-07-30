@@ -212,6 +212,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 var _default =
 {
   data: function data() {
@@ -222,29 +234,47 @@ var _default =
       curIcon: uni.getStorageSync('avatarUrl'),
       curNickname: uni.getStorageSync('nickName'),
       curLevel: uni.getStorageSync('level'),
-      curhonor: uni.getStorageSync('honor') };
+      curhonor: uni.getStorageSync('honor'),
+      curData: '' };
 
   },
   onLoad: function onLoad() {
     this.init();
   },
   methods: {
-    init: function init() {var _this = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {var params, ranklist;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:
+    init: function init() {var _this = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {var that, params, ranklist;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:
                 //  rankType
                 //  summaryRank 总排行
                 //  weekRank  周排行
+                that = _this;
                 params = {
                   from: 1,
                   count: _this.dataStep,
-                  rankType: 'summaryRank' };_context.next = 3;return (
+                  rankType: 'summaryRank' };_context.next = 4;return (
 
-                  _this.$api.showLoading());case 3:_context.next = 5;return (
-                  _this.$api.getData(_this.$api.webapi.ranklist, params));case 5:ranklist = _context.sent;_context.next = 8;return (
-                  _this.$api.hideLoading());case 8: // 等待请求数据成功后，隐藏loading
+                  _this.$api.showLoading());case 4:_context.next = 6;return (
+                  _this.$api.getData(_this.$api.webapi.ranklist, params));case 6:ranklist = _context.sent;_context.next = 9;return (
+                  _this.$api.hideLoading());case 9: // 等待请求数据成功后，隐藏loading
                 if (_this.$api.reshook(ranklist, _this.$mp.page.route)) {
                   console.log(ranklist);
-                  _this.phlist = ranklist.data;
-                }case 9:case "end":return _context.stop();}}}, _callee);}))();
+
+                  ranklist.data.rankList.forEach(function (item, index, arr) {
+                    console.log(item);
+                    var arr = [];
+                    var honor = {
+                      honor: that.$api.expTitle(item.userLevelInfo.level) };
+
+                    var newInfo = Object.assign(item, honor);
+                    console.log(newInfo);
+                    console.log(index);
+                    console.log(arr);
+                    arr.push(newInfo);
+
+                  });
+                  console.log(ranklist.data);
+                  _this.phlist = ranklist.data.rankList;
+                  _this.curData = ranklist.data.userRankInfo;
+                }case 10:case "end":return _context.stop();}}}, _callee);}))();
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 

@@ -24,7 +24,25 @@
 				
 				<view class="levelTip">Lv{{ level1 }}</view>
 				<view class="levelProgress"><view class="progressCount" :style="{ width: levelnum1 + '%' }"></view></view>
-				<view class="qingtong1">
+				
+							
+				
+				<view class="qingtong1" v-if="honor1 == honorqt">
+					{{honor1}}
+				</view>
+				<view class="baiyin2" v-if="honor1 == honorby">
+					{{honor1}}
+				</view>
+				<view class="huangjin3" v-if="honor1 == honorhj">
+					{{honor1}}
+				</view>
+				<view class="bojin4" v-if="honor1 == honorbj">
+					{{honor1}}
+				</view>
+				<view class="zuanshi5" v-if="honor1 == honorzs">
+					{{honor1}}
+				</view>
+				<view class="xueshen6" v-if="honor1 == honorxs">
 					{{honor1}}
 				</view>
 			</view>

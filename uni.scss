@@ -242,13 +242,36 @@ page {
 		font-size: $fontsize-30;
 	}
 }
-.qingtong1{
-	background: #81a80a;
+@mixin honstyle{
 	color: #fff;
 	font-size: 24upx;
 	margin-left:30upx;
 	padding:1upx 8upx;
 	height:32upx;
 	line-height: 32upx;
-	border-radius: 5upx;;
+	border-radius: 5upx;
+}
+.qingtong1{
+	background: #81a80a;
+	@include honstyle
+}
+.baiyin2{
+	background: #8da1ba;
+	@include honstyle
+}
+.huangjin3{
+	background: #ff8a00;
+	@include honstyle
+}
+.bojin4{
+	background: #6396d7;
+	@include honstyle
+}
+.zuanshi5{
+	background: #1e81f9;
+	@include honstyle
+}
+.xueshen6{
+	background: #921fec;
+	@include honstyle
 }

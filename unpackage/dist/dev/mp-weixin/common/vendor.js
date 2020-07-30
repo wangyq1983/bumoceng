@@ -15292,7 +15292,8 @@ var formatTime = function formatTime(date) {
   addExp: addExp,
   starAdjust: starAdjust,
   expval: expval,
-  getWeekDay: getWeekDay };exports.default = _default;
+  getWeekDay: getWeekDay,
+  expTitle: expTitle };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ })
