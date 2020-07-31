@@ -74,8 +74,17 @@ var webapi = {
 	signget: webhost + 'sign/get',
 	
 	// 签到清空
-	signclear: webhost + 'sign/clear'
+	signclear: webhost + 'sign/clear',
+	
+	// 成就列表
+	cjList:webhost + 'achievement/user/list',
+	
+	// 成就请求
+	cjRequest:webhost + 'achievement/user/check'
 }
+
+// 成就图标
+var honorTitle = ['胜','三','十','百','千','初','传','应','秒','稳','坚','恒','精']
 
 // 经验值设置
 var expval = {
@@ -414,5 +423,6 @@ export default {
 	starAdjust,
 	expval,
 	getWeekDay,
-	expTitle
+	expTitle,
+	honorTitle
 }

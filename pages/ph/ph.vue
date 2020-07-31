@@ -19,7 +19,6 @@
 						
 					</view>
 				</view>
-
 				<view class="timebox">{{ items.realDurationSumZh }}</view>
 			</view>
 		</view>

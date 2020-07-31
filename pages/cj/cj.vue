@@ -1,36 +1,138 @@
 <template>
 	<view>
-		<view>store:  level is {{storelevel}}; exp is {{storel}} * 150</view>
-		<view>storage:level is {{storagelevel}}; exp is {{storagel}} * 150</view>
+		<userinfo></userinfo>
+		<view class="userbor"></view>
+		<view class="menuguide"><view class="left">成就列表</view></view>
+
+		<view class="cjlist">
+			<view :class="items.flag  == 1 ? 'cjitem':'cjitem gray'" v-for="items in cjlist" :key = "items.achievementCode">
+				<view class="cjicon">
+					{{items.icon}}
+				</view>
+				<view class="cjInfo">
+					<view class="cjinfoTitle">
+						{{items.title}}
+					</view>
+					<view class="cjinfoCon">
+						{{items.description}}
+					</view>
+				</view>
+			</view>
+			
+			<!-- <view class="cjitem gray">
+				<view class="cjicon">
+					信
+				</view>
+				<view class="cjInfo">
+					<view class="cjinfoTitle">
+						旗开得胜
+					</view>
+					<view class="cjinfoCon">
+						首次创建任务并按时完成
+					</view>
+				</view>
+			</view> -->
+			
+		</view>
 	</view>
 </template>
 
 <script>
-	export default {
-		data() {
-			return {
-				storelevel:0,
-				storagelevel:0
+export default {
+	data() {
+		return {
+			cjlist: []
+		};
+	},
+	methods: {
+		async init() {
+			var that = this;
+			await this.$api.showLoading(); // 显示loading
+			var cjlist = await this.$api.getData(this.$api.webapi.cjList);
+			await this.$api.hideLoading(); // 等待请求数据成功后，隐藏loading
+			console.log('成就列表是');
+			console.log(cjlist);
+			if (this.$api.reshook(cjlist, this.$mp.page.route)) {
+				var arr = []
+				if (cjlist.resultCode == 0) {
+					
+					cjlist.data.forEach(function(item,index,arr){
+						var cjicon = {
+							icon:that.$api.honorTitle[index]
+						}
+						var newitem = Object.assign(item,cjicon);
+						arr.push(newitem)
+						console.log(arr)
+					})
+					console.log(cjlist.data)
+					this.cjlist = cjlist.data
+				}
 			}
-		},
-		methods: {
 			
-		},
-		computed:{
-			storel(){
-				return this.storelevel*150
-			},
-			storagel(){
-				return this.storagelevel*150
-			}
-		},
-		onLoad() {
-			this.storelevel = this.$store.state.level;
-			this.storagelevel = uni.getStorageSync("level")
 		}
+	},
+	computed: {
+		// storel(){
+		// 	return this.storelevel*150
+		// },
+		// storagel(){
+		// 	return this.storagelevel*150
+		// }
+	},
+	onLoad() {
+		this.init();
 	}
+};
 </script>
 
 <style lang="scss">
-
+.cjlist {
+	width: 750upx;
+	@include colflex;
+	justify-content: flex-start;
+}
+.cjitem {
+	width: 750upx;
+	height: 160upx;
+	margin-bottom: 10upx;
+	@include rowflex;
+	justify-content:flex-start;
+	background-image: linear-gradient(to bottom,#ffd10f,#fff8dd,#ffd10f);
+	.cjicon {
+		width: 90upx;
+		height: 90upx;
+		line-height: 90upx;
+		border-radius: 30upx;
+		border: 10upx solid #c09d29;
+		text-align: center;
+		background-image: linear-gradient(#f9ee84,#eed138,#f9ee84);
+		font-size: 60upx;
+		color: #8c6d01;
+		font-weight: bold;
+		box-shadow: 0 0 20upx #fff;
+		margin-left: 30upx;
+	}
+	.cjInfo{
+		@include colflex;
+		justify-content: flex-start;
+		align-items: flex-start;
+		margin-left: 40upx;
+		.cjinfoTitle{
+			height: 50upx;
+			font-size: 60upx;
+			color: #8c6d01;
+			font-weight: bold;
+			font-size: 36upx;
+		}
+		.cjinfoCon{
+			height:50upx;
+			font-size: 28upx;
+			color:#8c6d01
+		}
+	}
+}
+.gray{
+	filter: grayscale(100%);
+	filter: gray;
+}
 </style>

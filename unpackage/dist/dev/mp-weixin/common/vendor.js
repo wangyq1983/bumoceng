@@ -14953,8 +14953,17 @@ var webapi = {
   signget: webhost + 'sign/get',
 
   // 签到清空
-  signclear: webhost + 'sign/clear' };
+  signclear: webhost + 'sign/clear',
 
+  // 成就列表
+  cjList: webhost + 'achievement/user/list',
+
+  // 成就请求
+  cjRequest: webhost + 'achievement/user/check' };
+
+
+// 成就图标
+var honorTitle = ['胜', '三', '十', '百', '千', '初', '传', '应', '秒', '稳', '坚', '恒', '精'];
 
 // 经验值设置
 var expval = {
@@ -15293,7 +15302,8 @@ var formatTime = function formatTime(date) {
   starAdjust: starAdjust,
   expval: expval,
   getWeekDay: getWeekDay,
-  expTitle: expTitle };exports.default = _default;
+  expTitle: expTitle,
+  honorTitle: honorTitle };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ })
