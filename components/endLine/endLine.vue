@@ -1,6 +1,6 @@
 <template>
 	<view class="endline">
-		^_^ 已经到底了，没有更多了 ^_^
+		^_^ 一共就这些任务了,没有更多了 ^_^
 	</view>
 </template>
 

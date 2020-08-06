@@ -80,7 +80,9 @@ var webapi = {
 	cjList:webhost + 'achievement/user/list',
 	
 	// 成就请求
-	cjRequest:webhost + 'achievement/user/check'
+	cjRequest:webhost + 'achievement/user/check',
+	
+	
 }
 
 // 成就图标
@@ -280,8 +282,28 @@ const addExp = async(exp)=>{
 	}
 	var expRes = await postData(webapi.exp,params);
 	if(reshook(expRes)){
-		console.log(expRes);
-		getUserinfo()
+		if(expRes.resultCode == 0){
+			console.log(expRes);
+			getUserinfo()
+		}
+		
+	}
+}
+
+// 成就变化检查
+const cjCheck = async(cjinfo) => {
+	// 请求参数示例
+	// {
+	//     "jobInfoId":12,
+	//     "thresholdTypeList": [
+	//         "job",
+	//         "completionTimeToEnd"
+	//     ]
+	// }
+	var checkCj = await postData(webapi.cjRequest,cjinfo);
+	if(reshook(checkCj)){
+		console.log('成就返回结果')
+		console.log(checkCj)
 	}
 }
 
@@ -293,8 +315,11 @@ const starAdjust = async(star,reason) =>{
 	}
 	var starRes = await postData(webapi.star,params);
 	if(reshook(starRes)){
-		console.log(starRes);
-		getUserinfo()
+		if(starRes.resultCode == 0){
+			console.log(starRes);
+			getUserinfo()
+		}
+		
 	}
 }
 
@@ -424,5 +449,6 @@ export default {
 	expval,
 	getWeekDay,
 	expTitle,
-	honorTitle
+	honorTitle,
+	cjCheck
 }

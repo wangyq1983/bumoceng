@@ -53,16 +53,15 @@ export default {
 			console.log('成就列表是');
 			console.log(cjlist);
 			if (this.$api.reshook(cjlist, this.$mp.page.route)) {
-				var arr = []
+				
 				if (cjlist.resultCode == 0) {
 					
 					cjlist.data.forEach(function(item,index,arr){
 						var cjicon = {
 							icon:that.$api.honorTitle[index]
 						}
-						var newitem = Object.assign(item,cjicon);
-						arr.push(newitem)
-						console.log(arr)
+						Object.assign(item,cjicon);
+
 					})
 					console.log(cjlist.data)
 					this.cjlist = cjlist.data

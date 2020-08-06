@@ -94,7 +94,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "components", function() { return components; });
 var components = {
   mask: function() {
-    return __webpack_require__.e(/*! import() | components/mask/mask */ "components/mask/mask").then(__webpack_require__.bind(null, /*! @/components/mask/mask.vue */ 118))
+    return __webpack_require__.e(/*! import() | components/mask/mask */ "components/mask/mask").then(__webpack_require__.bind(null, /*! @/components/mask/mask.vue */ 120))
   }
 }
 var render = function() {
@@ -409,11 +409,9 @@ var _default =
                   this.$api.showLoading());case 6:_context4.next = 8;return (
                   this.$api.postData(this.$api.webapi.cTask, params));case 8:ctask = _context4.sent;_context4.next = 11;return (
                   this.$api.hideLoading());case 11: // 等待请求数据成功后，隐藏loading
-
                 if (this.$api.reshook(ctask, this.$mp.page.route)) {
                   this.createSuccess(ctask);
                 }case 12:case "end":return _context4.stop();}}}, _callee4, this);}));function creatzyRequest() {return _creatzyRequest.apply(this, arguments);}return creatzyRequest;}(),
-
 
 
     createSuccess: function createSuccess(res) {

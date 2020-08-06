@@ -384,6 +384,11 @@ page {
           align-items: center;
   -webkit-justify-content: space-around;
           justify-content: space-around;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  z-index: 9;
+  background-color: #fff;
 }
 .createTask {
   width: 346rpx;
@@ -628,5 +633,18 @@ page {
   height: 30rpx;
   margin-right: 16rpx;
   opacity: 0.3;
+}
+.rwlist {
+  margin-top: 230rpx;
+  margin-bottom: 178rpx;
+}
+.indexTop {
+  width: 750rpx;
+  height: 220rpx;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9;
+  background-color: #fff;
 }
 

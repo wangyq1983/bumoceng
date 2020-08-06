@@ -1,4 +1,4 @@
-<template>
+	<template>
 	<view class="rwItem">
 		<view class="TitleBox">
 			<view v-if="itemcon.state == 1 && itemcon.flag == 1" class="rwState ongoing"></view>
@@ -145,6 +145,10 @@ export default {
 				var realstar = this.itemcon.starNumber * 0.01 * zhiliangpoint;
 				await this.$api.addExp(this.$api.expval.endtask);
 				await this.$api.starAdjust(realstar, '任务完成');
+				let cjparams = {
+					thresholdTypeList:["completionQuality"]
+				}
+				await this.$api.cjCheck(cjparams)
 				this.$emit('on-zhiliang', realstar, this.$api.expval.endtask);
 			}
 		},

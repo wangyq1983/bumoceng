@@ -36,23 +36,9 @@
 				</view>
 			</view>
 		</mask>
-		
-		<userinfo></userinfo>
-		<!-- <view class="actionTest">
-			<view class="" @tap="storetap">
-				store test
-			</view>
-			<view class="" @tap="storagetap">
-				storagetest
-			</view>
-		</view> -->
-		<view class="newsbox">
-			<image src="/static/news.png" mode=""></image>
-			<view class="">
-				作业不磨蹭操作使用说明
-			</view>
-		</view>
-		<view class="timeSelect">
+		<view class="indexTop">
+			<userinfo></userinfo>
+			<view class="timeSelect">
 			
 			<picker mode="date" :value="date" start="2020-07-01" :end="enddate" @change="DateChange">
 				<view class="selectCon">
@@ -73,7 +59,36 @@
 			
 		</view>
 		
-		<view class="createBox" style="border-bottom: 10upx solid #e6e6e6;">
+		</view>
+		
+		<!-- <view class="actionTest">
+			<view class="" @tap="storetap">
+				store test
+			</view>
+			<view class="" @tap="storagetap">
+				storagetest
+			</view>
+		</view> -->
+		
+		
+		<view class="rwlist">
+			<view class="newsbox">
+				<image src="/static/news.png" mode=""></image>
+				<view class="">
+					作业不磨蹭操作使用说明
+				</view>
+			</view>
+		
+		<rwlistItem v-for="items in rwlist" :key='items.id' :info = "items" @on-cdtime = "countTime" @on-zhiliang = "zhiliang" @on-del = "deltask"></rwlistItem>
+		<view v-if = "isEmpty == 1">
+		    <nodata wordinfo = "没有任务哦" type = "1"></nodata>
+		  </view>
+		  <view v-if="isEnd == true">
+		     <endLine></endLine>
+		  </view>
+		</view>
+		
+		<view class="createBox" style="border-top: 10upx solid #e6e6e6;">
 			<view class="createTask zuoye" @tap="gotoCreate" data-type="zuoye">
 				<view class="taskbg zuoye1"></view>
 				<view class="taskInfo">
@@ -88,14 +103,7 @@
 					<view class="taskWord">创建其他任务</view>
 				</view>
 			</view>
-		</view>
-		<rwlistItem v-for="items in rwlist" :key='items.id' :info = "items" @on-cdtime = "countTime" @on-zhiliang = "zhiliang" @on-del = "deltask"></rwlistItem>
-		<view v-if = "isEmpty == 1">
-		    <nodata wordinfo = "今天还没有创建任务, 赶快行动起来吧" type = "1"></nodata>
-		  </view>
-		  <view v-if="isEnd == true">
-		     <endLine></endLine>
-		  </view>
+		</view>  
 	</view>
 </template>
 
@@ -159,19 +167,30 @@ export default {
 		      this.renderList(this.rwlist.length + 1,this.dataStep,this.date)
 		    }
 	},
-	onShareTimeline(){
-		console.log('分享到朋友圈')
+	onShareTimeline: async function(){
+		console.log('分享到朋友圈');
+		console.log(this)
+		let cjparams = {
+			thresholdTypeList:["share"]
+		}
+		this.$api.cjCheck(cjparams);
 	},
-	onShareAppMessage(){
+	onShareAppMessage:async function(){
+		console.log('分享');
 		var jielongImg = '/static/timebg.jpg';
 		var jielongpath = '/pages/rwlist/rwlist';
+		let cjparams = {
+			thresholdTypeList:["share"]
+		}
+		this.$api.cjCheck(cjparams);
 		return {
-		  title: '123',
+		  title: '让孩子从此作业不磨蹭',
 		  path: '/pages/rwlist/rwlist',
 		  imageUrl: jielongImg,
 		  success: (res) => {
 			console.log("转发成功", res);
-			console.log(uni)
+			console.log(uni);
+			
 			uni.showToast({
 				title:'转发成功',
 				icon:'none',
@@ -261,8 +280,7 @@ export default {
 							duration:1500
 						})
 					}
-					this.signget()
-					// this.closemask();
+					this.signget();
 				}
 			}else{
 				uni.showToast({
@@ -338,9 +356,15 @@ export default {
 			}
 		},
 		deltask:function(id){
+			var that = this;
 			this.rwlist.forEach(function(item, index, arr) {
 				if(item.id == id) {
 					arr.splice(index, 1);
+					if(arr.length == 0){
+						console.log('列表空了');
+						that.isEmpty = 1;
+						that.isEnd = false
+					}
 					// this.rwlist = arr
 				}
 				// console.log(arr)
@@ -409,6 +433,7 @@ export default {
 			// console.log(minute);
 			// console.log('nowtask is');
 			// console.log(this.nowtask);
+			var taskid = this.nowtask;
 			var params = {
 				id:this.nowtask,
 				realDuration:minute,
@@ -439,9 +464,12 @@ export default {
 							this.nowtask = '';
 							this.closemask();
 						}
-						
-						
 					}
+					let cjparams = {
+						jobInfoId:taskid,
+						thresholdTypeList:["job","completionTimeToEnd","completeDays"]
+					}
+					await this.$api.cjCheck(cjparams)
 				}
 			}
 		},
@@ -545,6 +573,11 @@ export default {
 	width: 750upx;
 	height: 158upx;
 	@include rowflex; justify-content: space-around;
+	position: fixed;
+	left:0;
+	bottom:0;
+	z-index: 9;
+	background-color: #fff;
 }
 .createTask {
 	width: 346upx;
@@ -711,5 +744,18 @@ export default {
 		margin-right:16upx;
 		opacity: 0.3;
 	}
+}
+.rwlist{
+	margin-top:230upx;
+	margin-bottom: 178upx;	
+}
+.indexTop{
+	width:750upx;
+	height:220upx;
+	position: fixed;
+	top:0;
+	left:0;
+	z-index: 9;
+	background-color: #fff;;
 }
 </style>

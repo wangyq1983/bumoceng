@@ -94,7 +94,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "components", function() { return components; });
 var components = {
   mask: function() {
-    return __webpack_require__.e(/*! import() | components/mask/mask */ "components/mask/mask").then(__webpack_require__.bind(null, /*! @/components/mask/mask.vue */ 118))
+    return __webpack_require__.e(/*! import() | components/mask/mask */ "components/mask/mask").then(__webpack_require__.bind(null, /*! @/components/mask/mask.vue */ 120))
   }
 }
 var render = function() {
@@ -135,6 +135,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _regenerator = _interopRequireDefault(__webpack_require__(/*! ./node_modules/@vue/babel-preset-app/node_modules/@babel/runtime/regenerator */ 10));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};} //
+//
 //
 //
 //
@@ -372,6 +373,7 @@ var _default =
                   this.$api.hideLoading());case 11: // 等待请求数据成功后，隐藏loading
 
                 if (this.$api.reshook(ctask, this.$mp.page.route)) {
+
                   this.createSuccess(ctask);
                 }case 12:case "end":return _context4.stop();}}}, _callee4, this);}));function creatzyRequest() {return _creatzyRequest.apply(this, arguments);}return creatzyRequest;}(),
 
@@ -379,17 +381,19 @@ var _default =
 
     createSuccess: function createSuccess(res) {
       console.log(res);
-      if (res.re)
-      uni.showToast({
-        title: "任务创建成功！",
-        icon: 'none',
-        duration: 2000 });
+      if (res.resultCode == 0) {
+        uni.showToast({
+          title: "任务创建成功！",
+          icon: 'none',
+          duration: 1500 });
+
+      }
 
       setTimeout(function () {
         uni.reLaunch({
           url: '/pages/rwlist/rwlist' });
 
-      }, 2000);
+      }, 1550);
     },
     typeselect: function typeselect(e) {
       console.log(e.currentTarget.dataset.value);

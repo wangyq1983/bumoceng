@@ -3475,7 +3475,7 @@ var index_esm = {
 
 /***/ }),
 
-/***/ 173:
+/***/ 175:
 /*!********************************************************************************************!*\
   !*** D:/g工作/zilv/code/defaultmoban/defaultmoban/components/uni-swipe-action-item/mpwxs.js ***!
   \********************************************************************************************/
@@ -14962,6 +14962,8 @@ var webapi = {
   cjRequest: webhost + 'achievement/user/check' };
 
 
+
+
 // 成就图标
 var honorTitle = ['胜', '三', '十', '百', '千', '初', '传', '应', '秒', '稳', '坚', '恒', '精'];
 
@@ -15159,22 +15161,45 @@ var addExp = /*#__PURE__*/function () {var _ref2 = _asyncToGenerator( /*#__PURE_
 
               postData(webapi.exp, params));case 3:expRes = _context2.sent;
             if (reshook(expRes)) {
-              console.log(expRes);
-              getUserinfo();
+              if (expRes.resultCode == 0) {
+                console.log(expRes);
+                getUserinfo();
+              }
+
             }case 5:case "end":return _context2.stop();}}}, _callee2);}));return function addExp(_x) {return _ref2.apply(this, arguments);};}();
 
 
+// 成就变化检查
+var cjCheck = /*#__PURE__*/function () {var _ref3 = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee3(cjinfo) {var checkCj;return _regenerator.default.wrap(function _callee3$(_context3) {while (1) {switch (_context3.prev = _context3.next) {case 0:_context3.next = 2;return (
+
+
+
+
+
+
+
+
+              postData(webapi.cjRequest, cjinfo));case 2:checkCj = _context3.sent;
+            if (reshook(checkCj)) {
+              console.log('成就返回结果');
+              console.log(checkCj);
+            }case 4:case "end":return _context3.stop();}}}, _callee3);}));return function cjCheck(_x2) {return _ref3.apply(this, arguments);};}();
+
+
 // 星变化接口
-var starAdjust = /*#__PURE__*/function () {var _ref3 = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee3(star, reason) {var params, starRes;return _regenerator.default.wrap(function _callee3$(_context3) {while (1) {switch (_context3.prev = _context3.next) {case 0:
+var starAdjust = /*#__PURE__*/function () {var _ref4 = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee4(star, reason) {var params, starRes;return _regenerator.default.wrap(function _callee4$(_context4) {while (1) {switch (_context4.prev = _context4.next) {case 0:
             params = {
               adjustCount: star,
-              reason: reason };_context3.next = 3;return (
+              reason: reason };_context4.next = 3;return (
 
-              postData(webapi.star, params));case 3:starRes = _context3.sent;
+              postData(webapi.star, params));case 3:starRes = _context4.sent;
             if (reshook(starRes)) {
-              console.log(starRes);
-              getUserinfo();
-            }case 5:case "end":return _context3.stop();}}}, _callee3);}));return function starAdjust(_x2, _x3) {return _ref3.apply(this, arguments);};}();
+              if (starRes.resultCode == 0) {
+                console.log(starRes);
+                getUserinfo();
+              }
+
+            }case 5:case "end":return _context4.stop();}}}, _callee4);}));return function starAdjust(_x3, _x4) {return _ref4.apply(this, arguments);};}();
 
 
 // loading加载提示
@@ -15303,7 +15328,8 @@ var formatTime = function formatTime(date) {
   expval: expval,
   getWeekDay: getWeekDay,
   expTitle: expTitle,
-  honorTitle: honorTitle };exports.default = _default;
+  honorTitle: honorTitle,
+  cjCheck: cjCheck };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ })

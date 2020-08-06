@@ -105,22 +105,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "components", function() { return components; });
 var components = {
   mask: function() {
-    return __webpack_require__.e(/*! import() | components/mask/mask */ "components/mask/mask").then(__webpack_require__.bind(null, /*! @/components/mask/mask.vue */ 118))
+    return __webpack_require__.e(/*! import() | components/mask/mask */ "components/mask/mask").then(__webpack_require__.bind(null, /*! @/components/mask/mask.vue */ 120))
   },
   successdata: function() {
-    return __webpack_require__.e(/*! import() | components/successdata/successdata */ "components/successdata/successdata").then(__webpack_require__.bind(null, /*! @/components/successdata/successdata.vue */ 123))
+    return __webpack_require__.e(/*! import() | components/successdata/successdata */ "components/successdata/successdata").then(__webpack_require__.bind(null, /*! @/components/successdata/successdata.vue */ 125))
   },
   userinfo: function() {
-    return __webpack_require__.e(/*! import() | components/userinfo/userinfo */ "components/userinfo/userinfo").then(__webpack_require__.bind(null, /*! @/components/userinfo/userinfo.vue */ 128))
+    return __webpack_require__.e(/*! import() | components/userinfo/userinfo */ "components/userinfo/userinfo").then(__webpack_require__.bind(null, /*! @/components/userinfo/userinfo.vue */ 130))
   },
   rwlistItem: function() {
-    return __webpack_require__.e(/*! import() | components/rwlistItem/rwlistItem */ "components/rwlistItem/rwlistItem").then(__webpack_require__.bind(null, /*! @/components/rwlistItem/rwlistItem.vue */ 135))
+    return __webpack_require__.e(/*! import() | components/rwlistItem/rwlistItem */ "components/rwlistItem/rwlistItem").then(__webpack_require__.bind(null, /*! @/components/rwlistItem/rwlistItem.vue */ 137))
   },
   nodata: function() {
-    return __webpack_require__.e(/*! import() | components/nodata/nodata */ "components/nodata/nodata").then(__webpack_require__.bind(null, /*! @/components/nodata/nodata.vue */ 142))
+    return __webpack_require__.e(/*! import() | components/nodata/nodata */ "components/nodata/nodata").then(__webpack_require__.bind(null, /*! @/components/nodata/nodata.vue */ 144))
   },
   endLine: function() {
-    return __webpack_require__.e(/*! import() | components/endLine/endLine */ "components/endLine/endLine").then(__webpack_require__.bind(null, /*! @/components/endLine/endLine.vue */ 149))
+    return __webpack_require__.e(/*! import() | components/endLine/endLine */ "components/endLine/endLine").then(__webpack_require__.bind(null, /*! @/components/endLine/endLine.vue */ 151))
   }
 }
 var render = function() {
@@ -158,7 +158,15 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _regenerator = _interopRequireDefault(__webpack_require__(/*! ./node_modules/@vue/babel-preset-app/node_modules/@babel/runtime/regenerator */ 10));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}var uniCountdown = function uniCountdown() {__webpack_require__.e(/*! require.ensure | components/uni-countdown/uni-countdown */ "components/uni-countdown/uni-countdown").then((function () {return resolve(__webpack_require__(/*! @/components/uni-countdown/uni-countdown.vue */ 156));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _regenerator = _interopRequireDefault(__webpack_require__(/*! ./node_modules/@vue/babel-preset-app/node_modules/@babel/runtime/regenerator */ 10));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}var uniCountdown = function uniCountdown() {__webpack_require__.e(/*! require.ensure | components/uni-countdown/uni-countdown */ "components/uni-countdown/uni-countdown").then((function () {return resolve(__webpack_require__(/*! @/components/uni-countdown/uni-countdown.vue */ 158));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
+
+
+
+
+
+
+
+
 
 
 
@@ -319,30 +327,41 @@ __webpack_require__.r(__webpack_exports__);
                 this.renderList(this.rwlist.length + 1, this.dataStep, this.date);
               }case 2:case "end":return _context.stop();}}}, _callee, this);}));function onReachBottom() {return _onReachBottom.apply(this, arguments);}return onReachBottom;}(),
 
-  onShareTimeline: function onShareTimeline() {
-    console.log('分享到朋友圈');
-  },
-  onShareAppMessage: function onShareAppMessage() {
-    var jielongImg = '/static/timebg.jpg';
-    var jielongpath = '/pages/rwlist/rwlist';
-    return {
-      title: '123',
-      path: '/pages/rwlist/rwlist',
-      imageUrl: jielongImg,
-      success: function success(res) {
-        console.log("转发成功", res);
-        console.log(uni);
-        uni.showToast({
-          title: '转发成功',
-          icon: 'none',
-          duration: 1500 });
+  onShareTimeline: function () {var _onShareTimeline = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee2() {var cjparams;return _regenerator.default.wrap(function _callee2$(_context2) {while (1) {switch (_context2.prev = _context2.next) {case 0:
+              console.log('分享到朋友圈');
+              console.log(this);
+              cjparams = {
+                thresholdTypeList: ["share"] };
 
-      },
-      fail: function fail(res) {
-        // console.log("转发失败", res);
-      } };
+              this.$api.cjCheck(cjparams);case 4:case "end":return _context2.stop();}}}, _callee2, this);}));function onShareTimeline() {return _onShareTimeline.apply(this, arguments);}return onShareTimeline;}(),
 
-  },
+  onShareAppMessage: function () {var _onShareAppMessage = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee3() {var jielongImg, jielongpath, cjparams;return _regenerator.default.wrap(function _callee3$(_context3) {while (1) {switch (_context3.prev = _context3.next) {case 0:
+              console.log('分享');
+              jielongImg = '/static/timebg.jpg';
+              jielongpath = '/pages/rwlist/rwlist';
+              cjparams = {
+                thresholdTypeList: ["share"] };
+
+              this.$api.cjCheck(cjparams);return _context3.abrupt("return",
+              {
+                title: '让孩子从此作业不磨蹭',
+                path: '/pages/rwlist/rwlist',
+                imageUrl: jielongImg,
+                success: function success(res) {
+                  console.log("转发成功", res);
+                  console.log(uni);
+
+                  uni.showToast({
+                    title: '转发成功',
+                    icon: 'none',
+                    duration: 1500 });
+
+                },
+                fail: function fail(res) {
+                  // console.log("转发失败", res);
+                } });case 6:case "end":return _context3.stop();}}}, _callee3, this);}));function onShareAppMessage() {return _onShareAppMessage.apply(this, arguments);}return onShareAppMessage;}(),
+
+
   methods: {
 
     DateChange: function DateChange(e) {
@@ -355,13 +374,13 @@ __webpack_require__.r(__webpack_exports__);
     daystate: function daystate(e) {
 
     },
-    clearsign: function () {var _clearsign = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee2() {return _regenerator.default.wrap(function _callee2$(_context2) {while (1) {switch (_context2.prev = _context2.next) {case 0:_context2.next = 2;return (
-                  this.$api.getData(this.$api.webapi.signclear));case 2:case "end":return _context2.stop();}}}, _callee2, this);}));function clearsign() {return _clearsign.apply(this, arguments);}return clearsign;}(),
+    clearsign: function () {var _clearsign = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee4() {return _regenerator.default.wrap(function _callee4$(_context4) {while (1) {switch (_context4.prev = _context4.next) {case 0:_context4.next = 2;return (
+                  this.$api.getData(this.$api.webapi.signclear));case 2:case "end":return _context4.stop();}}}, _callee4, this);}));function clearsign() {return _clearsign.apply(this, arguments);}return clearsign;}(),
 
     signEvent: function signEvent() {
       this.signget();
     },
-    signOk: function () {var _signOk = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee3(e) {var _this, nowexp, signed, tempsign, params, signRes;return _regenerator.default.wrap(function _callee3$(_context3) {while (1) {switch (_context3.prev = _context3.next) {case 0:
+    signOk: function () {var _signOk = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee5(e) {var _this, nowexp, signed, tempsign, params, signRes;return _regenerator.default.wrap(function _callee5$(_context5) {while (1) {switch (_context5.prev = _context5.next) {case 0:
                 _this = this;
                 // console.log(this.nowweekday);
 
@@ -403,16 +422,16 @@ __webpack_require__.r(__webpack_exports__);
                   }
                 });
                 // console.log(nowexp);
-                if (signed) {_context3.next = 20;break;}
+                if (signed) {_context5.next = 20;break;}
                 params = {
-                  experience: nowexp };_context3.next = 7;return (
+                  experience: nowexp };_context5.next = 7;return (
 
-                  this.$api.showLoading());case 7:_context3.next = 9;return (
-                  this.$api.postData(this.$api.webapi.signin, params));case 9:signRes = _context3.sent;_context3.next = 12;return (
+                  this.$api.showLoading());case 7:_context5.next = 9;return (
+                  this.$api.postData(this.$api.webapi.signin, params));case 9:signRes = _context5.sent;_context5.next = 12;return (
                   this.$api.hideLoading());case 12:if (!
-                this.$api.reshook(signRes, this.$mp.page.route)) {_context3.next = 18;break;}if (!(
+                this.$api.reshook(signRes, this.$mp.page.route)) {_context5.next = 18;break;}if (!(
 
-                signRes.resultCode == 0)) {_context3.next = 17;break;}_context3.next = 16;return (
+                signRes.resultCode == 0)) {_context5.next = 17;break;}_context5.next = 16;return (
 
                   this.$api.addExp(nowexp));case 16:
                 uni.showToast({
@@ -421,14 +440,13 @@ __webpack_require__.r(__webpack_exports__);
                   duration: 1500 });case 17:
 
 
-                this.signget();
-                // this.closemask();
-              case 18:_context3.next = 21;break;case 20:
+                this.signget();case 18:_context5.next = 21;break;case 20:
+
 
                 uni.showToast({
                   title: '已经签到过了',
                   icon: 'none',
-                  duration: 1500 });case 21:case "end":return _context3.stop();}}}, _callee3, this);}));function signOk(_x) {return _signOk.apply(this, arguments);}return signOk;}(),
+                  duration: 1500 });case 21:case "end":return _context5.stop();}}}, _callee5, this);}));function signOk(_x) {return _signOk.apply(this, arguments);}return signOk;}(),
 
 
 
@@ -445,7 +463,7 @@ __webpack_require__.r(__webpack_exports__);
 
       this.nowweekday = weekList[d.getDay()];
     },
-    signget: function () {var _signget = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee4() {var _this, newArr, tempsign, signget;return _regenerator.default.wrap(function _callee4$(_context4) {while (1) {switch (_context4.prev = _context4.next) {case 0:
+    signget: function () {var _signget = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee6() {var _this, newArr, tempsign, signget;return _regenerator.default.wrap(function _callee6$(_context6) {while (1) {switch (_context6.prev = _context6.next) {case 0:
                 _this = this;
                 newArr = [];
                 tempsign = [
@@ -475,10 +493,10 @@ __webpack_require__.r(__webpack_exports__);
 
                 {
                   day: '周日',
-                  exp: 10 }];_context4.next = 5;return (
+                  exp: 10 }];_context6.next = 5;return (
 
 
-                  this.$api.getData(this.$api.webapi.signget));case 5:signget = _context4.sent;
+                  this.$api.getData(this.$api.webapi.signget));case 5:signget = _context6.sent;
                 if (this.$api.reshook(signget, this.$mp.page.route)) {
                   signget.data.forEach(function (item, index, arr) {
                     // console.log(tempsign[index])
@@ -495,12 +513,18 @@ __webpack_require__.r(__webpack_exports__);
                   this.signIn = true;
                   this.cdtime = true;
                   this.nowWeek();
-                }case 7:case "end":return _context4.stop();}}}, _callee4, this);}));function signget() {return _signget.apply(this, arguments);}return signget;}(),
+                }case 7:case "end":return _context6.stop();}}}, _callee6, this);}));function signget() {return _signget.apply(this, arguments);}return signget;}(),
 
     deltask: function deltask(id) {
+      var that = this;
       this.rwlist.forEach(function (item, index, arr) {
         if (item.id == id) {
           arr.splice(index, 1);
+          if (arr.length == 0) {
+            console.log('列表空了');
+            that.isEmpty = 1;
+            that.isEnd = false;
+          }
           // this.rwlist = arr
         }
         // console.log(arr)
@@ -564,61 +588,65 @@ __webpack_require__.r(__webpack_exports__);
 
     },
     // 任务完成
-    timed: function () {var _timed = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee5(minute, state) {var params, taskend;return _regenerator.default.wrap(function _callee5$(_context5) {while (1) {switch (_context5.prev = _context5.next) {case 0:
+    timed: function () {var _timed = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee7(minute, state) {var taskid, params, taskend, cjparams;return _regenerator.default.wrap(function _callee7$(_context7) {while (1) {switch (_context7.prev = _context7.next) {case 0:
                 // console.log('秒数');
                 // console.log(minute);
                 // console.log('nowtask is');
                 // console.log(this.nowtask);
+                taskid = this.nowtask;
                 params = {
                   id: this.nowtask,
                   realDuration: minute,
-                  state: state };_context5.next = 3;return (
+                  state: state };_context7.next = 4;return (
 
-                  this.$api.showLoading());case 3:_context5.next = 5;return (
-                  this.$api.postData(this.$api.webapi.TaskEnd, params));case 5:taskend = _context5.sent;_context5.next = 8;return (
-                  this.$api.hideLoading());case 8:if (!
-                this.$api.reshook(taskend, this.$mp.page.route)) {_context5.next = 23;break;}if (!(
+                  this.$api.showLoading());case 4:_context7.next = 6;return (
+                  this.$api.postData(this.$api.webapi.TaskEnd, params));case 6:taskend = _context7.sent;_context7.next = 9;return (
+                  this.$api.hideLoading());case 9:if (!
+                this.$api.reshook(taskend, this.$mp.page.route)) {_context7.next = 27;break;}if (!(
 
-                taskend.resultCode == 0)) {_context5.next = 23;break;}if (!
-                this.ifswitch) {_context5.next = 14;break;}
+                taskend.resultCode == 0)) {_context7.next = 27;break;}if (!
+                this.ifswitch) {_context7.next = 15;break;}
                 //await this.$api.addExp(this.$api.expval.endtask)
                 //this.taskSuccess = true;
                 // this.nowtask = '';
                 // this.cdtime = false;
-                this.closemask();_context5.next = 23;break;case 14:if (!(
+                this.closemask();_context7.next = 24;break;case 15:if (!(
 
-                state == 3)) {_context5.next = 22;break;}_context5.next = 17;return (
-                  this.$api.addExp(this.$api.expval.endtask));case 17:_context5.next = 19;return (
-                  this.$api.starAdjust(this.star, '任务完成'));case 19:
+                state == 3)) {_context7.next = 23;break;}_context7.next = 18;return (
+                  this.$api.addExp(this.$api.expval.endtask));case 18:_context7.next = 20;return (
+                  this.$api.starAdjust(this.star, '任务完成'));case 20:
                 // await this.$api.getUserinfo()
                 this.taskSuccess = true;
                 this.nowtask = '';
-                this.exptype = this.$api.expval.endtask;case 22:
+                this.exptype = this.$api.expval.endtask;case 23:
 
                 if (state == 4) {
                   this.nowtask = '';
                   this.closemask();
-                }case 23:case "end":return _context5.stop();}}}, _callee5, this);}));function timed(_x2, _x3) {return _timed.apply(this, arguments);}return timed;}(),
+                }case 24:
+
+                cjparams = {
+                  jobInfoId: taskid,
+                  thresholdTypeList: ["job", "completionTimeToEnd", "completeDays"] };_context7.next = 27;return (
+
+                  this.$api.cjCheck(cjparams));case 27:case "end":return _context7.stop();}}}, _callee7, this);}));function timed(_x2, _x3) {return _timed.apply(this, arguments);}return timed;}(),
 
 
 
-
-
-
-    init: function init() {var _this2 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee6() {var date;return _regenerator.default.wrap(function _callee6$(_context6) {while (1) {switch (_context6.prev = _context6.next) {case 0:
+    init: function init() {var _this2 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee8() {var date;return _regenerator.default.wrap(function _callee8$(_context8) {while (1) {switch (_context8.prev = _context8.next) {case 0:
                 date = new Date();
                 _this2.date = _this2.$api.formatTime(date);
                 _this2.enddate = _this2.$api.formatTime(date);
-                _this2.renderList(1, _this2.dataStep, _this2.date);case 4:case "end":return _context6.stop();}}}, _callee6);}))();
+                _this2.renderList(1, _this2.dataStep, _this2.date);case 4:case "end":return _context8.stop();}}}, _callee8);}))();
     },
-    renderList: function renderList(from, count, dateTime) {var _this3 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee7() {var params, cjlist;return _regenerator.default.wrap(function _callee7$(_context7) {while (1) {switch (_context7.prev = _context7.next) {case 0:
+    renderList: function renderList(from, count, dateTime) {var _this3 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee9() {var params, cjlist;return _regenerator.default.wrap(function _callee9$(_context9) {while (1) {switch (_context9.prev = _context9.next) {case 0:
                 params = {
                   from: from,
                   count: count,
-                  dateTime: dateTime };_context7.next = 3;return (
+                  dateTime: dateTime };_context9.next = 3;return (
 
-                  _this3.$api.showLoading());case 3:_context7.next = 5;return (
-                  _this3.$api.getData(_this3.$api.webapi.TaskList, params));case 5:cjlist = _context7.sent;_context7.next = 8;return (
+                  _this3.$api.showLoading());case 3:_context9.next = 5;return (
+                  _this3.$api.getData(_this3.$api.webapi.TaskList, params));case 5:cjlist = _context9.sent;_context9.next = 8;return (
                   _this3.$api.hideLoading());case 8: // 等待请求数据成功后，隐藏loading
                 if (_this3.$api.reshook(cjlist, _this3.$mp.page.route)) {
                   // this.renderList(cjlist);
@@ -634,7 +662,7 @@ __webpack_require__.r(__webpack_exports__);
                     }
                     // this.rwlist = cjlist.data
                   }
-                }case 9:case "end":return _context7.stop();}}}, _callee7);}))();
+                }case 9:case "end":return _context9.stop();}}}, _callee9);}))();
     },
     gotoCreate: function gotoCreate(e) {
       var rwtype = e.currentTarget.dataset.type;

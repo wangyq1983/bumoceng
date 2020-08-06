@@ -273,12 +273,10 @@ export default {
 				await this.$api.showLoading(); // 显示loading
 				var ctask = await this.$api.postData(this.$api.webapi.cTask, params);
 				await this.$api.hideLoading(); // 等待请求数据成功后，隐藏loading
-
 				if (this.$api.reshook(ctask, this.$mp.page.route)) {
 					this.createSuccess(ctask); 
 				}
 			}
-			
 		},
 		createSuccess(res){
 			console.log(res);
