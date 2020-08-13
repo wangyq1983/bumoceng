@@ -6,17 +6,26 @@
 
 		<view class="cjlist">
 			<view :class="items.flag  == 1 ? 'cjitem':'cjitem gray'" v-for="items in cjlist" :key = "items.achievementCode">
-				<view class="cjicon">
-					{{items.icon}}
-				</view>
-				<view class="cjInfo">
-					<view class="cjinfoTitle">
-						{{items.title}}
+				<view class="cjleft">
+					<view class="cjicon">
+						{{items.icon}}
 					</view>
-					<view class="cjinfoCon">
-						{{items.description}}
+					<view class="cjInfo">
+						<view class="cjinfoTitle">
+							{{items.title}}
+						</view>
+						<view class="cjinfoCon">
+							{{items.description}}
+						</view>
 					</view>
 				</view>
+				<view class="cjright">
+					<view class="">
+						{{items.cumulativeThreshold?(items.cumulativeThreshold>items.threshold?items.threshold:items.cumulativeThreshold):0}}/{{items.threshold}}
+					</view>
+				</view>
+				
+				
 			</view>
 			
 			<!-- <view class="cjitem gray">
@@ -95,8 +104,18 @@ export default {
 	height: 160upx;
 	margin-bottom: 10upx;
 	@include rowflex;
-	justify-content:flex-start;
+	justify-content: space-between;
 	background-image: linear-gradient(to bottom,#ffd10f,#fff8dd,#ffd10f);
+	.cjleft{
+		@include rowflex;
+		justify-content: flex-start;
+	}
+	.cjright{
+		color: #363636;
+		font-size: $fontsize-28;
+		margin-right:30upx;
+		font-weight: bold;
+	}
 	.cjicon {
 		width: 90upx;
 		height: 90upx;

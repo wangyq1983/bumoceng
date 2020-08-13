@@ -76,24 +76,91 @@ var webapi = {
 	// 签到清空
 	signclear: webhost + 'sign/clear',
 	
+	// 清空用户信息
+	userclear: webhost + 'user/experience/clear',
+	
 	// 成就列表
 	cjList:webhost + 'achievement/user/list',
 	
 	// 成就请求
-	cjRequest:webhost + 'achievement/user/check',
+	cjRequest:webhost + 'achievement/user/check'
 	
 	
 }
 
 // 成就图标
-var honorTitle = ['胜','三','十','百','千','初','传','应','秒','稳','坚','恒','精']
+var honorTitle = ['胜','三','十','百','千','初','传','应','秒','稳','坚','恒','精'];
+
+const honorCorres = (honor) => {
+	var honorList = [
+		{
+			title:"旗开得胜",
+			icon:"胜"
+		},
+		{
+			title:"三阳开泰",
+			icon:"三"
+		},
+		{
+			title:"十全十美",
+			icon:"十"
+		},
+		{
+			title:"百尺竿头",
+			icon:"百"
+		},
+		{
+			title:"千锤百炼",
+			icon:"千"
+		},
+		{
+			title:"初出茅庐",
+			icon:"初"
+		},
+		{
+			title:"十口相传",
+			icon:"传"
+		},
+		{
+			title:"一呼百应",
+			icon:"应"
+		},
+		{
+			title:"争分夺秒",
+			icon:"秒"
+		},
+		{
+			title:"高枕无忧",
+			icon:"稳"
+		},
+		{
+			title:"坚持不懈",
+			icon:"坚"
+		},
+		{
+			title:"持之以恒",
+			icon:"恒"
+		},
+		{
+			title:"精益求精",
+			icon:"精"
+		}
+	]
+	var curicon = "";
+	honorList.forEach(function(item,index,arr){
+		if(honor == item.title){
+			curicon = item.icon
+		}
+	})
+	return curicon
+}
 
 // 经验值设置
 var expval = {
 	ctask:10,
-	endtask:30,
+	endtask:120,
 	signin:10,
-	share:50,
+	share:50
 }
 
 // 获得周几
@@ -211,21 +278,40 @@ const postData = (url, param) => {
 const getUserinfo = async() => {
 	// 获取用户信息
 	var userRes = await getData(webapi.userInfo);
-	console.log('token is');
-	console.log(uni.getStorageSync("token"))
-	console.log('userinfo is')
-	console.log(userRes)
+	// console.log('token is');
+	// console.log(uni.getStorageSync("token"))
+	// console.log('userinfo is')
+	// console.log(userRes)
 	if (reshook(userRes)) {
 		
 		// userRes字段  currentExperience  、  totalExperienceForCurrentLevel
 		var expProgress = parseInt((userRes.data.userLevelInfo.currentExperience / userRes.data.userLevelInfo.totalExperienceForCurrentLevel)*100); 
-		console.log('====================================================================================================================================')
-		console.log('currentExperience');
-		console.log(userRes.data.userLevelInfo.currentExperience);
-		console.log('totalExperienceForCurrentLevel');
-		console.log(userRes.data.userLevelInfo.totalExperienceForCurrentLevel);
-		console.log('exp Progress is = ');
-		console.log(expProgress)
+		// console.log('====================================================================================================================================')
+		// console.log('currentExperience');
+		// console.log(userRes.data.userLevelInfo.currentExperience);
+		// console.log('totalExperienceForCurrentLevel');
+		// console.log(userRes.data.userLevelInfo.totalExperienceForCurrentLevel);
+		// console.log('exp Progress is = ');
+		// console.log(expProgress)
+		// console.log('获取状态开始--------------------------------------------------------------------------------')
+		// console.log(store.state)
+		// console.log('获取状态结束--------------------------------------------------------------------------------')
+		
+		if(uni.getStorageSync('level')){
+			if(userRes.data.userLevelInfo.level == uni.getStorageSync('level')){
+				store.commit('levelUpdata', false)
+			}else{
+				store.commit('levelUpdata', true)
+			}
+		}
+		
+		if(uni.getStorageSync('honor')){
+			if(expTitle(userRes.data.userLevelInfo.level) == uni.getStorageSync('honor')){
+				store.commit('honorUpdata', false)
+			}else{
+				store.commit('honorUpdata', true)
+			}
+		}
 		
 		uni.setStorage({
 			key: 'level',
@@ -239,6 +325,7 @@ const getUserinfo = async() => {
 		})
 		store.commit('changeHonor', expTitle(userRes.data.userLevelInfo.level))
 		
+		
 		uni.setStorage({
 			key: 'progress',
 			data: expProgress
@@ -250,10 +337,8 @@ const getUserinfo = async() => {
 			data: userRes.data.starSummary.totalCount
 		});
 		store.commit('changeStar', userRes.data.starSummary.totalCount)
-		
 		return true
 	}else{
-		
 		uni.showModal({
 		  title: '用户信息获取失败',
 		  content: uni.getStorageSync('token')?uni.getStorageSync('token'):'no token',
@@ -303,7 +388,10 @@ const cjCheck = async(cjinfo) => {
 	var checkCj = await postData(webapi.cjRequest,cjinfo);
 	if(reshook(checkCj)){
 		console.log('成就返回结果')
-		console.log(checkCj)
+		console.log(checkCj);
+		if(checkCj.resultCode == 0){
+			return checkCj;
+		}
 	}
 }
 
@@ -450,5 +538,6 @@ export default {
 	getWeekDay,
 	expTitle,
 	honorTitle,
-	cjCheck
+	cjCheck,
+	honorCorres
 }

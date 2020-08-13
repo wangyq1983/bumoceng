@@ -760,7 +760,7 @@ function initData(vueOptions, context) {
     try {
       data = data.call(context); // 支持 Vue.prototype 上挂的数据
     } catch (e) {
-      if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
+      if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
         console.warn('根据 Vue 的 data 函数初始化小程序 data 失败，请尽量确保 data 函数中不访问 vm 对象，否则可能影响首次数据渲染速度。', data);
       }
     }
@@ -2409,6 +2409,8 @@ var store = new _vuex.default.Store({
     progress: 0, // 经验进度
     starNum: 0, // 星数
     cjNum: 0, // 成就点数
+    levelupdata: false,
+    honorupdata: false,
     openid: null,
     testvuex: false,
     colorIndex: 0,
@@ -2442,6 +2444,12 @@ var store = new _vuex.default.Store({
     },
     addLevel: function addLevel(state, num) {
       state.level = state.level + num;
+    },
+    levelUpdata: function levelUpdata(state, isUpdata) {
+      state.levelupdata = isUpdata;
+    },
+    honorUpdata: function honorUpdata(state, isUpdata) {
+      state.honorupdata = isUpdata;
     },
     changeLevel: function changeLevel(state, level) {
       // 变更等级
@@ -9127,7 +9135,7 @@ function type(obj) {
 
 function flushCallbacks$1(vm) {
     if (vm.__next_tick_callbacks && vm.__next_tick_callbacks.length) {
-        if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
+        if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
             var mpInstance = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:flushCallbacks[' + vm.__next_tick_callbacks.length + ']');
@@ -9148,14 +9156,14 @@ function nextTick$1(vm, cb) {
     //1.nextTick 之前 已 setData 且 setData 还未回调完成
     //2.nextTick 之前存在 render watcher
     if (!vm.__next_tick_pending && !hasRenderWatcher(vm)) {
-        if(Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:nextVueTick');
         }
         return nextTick(cb, vm)
     }else{
-        if(Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance$1 = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance$1.is || mpInstance$1.route) + '][' + vm._uid +
                 ']:nextMPTick');
@@ -9240,7 +9248,7 @@ var patch = function(oldVnode, vnode) {
     });
     var diffData = this.$shouldDiffData === false ? data : diff(data, mpData);
     if (Object.keys(diffData).length) {
-      if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
+      if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
         console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + this._uid +
           ']差量更新',
           JSON.stringify(diffData));
@@ -14955,6 +14963,9 @@ var webapi = {
   // 签到清空
   signclear: webhost + 'sign/clear',
 
+  // 清空用户信息
+  userclear: webhost + 'user/experience/clear',
+
   // 成就列表
   cjList: webhost + 'achievement/user/list',
 
@@ -14967,10 +14978,74 @@ var webapi = {
 // 成就图标
 var honorTitle = ['胜', '三', '十', '百', '千', '初', '传', '应', '秒', '稳', '坚', '恒', '精'];
 
+var honorCorres = function honorCorres(honor) {
+  var honorList = [
+  {
+    title: "旗开得胜",
+    icon: "胜" },
+
+  {
+    title: "三阳开泰",
+    icon: "三" },
+
+  {
+    title: "十全十美",
+    icon: "十" },
+
+  {
+    title: "百尺竿头",
+    icon: "百" },
+
+  {
+    title: "千锤百炼",
+    icon: "千" },
+
+  {
+    title: "初出茅庐",
+    icon: "初" },
+
+  {
+    title: "十口相传",
+    icon: "传" },
+
+  {
+    title: "一呼百应",
+    icon: "应" },
+
+  {
+    title: "争分夺秒",
+    icon: "秒" },
+
+  {
+    title: "高枕无忧",
+    icon: "稳" },
+
+  {
+    title: "坚持不懈",
+    icon: "坚" },
+
+  {
+    title: "持之以恒",
+    icon: "恒" },
+
+  {
+    title: "精益求精",
+    icon: "精" }];
+
+
+  var curicon = "";
+  honorList.forEach(function (item, index, arr) {
+    if (honor == item.title) {
+      curicon = item.icon;
+    }
+  });
+  return curicon;
+};
+
 // 经验值设置
 var expval = {
   ctask: 10,
-  endtask: 30,
+  endtask: 120,
   signin: 10,
   share: 50 };
 
@@ -15089,22 +15164,41 @@ var postData = function postData(url, param) {
 // 获取用户信息
 var getUserinfo = /*#__PURE__*/function () {var _ref = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {var userRes, expProgress;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:_context.next = 2;return (
 
-              getData(webapi.userInfo));case 2:userRes = _context.sent;
-            console.log('token is');
-            console.log(uni.getStorageSync("token"));
-            console.log('userinfo is');
-            console.log(userRes);if (!
-            reshook(userRes)) {_context.next = 27;break;}
+              getData(webapi.userInfo));case 2:userRes = _context.sent;if (!
+
+
+
+
+            reshook(userRes)) {_context.next = 18;break;}
 
             // userRes字段  currentExperience  、  totalExperienceForCurrentLevel
             expProgress = parseInt(userRes.data.userLevelInfo.currentExperience / userRes.data.userLevelInfo.totalExperienceForCurrentLevel * 100);
-            console.log('====================================================================================================================================');
-            console.log('currentExperience');
-            console.log(userRes.data.userLevelInfo.currentExperience);
-            console.log('totalExperienceForCurrentLevel');
-            console.log(userRes.data.userLevelInfo.totalExperienceForCurrentLevel);
-            console.log('exp Progress is = ');
-            console.log(expProgress);
+            // console.log('====================================================================================================================================')
+            // console.log('currentExperience');
+            // console.log(userRes.data.userLevelInfo.currentExperience);
+            // console.log('totalExperienceForCurrentLevel');
+            // console.log(userRes.data.userLevelInfo.totalExperienceForCurrentLevel);
+            // console.log('exp Progress is = ');
+            // console.log(expProgress)
+            // console.log('获取状态开始--------------------------------------------------------------------------------')
+            // console.log(store.state)
+            // console.log('获取状态结束--------------------------------------------------------------------------------')
+
+            if (uni.getStorageSync('level')) {
+              if (userRes.data.userLevelInfo.level == uni.getStorageSync('level')) {
+                _store.default.commit('levelUpdata', false);
+              } else {
+                _store.default.commit('levelUpdata', true);
+              }
+            }
+
+            if (uni.getStorageSync('honor')) {
+              if (expTitle(userRes.data.userLevelInfo.level) == uni.getStorageSync('honor')) {
+                _store.default.commit('honorUpdata', false);
+              } else {
+                _store.default.commit('honorUpdata', true);
+              }
+            }
 
             uni.setStorage({
               key: 'level',
@@ -15118,6 +15212,7 @@ var getUserinfo = /*#__PURE__*/function () {var _ref = _asyncToGenerator( /*#__P
 
             _store.default.commit('changeHonor', expTitle(userRes.data.userLevelInfo.level));
 
+
             uni.setStorage({
               key: 'progress',
               data: expProgress });
@@ -15129,9 +15224,7 @@ var getUserinfo = /*#__PURE__*/function () {var _ref = _asyncToGenerator( /*#__P
               data: userRes.data.starSummary.totalCount });
 
             _store.default.commit('changeStar', userRes.data.starSummary.totalCount);return _context.abrupt("return",
-
-            true);case 27:
-
+            true);case 18:
 
             uni.showModal({
               title: '用户信息获取失败',
@@ -15150,7 +15243,7 @@ var getUserinfo = /*#__PURE__*/function () {var _ref = _asyncToGenerator( /*#__P
             // 	icon:'none',
             // 	duration:1500
             // })
-            return _context.abrupt("return", false);case 29:case "end":return _context.stop();}}}, _callee);}));return function getUserinfo() {return _ref.apply(this, arguments);};}();
+            return _context.abrupt("return", false);case 20:case "end":return _context.stop();}}}, _callee);}));return function getUserinfo() {return _ref.apply(this, arguments);};}();
 
 
 
@@ -15179,11 +15272,14 @@ var cjCheck = /*#__PURE__*/function () {var _ref3 = _asyncToGenerator( /*#__PURE
 
 
 
-              postData(webapi.cjRequest, cjinfo));case 2:checkCj = _context3.sent;
-            if (reshook(checkCj)) {
-              console.log('成就返回结果');
-              console.log(checkCj);
-            }case 4:case "end":return _context3.stop();}}}, _callee3);}));return function cjCheck(_x2) {return _ref3.apply(this, arguments);};}();
+              postData(webapi.cjRequest, cjinfo));case 2:checkCj = _context3.sent;if (!
+            reshook(checkCj)) {_context3.next = 8;break;}
+            console.log('成就返回结果');
+            console.log(checkCj);if (!(
+            checkCj.resultCode == 0)) {_context3.next = 8;break;}return _context3.abrupt("return",
+            checkCj);case 8:case "end":return _context3.stop();}}}, _callee3);}));return function cjCheck(_x2) {return _ref3.apply(this, arguments);};}();
+
+
 
 
 // 星变化接口
@@ -15329,7 +15425,8 @@ var formatTime = function formatTime(date) {
   getWeekDay: getWeekDay,
   expTitle: expTitle,
   honorTitle: honorTitle,
-  cjCheck: cjCheck };exports.default = _default;
+  cjCheck: cjCheck,
+  honorCorres: honorCorres };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ })

@@ -17,11 +17,13 @@ const store = new Vuex.Store({
 		progress:0,  // 经验进度
 		starNum:0,  // 星数
 		cjNum:0,  // 成就点数
+		levelupdata:false,
+		honorupdata:false,
 		openid: null,
 		testvuex: false,
 		colorIndex: 0,
 		signList:[], //签到列表
-		colorList: ['#FF0000', '#00FF00', '#0000FF']
+		colorList: ['#FF0000', '#00FF00', '#0000FF'],
 	},
 	mutations: {
 		login(state, res) {
@@ -50,6 +52,12 @@ const store = new Vuex.Store({
 		},
 		addLevel(state,num){
 			state.level = state.level + num
+		},
+		levelUpdata(state,isUpdata){
+			state.levelupdata = isUpdata
+		},
+		honorUpdata(state,isUpdata){
+			state.honorupdata = isUpdata
 		},
 		changeLevel(state,level){
 			// 变更等级

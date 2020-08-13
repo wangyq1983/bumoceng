@@ -112,7 +112,20 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -147,14 +160,68 @@ var _default =
 
     expType: {
       type: Number,
-      default: 0 } },
+      default: 0 },
+
+    cjList: {
+      type: Array },
+
+    level: {
+      type: Number,
+      default: 1 },
+
+    honor: {
+      type: String,
+      default: '' },
+
+    levelchange: {
+      type: Boolean },
+
+    honorchange: {
+      type: Boolean } },
 
 
   data: function data() {
-    return {};
+    return {
+      starNum1: true,
+      expType1: true,
+      successHeight: "height:0",
+      honorList: [] };
 
 
-  } };exports.default = _default;
+
+  },
+  created: function created() {
+    console.log(this.levelchange);
+    console.log(this.honorchange);
+    var that = this;
+    this.cjList.forEach(function (item, index, arr) {
+      var cjicon = {
+        icon: that.$api.honorCorres(item.title) };
+
+      console.log(cjicon);
+      Object.assign(item, cjicon);
+    });
+    console.log('this.cjlist');
+    console.log(this.cjList);
+    this.honorList = this.cjList;
+  },
+  mounted: function mounted() {
+    var that = this;
+    // 动态获取高度
+
+    var query = uni.createSelectorQuery().in(this);
+    query.
+    select('.slayCon').
+    boundingClientRect(function (data) {
+      console.log('动态获取');
+      console.log(data);
+      that.successHeight = 'height:' + data.height + 'px';
+    }).
+    exec();
+  },
+
+  methods: {} };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ })
 

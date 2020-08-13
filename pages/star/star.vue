@@ -11,7 +11,9 @@
 				查看历史记录
 			</view>
 		</view>
-
+		<view class="">
+			奖励追加、惩罚扣除、遗漏补星都在这里
+		</view>
 		<view class="starWarp">
 			<view class="starAction">
 				<view :class="(changeType == 'add')?'actionBtn current':'actionBtn'" data-val = "add" @tap="actionEvt">  

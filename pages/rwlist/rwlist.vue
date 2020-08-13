@@ -4,8 +4,7 @@
 			<view class="cdlayer" v-if="nowtask">
 				<uniCountdown @on-complete = 'timed' :showmask = 'cdtime' :show-day="false" :show-hour="showhour" :hour="hourTask" :minute="minuteTask" :second="secondTask" ref = "countDown"></uniCountdown>
 			</view>
-			<successdata :starNum = 'star' :expType = 'exptype' v-if="taskSuccess"></successdata>
-		
+				<successdata :starNum = 'star' :expType = 'exptype' :cjList = 'cjList' :level = "level1" :honor = "honor1" :levelchange = "levelupdata" :honorchange = "honorupdata" v-if="taskSuccess"></successdata>
 			<view class="signin" v-if="signIn">
 				<view class="signTitle">
 					一周签到
@@ -52,6 +51,9 @@
 			<!-- <view class="" @tap = "clearsign">
 				取消签到
 			</view> -->
+			<view class="" @tap="clearUser">
+				清空用户
+			</view>
 			<view class="signCon" @tap="signEvent">
 				<image src="/static/sign.png" mode=""></image>
 				<view>签到</view>
@@ -75,7 +77,7 @@
 			<view class="newsbox">
 				<image src="/static/news.png" mode=""></image>
 				<view class="">
-					作业不磨蹭操作使用说明
+					作业不磨蹭操作使用说明1
 				</view>
 			</view>
 		
@@ -124,8 +126,14 @@ export default {
 			showhour:false,
 			nowtask:'',  // 真实状态下为 ""
 			datetime:'',
+			
 			star:null,
 			exptype:null,
+			cjList:[],
+			level:0,
+			honor:"",
+			levelchange:false,
+			honorchange:false,
 			ifswitch:false,
 			signid:'',
 			signIn:false,
@@ -140,6 +148,18 @@ export default {
 	computed:{
 		listsign:function(){
 			return this.$store.state.signList
+		},
+		level1:function(){
+			return this.$store.state.level ? this.$store.state.level : uni.getStorageSync('level')
+		},
+		honor1:function(){
+			return this.$store.state.honor? this.$store.state.honor : uni.getStorageSync('honor')
+		},
+		levelupdata:function(){
+			return this.$store.state.levelupdata?this.$store.state.levelupdata:false
+		},
+		honorupdata:function(){
+			return this.$store.state.honorupdata?this.$store.state.honorupdata:false
 		}
 	},
 	components:{
@@ -171,18 +191,22 @@ export default {
 		console.log('分享到朋友圈');
 		console.log(this)
 		let cjparams = {
+			jobInfoId:0,
 			thresholdTypeList:["share"]
 		}
-		this.$api.cjCheck(cjparams);
+		var cjResult = await this.$api.cjCheck(cjparams);
+		this.renderCjlist(cjResult);
 	},
 	onShareAppMessage:async function(){
 		console.log('分享');
 		var jielongImg = '/static/timebg.jpg';
 		var jielongpath = '/pages/rwlist/rwlist';
 		let cjparams = {
+			jobInfoId:0,
 			thresholdTypeList:["share"]
 		}
-		this.$api.cjCheck(cjparams);
+		var cjResult = await this.$api.cjCheck(cjparams);
+		this.renderCjlist(cjResult);
 		return {
 		  title: '让孩子从此作业不磨蹭',
 		  path: '/pages/rwlist/rwlist',
@@ -203,7 +227,14 @@ export default {
 		}
 	},
 	methods: {
-		
+		renderCjlist:function(res){
+			console.log(res)
+			if(res.data.length > 0){
+				this.taskSuccess = true;
+				this.cdtime = true;
+				this.cjList = res.data;
+			}
+		},
 		DateChange:function(e) {
 			// console.log(e)
 			this.date = e.detail.value;
@@ -216,6 +247,12 @@ export default {
 		},
 		clearsign:async function(){
 			await this.$api.getData(this.$api.webapi.signclear);
+		},
+		clearUser:async function(){
+			var params = {
+				
+			};
+			await this.$api.postData(this.$api.webapi.userclear,params)
 		},
 		signEvent:function(){
 			this.signget()
@@ -455,21 +492,24 @@ export default {
 						if(state == 3){
 							await this.$api.addExp(this.$api.expval.endtask);
 							await this.$api.starAdjust(this.star,'任务完成');
+							let cjparams = {
+								jobInfoId:taskid,
+								thresholdTypeList:["job","completionTimeToEnd","completeDays"]
+							}
+							var cjResult = await this.$api.cjCheck(cjparams);
+							await this.renderCjlist(cjResult);
 							// await this.$api.getUserinfo()
 							this.taskSuccess = true;
 							this.nowtask = '';
-							this.exptype = this.$api.expval.endtask
+							this.exptype = this.$api.expval.endtask;
 						}
 						if(state == 4){
+							// 任务超时
 							this.nowtask = '';
 							this.closemask();
 						}
 					}
-					let cjparams = {
-						jobInfoId:taskid,
-						thresholdTypeList:["job","completionTimeToEnd","completeDays"]
-					}
-					await this.$api.cjCheck(cjparams)
+					
 				}
 			}
 		},
@@ -500,7 +540,6 @@ export default {
 					      this.isEnd = (cjlist.data.length < this.dataStep) ? true : false;
 					      this.rwlist = (this.rwlist.length == 0) ? cjlist.data : this.rwlist.concat(cjlist.data)
 					    }
-					// this.rwlist = cjlist.data
 				}
 			}
 		},
@@ -516,20 +555,7 @@ export default {
 					url: '/pages/createother/createother'
 				});
 			}
-		},
-		// storetap() {
-		// 	console.log('storetap');
-		// 	this.$store.commit('addLevel', 1);
-		// 	// this.$emit('close');
-		// },
-		// storagetap() {
-		// 	console.log('storagetap');
-		// 	uni.setStorage({
-		// 		key: 'level',
-		// 		data: uni.getStorageSync('level') + 1
-		// 	});
-		// 	// this.$emit('click');
-		// }
+		}
 	}
 };
 </script>
