@@ -19,6 +19,7 @@
 			return {
 			};
 		},
+
 		methods:{
 			closeEvent(){
 				console.log(this)

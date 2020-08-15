@@ -361,7 +361,7 @@ const getUserinfo = async() => {
 }
 
 // 经验变化接口
-const addExp = async(exp)=>{
+const addExp = async(exp,nogetuser)=>{
 	let params = {
 		experience:exp
 	}
@@ -369,7 +369,12 @@ const addExp = async(exp)=>{
 	if(reshook(expRes)){
 		if(expRes.resultCode == 0){
 			console.log(expRes);
-			getUserinfo()
+			if(nogetuser){
+				
+			}else{
+				getUserinfo()
+			}
+			// 
 		}
 		
 	}
@@ -396,7 +401,7 @@ const cjCheck = async(cjinfo) => {
 }
 
 // 星变化接口
-const starAdjust = async(star,reason) =>{
+const starAdjust = async(star,reason,nogetuser) =>{
 	let params = {
 		adjustCount:star,
 		reason:reason
@@ -405,7 +410,11 @@ const starAdjust = async(star,reason) =>{
 	if(reshook(starRes)){
 		if(starRes.resultCode == 0){
 			console.log(starRes);
-			getUserinfo()
+			if(nogetuser){
+				
+			}else{
+				getUserinfo()
+			}
 		}
 		
 	}

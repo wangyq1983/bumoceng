@@ -151,27 +151,25 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 var _default =
 {
   props: {
     starNum: {
-      type: Number,
-      default: 0 },
+      type: Number },
 
     expType: {
-      type: Number,
-      default: 0 },
+      type: Number },
 
     cjList: {
       type: Array },
 
     level: {
-      type: Number,
-      default: 1 },
+      type: Number },
 
     honor: {
-      type: String,
-      default: '' },
+      type: String },
 
     levelchange: {
       type: Boolean },
@@ -182,17 +180,19 @@ var _default =
 
   data: function data() {
     return {
-      starNum1: true,
-      expType1: true,
+      starNum1: 0,
+      expType1: 0,
       successHeight: "height:0",
-      honorList: [] };
+      honorList: [],
 
 
+      level1: 0,
+      honor1: "",
+      levelchange1: false,
+      honorchange1: false };
 
   },
   created: function created() {
-    console.log(this.levelchange);
-    console.log(this.honorchange);
     var that = this;
     this.cjList.forEach(function (item, index, arr) {
       var cjicon = {
@@ -205,22 +205,35 @@ var _default =
     console.log(this.cjList);
     this.honorList = this.cjList;
   },
-  mounted: function mounted() {
-    var that = this;
-    // 动态获取高度
-
-    var query = uni.createSelectorQuery().in(this);
-    query.
-    select('.slayCon').
-    boundingClientRect(function (data) {
-      console.log('动态获取');
-      console.log(data);
-      that.successHeight = 'height:' + data.height + 'px';
-    }).
-    exec();
+  beforeDestroy: function beforeDestroy() {
+    this.cjList = [];
   },
+  mounted: function mounted() {
+    this.createHeight();
+  },
+  watch: {
+    $props: {
+      handler: function handler() {
+        this.createHeight();
+      },
+      deep: true } },
 
-  methods: {} };exports.default = _default;
+
+  methods: {
+    createHeight: function createHeight() {
+      var that = this;
+      // 动态获取高度
+
+      var query = uni.createSelectorQuery().in(this);
+      query.
+      select('.slayCon').
+      boundingClientRect(function (data) {
+        console.log('动态获取');
+        console.log(data);
+        that.successHeight = 'height:' + data.height + 'px';
+      }).
+      exec();
+    } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ })

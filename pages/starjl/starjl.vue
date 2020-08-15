@@ -7,7 +7,7 @@
 					<view class="">请设置需要</view>
 					<image src="/static/menustar.png" class="simg" mode=""></image>
 					<view class="">的数量</view>
-					<view class=""><input type="text" value="" v-model="starcon" /></view>
+					<view class=""><input type="number" value="" v-model="starcon" /></view>
 					<view class="tipinfo">(请输入整数)</view>
 				</view>
 				<view class="eventBtn" @tap="createReward">保存</view>

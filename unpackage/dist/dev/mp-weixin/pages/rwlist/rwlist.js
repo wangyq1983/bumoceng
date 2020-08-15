@@ -290,10 +290,7 @@ __webpack_require__.r(__webpack_exports__);
       star: null,
       exptype: null,
       cjList: [],
-      level: 0,
-      honor: "",
-      levelchange: false,
-      honorchange: false,
+
       ifswitch: false,
       signid: '',
       signIn: false,
@@ -330,7 +327,6 @@ __webpack_require__.r(__webpack_exports__);
     //console.log(this.$mp.page.route)
     // this.signget()
     this.init();
-
   },
   onShow: function onShow() {
     // console.log('show');
@@ -389,6 +385,7 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     renderCjlist: function renderCjlist(res) {
       console.log(res);
+      this.cjList = [];
       if (res.data.length > 0) {
         this.taskSuccess = true;
         this.cdtime = true;
@@ -452,54 +449,48 @@ __webpack_require__.r(__webpack_exports__);
                   exp: 10 }];
 
 
-                tempsign.forEach(function (item, index, arr) {
+
+                this.$store.state.signList.forEach(function (item, index, arr) {
                   if (item.day == _this.nowweekday) {
                     nowexp = item.exp;
                     signed = item.isSigned;
                   }
                 });
                 // console.log(nowexp);
-                if (signed) {_context6.next = 20;break;}
+                if (signed) {_context6.next = 23;break;}
                 params = {
                   experience: nowexp };_context6.next = 7;return (
 
                   this.$api.showLoading());case 7:_context6.next = 9;return (
                   this.$api.postData(this.$api.webapi.signin, params));case 9:signRes = _context6.sent;_context6.next = 12;return (
                   this.$api.hideLoading());case 12:if (!
-                this.$api.reshook(signRes, this.$mp.page.route)) {_context6.next = 18;break;}if (!(
+                this.$api.reshook(signRes, this.$mp.page.route)) {_context6.next = 21;break;}if (!(
 
-                signRes.resultCode == 0)) {_context6.next = 17;break;}_context6.next = 16;return (
+                signRes.resultCode == 0)) {_context6.next = 16;break;}_context6.next = 16;return (
 
                   this.$api.addExp(nowexp));case 16:
-                uni.showToast({
-                  title: '签到成功',
-                  icon: 'none',
-                  duration: 1500 });case 17:
 
 
-                this.signget();case 18:_context6.next = 21;break;case 20:
 
+
+
+
+                this.exptype = nowexp;
+                this.star = 0;
+                this.taskSuccess = true;
+                this.cjList = [];
+                this.signIn = false;
+                // this.signget();
+              case 21:_context6.next = 24;break;case 23:
 
                 uni.showToast({
                   title: '已经签到过了',
                   icon: 'none',
-                  duration: 1500 });case 21:case "end":return _context6.stop();}}}, _callee6, this);}));function signOk(_x) {return _signOk.apply(this, arguments);}return signOk;}(),
+                  duration: 1500 });case 24:case "end":return _context6.stop();}}}, _callee6, this);}));function signOk(_x) {return _signOk.apply(this, arguments);}return signOk;}(),
 
 
 
-    nowWeek: function nowWeek() {
-      var d = new Date();
-      var weekList = [
-      '周日',
-      '周一',
-      '周二',
-      '周三',
-      '周四',
-      '周五',
-      '周六'];
 
-      this.nowweekday = weekList[d.getDay()];
-    },
     signget: function () {var _signget = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee7() {var _this, newArr, tempsign, signget;return _regenerator.default.wrap(function _callee7$(_context7) {while (1) {switch (_context7.prev = _context7.next) {case 0:
                 _this = this;
                 newArr = [];
@@ -552,6 +543,19 @@ __webpack_require__.r(__webpack_exports__);
                   this.nowWeek();
                 }case 7:case "end":return _context7.stop();}}}, _callee7, this);}));function signget() {return _signget.apply(this, arguments);}return signget;}(),
 
+    nowWeek: function nowWeek() {
+      var d = new Date();
+      var weekList = [
+      '周日',
+      '周一',
+      '周二',
+      '周三',
+      '周四',
+      '周五',
+      '周六'];
+
+      this.nowweekday = weekList[d.getDay()];
+    },
     deltask: function deltask(id) {
       var that = this;
       this.rwlist.forEach(function (item, index, arr) {
@@ -567,9 +571,10 @@ __webpack_require__.r(__webpack_exports__);
         // console.log(arr)
       });
     },
-    zhiliang: function zhiliang(star, exp) {
+    zhiliang: function zhiliang(star, exp, cjlist) {
       this.star = star;
       this.exptype = exp;
+      this.cjList = cjlist;
       this.cdtime = true;
       this.taskSuccess = true;
     },
@@ -639,35 +644,36 @@ __webpack_require__.r(__webpack_exports__);
                   this.$api.showLoading());case 4:_context8.next = 6;return (
                   this.$api.postData(this.$api.webapi.TaskEnd, params));case 6:taskend = _context8.sent;_context8.next = 9;return (
                   this.$api.hideLoading());case 9:if (!
-                this.$api.reshook(taskend, this.$mp.page.route)) {_context8.next = 30;break;}if (!(
+                this.$api.reshook(taskend, this.$mp.page.route)) {_context8.next = 32;break;}if (!(
 
-                taskend.resultCode == 0)) {_context8.next = 30;break;}if (!
+                taskend.resultCode == 0)) {_context8.next = 32;break;}if (!
                 this.ifswitch) {_context8.next = 15;break;}
                 //await this.$api.addExp(this.$api.expval.endtask)
                 //this.taskSuccess = true;
                 // this.nowtask = '';
                 // this.cdtime = false;
-                this.closemask();_context8.next = 30;break;case 15:if (!(
+                this.closemask();_context8.next = 32;break;case 15:if (!(
 
-                state == 3)) {_context8.next = 29;break;}_context8.next = 18;return (
-                  this.$api.addExp(this.$api.expval.endtask));case 18:_context8.next = 20;return (
-                  this.$api.starAdjust(this.star, '任务完成'));case 20:
+                state == 3)) {_context8.next = 31;break;}_context8.next = 18;return (
+                  this.$api.addExp(this.$api.expval.endtask, true));case 18:_context8.next = 20;return (
+                  this.$api.starAdjust(this.star, '任务完成', true));case 20:
+
                 cjparams = {
                   jobInfoId: taskid,
                   thresholdTypeList: ["job", "completionTimeToEnd", "completeDays"] };_context8.next = 23;return (
 
                   this.$api.cjCheck(cjparams));case 23:cjResult = _context8.sent;_context8.next = 26;return (
-                  this.renderCjlist(cjResult));case 26:
-                // await this.$api.getUserinfo()
+                  this.renderCjlist(cjResult));case 26:_context8.next = 28;return (
+                  this.$api.getUserinfo());case 28:
                 this.taskSuccess = true;
                 this.nowtask = '';
-                this.exptype = this.$api.expval.endtask;case 29:
+                this.exptype = this.$api.expval.endtask;case 31:
 
                 if (state == 4) {
                   // 任务超时
                   this.nowtask = '';
                   this.closemask();
-                }case 30:case "end":return _context8.stop();}}}, _callee8, this);}));function timed(_x2, _x3) {return _timed.apply(this, arguments);}return timed;}(),
+                }case 32:case "end":return _context8.stop();}}}, _callee8, this);}));function timed(_x2, _x3) {return _timed.apply(this, arguments);}return timed;}(),
 
 
 

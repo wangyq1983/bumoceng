@@ -142,14 +142,16 @@ export default {
 					zhiliangpoint = 50
 				}
 				
-				var realstar = this.itemcon.starNumber * 0.01 * zhiliangpoint;
-				await this.$api.addExp(this.$api.expval.endtask);
-				await this.$api.starAdjust(realstar, '任务完成');
+				var realstar = Math.ceil(this.itemcon.starNumber * 0.01 * zhiliangpoint);
+				await this.$api.addExp(this.$api.expval.endtask,true);
+				await this.$api.starAdjust(realstar, '任务完成',true);
+				await this.$api.getUserinfo();
 				let cjparams = {
-					thresholdTypeList:["completionQuality"]
+					jobInfoId:this.itemcon.id,
+					thresholdTypeList:["job","completionTimeToEnd","completeDays","completionQuality"]
 				}
-				await this.$api.cjCheck(cjparams)
-				this.$emit('on-zhiliang', realstar, this.$api.expval.endtask);
+				var cjlist = await this.$api.cjCheck(cjparams);
+				this.$emit('on-zhiliang', realstar, this.$api.expval.endtask,cjlist.data);
 			}
 		},
 		delAction() {

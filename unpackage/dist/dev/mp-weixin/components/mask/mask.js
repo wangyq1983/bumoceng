@@ -133,6 +133,7 @@ var _default =
     return {};
 
   },
+
   methods: {
     closeEvent: function closeEvent() {
       console.log(this);

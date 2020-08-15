@@ -15248,7 +15248,7 @@ var getUserinfo = /*#__PURE__*/function () {var _ref = _asyncToGenerator( /*#__P
 
 
 // 经验变化接口
-var addExp = /*#__PURE__*/function () {var _ref2 = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee2(exp) {var params, expRes;return _regenerator.default.wrap(function _callee2$(_context2) {while (1) {switch (_context2.prev = _context2.next) {case 0:
+var addExp = /*#__PURE__*/function () {var _ref2 = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee2(exp, nogetuser) {var params, expRes;return _regenerator.default.wrap(function _callee2$(_context2) {while (1) {switch (_context2.prev = _context2.next) {case 0:
             params = {
               experience: exp };_context2.next = 3;return (
 
@@ -15256,10 +15256,15 @@ var addExp = /*#__PURE__*/function () {var _ref2 = _asyncToGenerator( /*#__PURE_
             if (reshook(expRes)) {
               if (expRes.resultCode == 0) {
                 console.log(expRes);
-                getUserinfo();
+                if (nogetuser) {
+
+                } else {
+                  getUserinfo();
+                }
+                // 
               }
 
-            }case 5:case "end":return _context2.stop();}}}, _callee2);}));return function addExp(_x) {return _ref2.apply(this, arguments);};}();
+            }case 5:case "end":return _context2.stop();}}}, _callee2);}));return function addExp(_x, _x2) {return _ref2.apply(this, arguments);};}();
 
 
 // 成就变化检查
@@ -15277,13 +15282,13 @@ var cjCheck = /*#__PURE__*/function () {var _ref3 = _asyncToGenerator( /*#__PURE
             console.log('成就返回结果');
             console.log(checkCj);if (!(
             checkCj.resultCode == 0)) {_context3.next = 8;break;}return _context3.abrupt("return",
-            checkCj);case 8:case "end":return _context3.stop();}}}, _callee3);}));return function cjCheck(_x2) {return _ref3.apply(this, arguments);};}();
+            checkCj);case 8:case "end":return _context3.stop();}}}, _callee3);}));return function cjCheck(_x3) {return _ref3.apply(this, arguments);};}();
 
 
 
 
 // 星变化接口
-var starAdjust = /*#__PURE__*/function () {var _ref4 = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee4(star, reason) {var params, starRes;return _regenerator.default.wrap(function _callee4$(_context4) {while (1) {switch (_context4.prev = _context4.next) {case 0:
+var starAdjust = /*#__PURE__*/function () {var _ref4 = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee4(star, reason, nogetuser) {var params, starRes;return _regenerator.default.wrap(function _callee4$(_context4) {while (1) {switch (_context4.prev = _context4.next) {case 0:
             params = {
               adjustCount: star,
               reason: reason };_context4.next = 3;return (
@@ -15292,10 +15297,14 @@ var starAdjust = /*#__PURE__*/function () {var _ref4 = _asyncToGenerator( /*#__P
             if (reshook(starRes)) {
               if (starRes.resultCode == 0) {
                 console.log(starRes);
-                getUserinfo();
+                if (nogetuser) {
+
+                } else {
+                  getUserinfo();
+                }
               }
 
-            }case 5:case "end":return _context4.stop();}}}, _callee4);}));return function starAdjust(_x3, _x4) {return _ref4.apply(this, arguments);};}();
+            }case 5:case "end":return _context4.stop();}}}, _callee4);}));return function starAdjust(_x4, _x5, _x6) {return _ref4.apply(this, arguments);};}();
 
 
 // loading加载提示

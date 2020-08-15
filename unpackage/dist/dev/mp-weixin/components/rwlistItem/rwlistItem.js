@@ -221,12 +221,12 @@ var _default =
       console.log(e.currentTarget.dataset.time);
       this.$emit('on-cdtime', e.currentTarget.dataset.time, this.itemcon.id, this.itemcon.starNumber, this.itemcon.completionSwitch);
     },
-    zhiliangEvent: function zhiliangEvent() {var _this2 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {var params, utask, zhiliangpoint, realstar, cjparams;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:if (!(
+    zhiliangEvent: function zhiliangEvent() {var _this2 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {var params, utask, zhiliangpoint, realstar, cjparams, cjlist;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:if (!(
                 _this2.itemcon.state == 1)) {_context.next = 4;break;}
                 uni.showToast({
                   title: '任务未完成,不能评价完成质量',
                   icon: 'none',
-                  duration: 1500 });_context.next = 25;break;case 4:
+                  duration: 1500 });_context.next = 28;break;case 4:
 
 
                 params = {
@@ -258,14 +258,16 @@ var _default =
                   zhiliangpoint = 50;
                 }
 
-                realstar = _this2.itemcon.starNumber * 0.01 * zhiliangpoint;_context.next = 19;return (
-                  _this2.$api.addExp(_this2.$api.expval.endtask));case 19:_context.next = 21;return (
-                  _this2.$api.starAdjust(realstar, '任务完成'));case 21:
+                realstar = Math.ceil(_this2.itemcon.starNumber * 0.01 * zhiliangpoint);_context.next = 19;return (
+                  _this2.$api.addExp(_this2.$api.expval.endtask, true));case 19:_context.next = 21;return (
+                  _this2.$api.starAdjust(realstar, '任务完成', true));case 21:_context.next = 23;return (
+                  _this2.$api.getUserinfo());case 23:
                 cjparams = {
-                  thresholdTypeList: ["completionQuality"] };_context.next = 24;return (
+                  jobInfoId: _this2.itemcon.id,
+                  thresholdTypeList: ["job", "completionTimeToEnd", "completeDays", "completionQuality"] };_context.next = 26;return (
 
-                  _this2.$api.cjCheck(cjparams));case 24:
-                _this2.$emit('on-zhiliang', realstar, _this2.$api.expval.endtask);case 25:case "end":return _context.stop();}}}, _callee);}))();
+                  _this2.$api.cjCheck(cjparams));case 26:cjlist = _context.sent;
+                _this2.$emit('on-zhiliang', realstar, _this2.$api.expval.endtask, cjlist.data);case 28:case "end":return _context.stop();}}}, _callee);}))();
 
     },
     delAction: function delAction() {

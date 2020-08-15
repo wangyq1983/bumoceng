@@ -27,13 +27,13 @@
 		<view class="selectTime">
 			<image src="/static/time1.png" mode="" class="Imgicon"></image>
 			<view class="">请设置时长</view>
-			<input type="text" value="" v-model="timelength" maxlength="3" />
+			<input type="number" value="" v-model="timelength" maxlength="3" />
 			<view class="">分钟<text class="muststyle">(必填)</text></view>
 		</view>
 		<view class="selectStar">
 			<image src="/static/starother.png" mode="" class="Imgicon"></image>
 			<view class="">设置奖励星</view>
-			<input type="text" value="" v-model="rewardstar" maxlength="12" />
+			<input type="number" value="" v-model="rewardstar" maxlength="12" />
 			<view class="">颗<text class="muststyle">(必填)</text></view>
 		</view>
 		<view class="zhiliangSwitch">

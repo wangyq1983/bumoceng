@@ -19,7 +19,9 @@
 					<image src="/static/menustar.png" mode=""></image>
 					<view class="" style="font-weight: bold;">{{ starNum}}</view>
 				</view>
-				<view class="item" v-if="expType">获得经验 : <text style="font-weight: bold;">{{ expType }}</text></view>
+				<view class="item">
+					获得经验 : <text style="font-weight: bold;">{{ expType }}</text>
+				</view>
 				<view class="item" style="flex-direction: column;" v-if="cjList.length > 0">
 					<view class="">获得以下成就：</view>
 					<view class="cjlist">
@@ -41,23 +43,19 @@
 export default {
 	props: {
 		starNum: {
-			type: Number,
-			default: 0
+			type: Number
 		},
 		expType: {
-			type: Number,
-			default: 0
+			type: Number
 		},
 		cjList: {
 			type: Array
 		},
 		level: {
-			type: Number,
-			default: 1
+			type: Number
 		},
 		honor: {
-			type: String,
-			default: ''
+			type: String
 		},
 		levelchange: {
 			type: Boolean
@@ -68,17 +66,19 @@ export default {
 	},
 	data() {
 		return {
-			starNum1: true,
-			expType1: true,
+			starNum1: 0,
+			expType1: 0,
 			successHeight:"height:0",
 			honorList: [
 				
-			]
+			],
+			level1:0,
+			honor1:"",
+			levelchange1:false,
+			honorchange1:false
 		};
 	},
 	created() {
-		console.log(this.levelchange);
-		console.log(this.honorchange);
 		var that = this;
 		this.cjList.forEach(function(item,index,arr){
 			var cjicon = {
@@ -91,22 +91,36 @@ export default {
 		console.log(this.cjList)
 		this.honorList = this.cjList;
 	},
-	mounted() {
-		var that = this;
-		// 动态获取高度
-		
-		const query = uni.createSelectorQuery().in(this);
-		query
-			.select('.slayCon')
-			.boundingClientRect(data => {
-				console.log('动态获取');
-				console.log(data);
-				that.successHeight = 'height:'+data.height + 'px'
-			})
-			.exec();
+	beforeDestroy(){
+		this.cjList = []
 	},
-	
-	methods: {}
+	mounted() {
+		this.createHeight()
+	},
+	watch:{
+		$props:{
+		handler:function(){
+			this.createHeight()
+		},
+		deep:true
+		}
+	},
+	methods: {
+		createHeight(){
+			var that = this;
+			// 动态获取高度
+			
+			const query = uni.createSelectorQuery().in(this);
+			query
+				.select('.slayCon')
+				.boundingClientRect(data => {
+					console.log('动态获取');
+					console.log(data);
+					that.successHeight = 'height:'+data.height + 'px'
+				})
+				.exec();
+		}
+	}
 };
 </script>
 

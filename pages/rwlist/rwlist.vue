@@ -48,9 +48,9 @@
 					</view>
 				</view>
 			</picker>
-			<!-- <view class="" @tap = "clearsign">
+			<view class="" @tap = "clearsign">
 				取消签到
-			</view> -->
+			</view>
 			<view class="" @tap="clearUser">
 				清空用户
 			</view>
@@ -130,10 +130,7 @@ export default {
 			star:null,
 			exptype:null,
 			cjList:[],
-			level:0,
-			honor:"",
-			levelchange:false,
-			honorchange:false,
+			
 			ifswitch:false,
 			signid:'',
 			signIn:false,
@@ -170,7 +167,6 @@ export default {
 		//console.log(this.$mp.page.route)
 		// this.signget()
 		this.init();
-		
 	},
 	onShow() {
 		// console.log('show');
@@ -229,6 +225,7 @@ export default {
 	methods: {
 		renderCjlist:function(res){
 			console.log(res)
+			this.cjList = [];
 			if(res.data.length > 0){
 				this.taskSuccess = true;
 				this.cdtime = true;
@@ -292,7 +289,8 @@ export default {
 					exp:10
 				}
 			];
-			tempsign.forEach(function(item,index,arr){
+
+			this.$store.state.signList.forEach(function(item,index,arr){
 				if(item.day == _this.nowweekday){
 					nowexp = item.exp;
 					signed = item.isSigned
@@ -311,13 +309,18 @@ export default {
 					if(signRes.resultCode == 0){
 						// 签到成功增加经验
 						await this.$api.addExp(nowexp);
-						uni.showToast({
-							title:'签到成功',
-							icon:'none',
-							duration:1500
-						})
+						// uni.showToast({
+						// 	title:'签到成功',
+						// 	icon:'none',
+						// 	duration:1500
+						// })
 					}
-					this.signget();
+					this.exptype = nowexp;
+					this.star = 0;
+					this.taskSuccess = true;
+					this.cjList = [];
+					this.signIn = false
+					// this.signget();
 				}
 			}else{
 				uni.showToast({
@@ -327,19 +330,7 @@ export default {
 				})
 			}
 		},
-		nowWeek:function(){
-			var d = new Date();
-			let weekList = [
-				'周日',
-				'周一',
-				'周二',
-				'周三',
-				'周四',
-				'周五',
-				'周六'
-			]
-			this.nowweekday = weekList[d.getDay()];
-		},
+		
 		signget:async function(){
 			var _this = this;
 			var newArr = [];
@@ -392,6 +383,19 @@ export default {
 				this.nowWeek()
 			}
 		},
+		nowWeek:function(){
+			var d = new Date();
+			let weekList = [
+				'周日',
+				'周一',
+				'周二',
+				'周三',
+				'周四',
+				'周五',
+				'周六'
+			]
+			this.nowweekday = weekList[d.getDay()];
+		},
 		deltask:function(id){
 			var that = this;
 			this.rwlist.forEach(function(item, index, arr) {
@@ -407,9 +411,10 @@ export default {
 				// console.log(arr)
 			});
 		},
-		zhiliang:function(star,exp){
+		zhiliang:function(star,exp,cjlist){
 			this.star = star;
 			this.exptype = exp;
+			this.cjList = cjlist;
 			this.cdtime = true;
 			this.taskSuccess = true;
 		},
@@ -490,15 +495,16 @@ export default {
 						this.closemask();
 					}else{
 						if(state == 3){
-							await this.$api.addExp(this.$api.expval.endtask);
-							await this.$api.starAdjust(this.star,'任务完成');
+							await this.$api.addExp(this.$api.expval.endtask,true);
+							await this.$api.starAdjust(this.star,'任务完成',true);
+							
 							let cjparams = {
 								jobInfoId:taskid,
 								thresholdTypeList:["job","completionTimeToEnd","completeDays"]
 							}
 							var cjResult = await this.$api.cjCheck(cjparams);
 							await this.renderCjlist(cjResult);
-							// await this.$api.getUserinfo()
+							await this.$api.getUserinfo()
 							this.taskSuccess = true;
 							this.nowtask = '';
 							this.exptype = this.$api.expval.endtask;

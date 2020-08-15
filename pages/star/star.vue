@@ -31,7 +31,7 @@
 				<view class="">
 					数量
 				</view>
-				<input type="text" v-model="inputstar" />
+				<input type="number" v-model="inputstar" />
 				<view class="info">
 					请输入整数
 				</view>
