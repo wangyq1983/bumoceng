@@ -11,7 +11,7 @@
 				查看历史记录
 			</view>
 		</view>
-		<view class="">
+		<view class="starinfo">
 			奖励追加、惩罚扣除、遗漏补星都在这里
 		</view>
 		<view class="starWarp">
@@ -156,5 +156,11 @@
 	width:660upx;
 	padding:10upx;
 	border: 2upx solid $color-m;
+}
+
+.starinfo{
+	padding:6upx 20upx;
+	font-size: $fontsize-32;
+	color: #666;
 }
 </style>

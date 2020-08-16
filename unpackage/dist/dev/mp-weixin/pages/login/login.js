@@ -141,6 +141,22 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 var _default =
 {
   data: function data() {
@@ -160,7 +176,6 @@ var _default =
     console.log(this.origin);
   },
   methods: {
-
     //第一授权获取用户信息===》按钮触发
     wxGetUserInfo: function wxGetUserInfo() {
       var _this = this;
@@ -215,8 +230,6 @@ var _default =
                                     _this.$api.postData(_this.$api.webapi.uniLogin, params));case 11:loginres = _context.sent;_context.next = 14;return (
                                     _this.$api.hideLoading());case 14:
 
-
-
                                   if (_this.$api.reshook(loginres, '/pages/login/login')) {
                                     _this.loginSuccess(loginres, 'weixin');
                                   }case 15:case "end":return _context.stop();}}}, _callee);}));function success(_x2) {return _success2.apply(this, arguments);}return success;}() });case 3:case "end":return _context2.stop();}}}, _callee2);}));function success(_x) {return _success.apply(this, arguments);}return success;}() });
@@ -245,7 +258,7 @@ var _default =
                   data: res.data.token,
                   success: function () {var _success3 = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee3() {var userinfo;return _regenerator.default.wrap(function _callee3$(_context3) {while (1) {switch (_context3.prev = _context3.next) {case 0:
                               console.log('set token is = ');
-                              console.log(uni.getStorageSync("token"));_context3.next = 4;return (
+                              console.log(uni.getStorageSync('token'));_context3.next = 4;return (
                                 that.$api.getUserinfo());case 4:userinfo = _context3.sent;
 
                               if (userinfo) {

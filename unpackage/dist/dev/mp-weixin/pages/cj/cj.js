@@ -182,6 +182,10 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 //
 //
 //
+//
+//
+//
+//
 var _default =
 {
   data: function data() {
@@ -216,6 +220,18 @@ var _default =
     } },
 
   computed: {
+    cjallCount: function cjallCount() {
+      return this.cjlist.length;
+    },
+    cjcurCount: function cjcurCount() {
+      var curcount = 0;
+      this.cjlist.forEach(function (item, index, arr) {
+        if (item.flag == 1) {
+          curcount++;
+        }
+      });
+      return curcount;
+    }
     // storel(){
     // 	return this.storelevel*150
     // },

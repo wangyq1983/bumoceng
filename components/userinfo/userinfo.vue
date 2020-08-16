@@ -14,11 +14,11 @@
 					<image src="/static/star.png" mode=""></image>
 					<view class="starCount">{{ star1 }}</view>
 				</view>
-				<view class="chengjiuBox">
+				<!-- <view class="chengjiuBox">
 					
 					<image src="/static/cj_icon.png"></image>
 					<view class="cjword">成就：23</view>
-				</view>
+				</view> -->
 			</view>
 			<view class="levelBox">
 				

@@ -38,13 +38,16 @@
 					</view>
 				</uni-swipe-action-item>
 			</uni-swipe-action>
+			<view v-if = "isEmpty == 1">
+			    <nodata wordinfo = "还没有添加星愿奖励哦"></nodata>
+			  </view>
+			  <view v-if="isEnd == true">
+			     <endLine></endLine>
+			  </view>
 		</view>
-		<view v-if = "isEmpty == 1">
-		    <nodata wordinfo = "还没有添加星愿奖励哦"></nodata>
-		  </view>
-		  <view v-if="isEnd == true">
-		     <endLine></endLine>
-		  </view>
+		<view class="addxyBox">
+			
+		</view>
 		<view class="addxy" @tap="addReward">
 			<view class="addxyBtn"></view>
 			<view class="addxyBtn1"></view>
@@ -128,6 +131,7 @@ export default {
 						this.rewardList = [];
 						this.init();
 					}
+					
 				}
 			}
 		},
@@ -227,6 +231,7 @@ export default {
 	// @include colflex;
 	// width:750upx;
 	// justify-content: flex-start;
+	margin-bottom: 180upx;
 }
 .jlitem {
 	@include warpwidth;
@@ -280,32 +285,42 @@ export default {
 .shixianend {
 	background-color: #bebebe;
 }
+.addxyBox{
+	width:750upx;
+	height:200upx;
+	position: fixed;
+	left:0;
+	bottom:0;
+	z-index: 1;
+	background: linear-gradient(rgba(255,255,255,0),rgba(255,255,255,1));
+}
 .addxy {
-	width: 120upx;
-	height: 120upx;
+	width: 100upx;
+	height: 100upx;
 	background: $color-m;
 	border-radius: 100upx;
 	position: fixed;
-	bottom: 60upx;
-	left: 315upx;
+	bottom: 50upx;
+	left: 325upx;
 	z-index: 2;
 }
 .addxyBtn {
 	width: 10upx;
-	height: 80upx;
+	height: 70upx;
 	background: #ffffff;
 	position: absolute;
-	top: 20upx;
-	left: 55upx;
+	top: 15upx;
+	left: 45upx;
 	z-index: 3;
+	
 }
 .addxyBtn1 {
-	width: 80upx;
+	width: 70upx;
 	height: 10upx;
 	background: #ffffff;
 	position: absolute;
-	left: 20upx;
-	top: 55upx;
+	left: 15upx;
+	top: 45upx;
 	z-index: 3;
 }
 .simg {

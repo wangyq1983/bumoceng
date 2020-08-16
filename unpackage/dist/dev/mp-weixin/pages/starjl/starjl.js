@@ -203,6 +203,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 var _default =
 {
   data: function data() {
@@ -278,6 +281,7 @@ var _default =
                 _context3.next = 16;return _this2.$api.starAdjust(-item.consumeCount, item.description);case 16:
                 _this2.rewardList = [];
                 _this2.init();case 18:case "end":return _context3.stop();}}}, _callee3);}))();
+
 
 
 

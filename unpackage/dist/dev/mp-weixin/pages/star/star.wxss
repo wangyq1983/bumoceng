@@ -462,4 +462,9 @@ page {
   padding: 10rpx;
   border: 2rpx solid #ffce00;
 }
+.starinfo {
+  padding: 6rpx 20rpx;
+  font-size: 32rpx;
+  color: #666;
+}
 

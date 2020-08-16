@@ -4,8 +4,24 @@
 		<view class="logincon">
 			<!-- #ifdef MP-WEIXIN || H5 -->
 			<button class="wxloginbtn" type="primary" open-type="getUserInfo" withCredentials="true" lang="zh_CN" @getuserinfo="login">微信授权登录</button>
-				<!-- #endif -->
-			</view>
+			<!-- #endif -->
+
+			<!--#ifdef APP-PLUS-->
+			<view>微信登录</view>
+
+			<view>手机登录</view>
+
+			<view>QQ登录</view>
+			<!--#endif-->
+
+			<!--#ifdef MP-QQ-->
+			<view>QQ登录</view>
+			<!--#endif-->
+
+			<!--#ifdef MP-QQ-->
+			<view>QQ登录</view>
+			<!--#endif-->
+		</view>
 	</view>
 </template>
 
@@ -13,29 +29,28 @@
 export default {
 	data() {
 		return {
-			origin:'',
+			origin: '',
 			SessionKey: '',
 			OpenId: '',
 			nickName: null,
 			avatarUrl: null,
-			userinfo:{},
-			code:'',
+			userinfo: {},
+			code: '',
 			isCanUse: uni.getStorageSync('isCanUse') || true //默认为true
 		};
 	},
 	onLoad: function(options) {
-		this.origin ='/' + decodeURIComponent(options.url)
+		this.origin = '/' + decodeURIComponent(options.url);
 		console.log(this.origin);
 	},
 	methods: {
-		
 		//第一授权获取用户信息===》按钮触发
 		wxGetUserInfo() {
 			let _this = this;
 			uni.getUserInfo({
 				provider: 'weixin',
 				success: function(infoRes) {
-					console.log(infoRes)
+					console.log(infoRes);
 					let nickName = infoRes.userInfo.nickName; //昵称
 					let avatarUrl = infoRes.userInfo.avatarUrl; //头像
 					try {
@@ -45,7 +60,7 @@ export default {
 				},
 				fail(res) {}
 			});
-		}, 
+		},
 		// 默认微信小程序登录
 		login() {
 			let _this = this;
@@ -55,80 +70,78 @@ export default {
 			// 1.wx获取登录用户code
 			uni.login({
 				provider: 'weixin',
-				success:async function(loginRes) {
+				success: async function(loginRes) {
 					console.log(loginRes);
-					
+
 					var code = {
-						code:loginRes.code
+						code: loginRes.code
 					};
 					uni.getUserInfo({
 						provider: 'weixin',
-						success:async function(infoRes) {
+						success: async function(infoRes) {
 							// console.log(infoRes); //获取用户信息后向调用信息更新方法
 							let nickName = infoRes.userInfo.nickName; //昵称
 							let avatarUrl = infoRes.userInfo.avatarUrl; //头像
 							//_this.updateUserInfo(); //调用更新信息方法
 							_this.userinfo = infoRes.userInfo;
 							var otherinfo = {
-							  rawData: infoRes.rawData,
-							  signature: infoRes.signature,
-							  encryptedData: infoRes.encryptedData,
-							  iv:infoRes.iv
-							}
+								rawData: infoRes.rawData,
+								signature: infoRes.signature,
+								encryptedData: infoRes.encryptedData,
+								iv: infoRes.iv
+							};
 							Object.assign(_this.userinfo, code, otherinfo);
-							
+
 							var params = _this.userinfo;
 							console.log(params);
 							await _this.$api.showLoading(); // 显示loading
 							let loginres = await _this.$api.postData(_this.$api.webapi.uniLogin, params);
 							await _this.$api.hideLoading();
-							
-							
-							
+
 							if (_this.$api.reshook(loginres, '/pages/login/login')) {
-								_this.loginSuccess(loginres,'weixin');
+								_this.loginSuccess(loginres, 'weixin');
 							}
 						}
 					});
 				}
 			});
 		},
-		
-		async loginSuccess(res,platform){
-			console.log(this.origin)
+
+		async loginSuccess(res, platform) {
+			console.log(this.origin);
 			console.log('loginsuccess');
 			console.log(res.data);
 			// this.$store.commit('login',res.data);
-			var storgeName = ['avatarUrl','nickName','isLogin', 'userId'];
-			var storgeVal = [res.data.weiChatAuthUser.avatarUrl, res.data.weiChatAuthUser.nickName, true,res.data.userId];
+			var storgeName = ['avatarUrl', 'nickName', 'isLogin', 'userId'];
+			var storgeVal = [res.data.weiChatAuthUser.avatarUrl, res.data.weiChatAuthUser.nickName, true, res.data.userId];
 			var that = this;
 			for (var i = 0; i < storgeName.length; i++) {
 				uni.setStorage({
 					key: storgeName[i],
 					data: storgeVal[i]
-				})
+				});
 			}
 			uni.setStorage({
-				key:'token',
-				data:res.data.token,
-				success:async function (){
+				key: 'token',
+				data: res.data.token,
+				success: async function() {
 					console.log('set token is = ');
-					console.log(uni.getStorageSync("token"))
-					var userinfo = await that.$api.getUserinfo()
-					
-					if(userinfo){
+					console.log(uni.getStorageSync('token'));
+					var userinfo = await that.$api.getUserinfo();
+
+					if (userinfo) {
 						uni.reLaunch({
-								url:that.origin
-						})
-					}else{
+							url: that.origin
+						});
+					} else {
 						uni.showToast({
-							title:'获取用户信息失败',
-							icon:'none',
-							duration:2000
-						})
+							title: '获取用户信息失败',
+							icon: 'none',
+							duration: 2000
+						});
 					}
 				}
-			})
+			});
 			// if((this.origin.indexOf('pages/rwlist/rwlist') != -1) ||(this.origin.indexOf('pages/my/my') != -1)){
 			// 	uni.switchTab({
 			// 		url:this.origin

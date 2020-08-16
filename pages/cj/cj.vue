@@ -2,8 +2,12 @@
 	<view>
 		<userinfo></userinfo>
 		<view class="userbor"></view>
-		<view class="menuguide"><view class="left">成就列表</view></view>
-
+		<view class="menuguide">
+			<view class="left">成就列表</view>
+			<view class="right" style="background: transparent;">
+				<text style="color: #363636;">{{cjcurCount}}</text>/<text style="color: #999;">{{cjallCount}}</text>
+			</view>
+		</view>
 		<view class="cjlist">
 			<view :class="items.flag  == 1 ? 'cjitem':'cjitem gray'" v-for="items in cjlist" :key = "items.achievementCode">
 				<view class="cjleft">
@@ -80,6 +84,18 @@ export default {
 		}
 	},
 	computed: {
+		cjallCount(){
+			return this.cjlist.length
+		},
+		cjcurCount(){
+			var curcount = 0;
+			this.cjlist.forEach(function(item,index,arr){
+				if(item.flag == 1){
+					curcount++
+				}
+			})
+			return curcount
+		}
 		// storel(){
 		// 	return this.storelevel*150
 		// },

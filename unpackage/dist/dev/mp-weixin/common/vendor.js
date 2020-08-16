@@ -14890,7 +14890,10 @@ function normalizeComponent (
 //var webhost = "https://task.vsclouds.com/";
 
 // 开发服务器
-var webhost = "https://jielongtest.vsclouds.com/8080/polly/";
+var webhost = "http://192.168.3.9:8080/";
+
+// 开发服务器
+// var webhost = "https://jielongtest.vsclouds.com/8080/polly/";
 
 // 接口列表
 var webapi = {
@@ -15360,7 +15363,7 @@ var reshook = function reshook(res, path) {
         url: '/pages/login/login?' + origin });
 
     }
-    if (res.resultCode == 87014) {
+    if (res.resultCode == 87014 || res.resultCode == 7001) {
       uni.showToast({
         title: res.message,
         icon: "none",
