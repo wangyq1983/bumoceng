@@ -48,12 +48,12 @@
 					</view>
 				</view>
 			</picker>
-			<view class="" @tap = "clearsign">
+			<!-- <view class="" @tap = "clearsign">
 				取消签到
 			</view>
 			<view class="" @tap="clearUser">
 				清空用户
-			</view>
+			</view> -->
 			<view class="signCon" @tap="signEvent">
 				<image src="/static/sign.png" mode=""></image>
 				<view>签到</view>

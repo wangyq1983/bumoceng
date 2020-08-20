@@ -1,9 +1,31 @@
 <template>
 	<view>
-		<view class="logintop"><image src="/static/icon.png" mode=""></image></view>
+		<!-- <view class="logintop"><image src="/static/icon.png" mode=""></image></view> -->
+		<view class="loginBox">
+			<view class="loginWord">
+				<view class="logininfo">
+					<view class="f1">写</view>
+					<view class="f2">作 业</view>
+					<view class="f3">快 又 好</view>
+				</view>
+				<view class="loginarrow">
+					
+				</view>
+			</view>
+		</view>
+		<view class="logobox">
+			<image src="/static/icon.png" mode="" class="logoImg"></image>
+			
+			<view class="logoTitle">
+				作业不磨蹭
+			</view>
+			<view class="logoInfo">
+				宝贝，你写作业的时候真的很专注哦
+			</view>
+		</view>
 		<view class="logincon">
 			<!-- #ifdef MP-WEIXIN || H5 -->
-			<button class="wxloginbtn" type="primary" open-type="getUserInfo" withCredentials="true" lang="zh_CN" @getuserinfo="login">微信授权登录</button>
+			<button class="wxloginbtn" open-type="getUserInfo" withCredentials="true" lang="zh_CN" @getuserinfo="login">微信授权登录</button>
 			<!-- #endif -->
 
 			<!--#ifdef APP-PLUS-->
@@ -128,10 +150,9 @@ export default {
 					console.log('set token is = ');
 					console.log(uni.getStorageSync('token'));
 					var userinfo = await that.$api.getUserinfo();
-
 					if (userinfo) {
 						uni.reLaunch({
-							url: that.origin
+							url: (that.origin !== '/undefined')?that.origin:'/pages/rwlist/rwlist'
 						});
 					} else {
 						uni.showToast({
@@ -182,6 +203,49 @@ export default {
 </script>
 
 <style lang="scss">
+.loginBox {
+	width: 750upx;
+	height: 520upx;
+	@include rowflex;
+	justify-content: center;
+	margin-top: 60upx;
+}
+.loginWord {
+	width: 320upx;
+	height: 520upx;
+	position: relative;
+	.logininfo {
+		width: 320upx;
+		height: 440upx;
+		background: $color-m;
+		border-radius: 12upx;
+		text-align: center;
+	}
+	.loginarrow {
+		width: 0;
+		height: 0;
+		border-left: 20upx solid transparent;
+		border-right: 0upx solid transparent;
+		border-top: 80upx solid #ffce00;
+		margin-left:150upx
+	}
+	.f1 {
+		font-size: 138upx;
+		font-family: Microsoft YaHei;
+		font-weight: bold;
+	}
+	.f2 {
+		font-size: 90upx;
+		font-family: Microsoft YaHei;
+		font-weight: bold;
+	}
+	.f3 {
+		font-size: 60upx;
+		font-family: Microsoft YaHei;
+		font-weight: bold;
+		margin-top: 20upx;
+	}
+}
 .logintop {
 	width: 750upx;
 	height: 350upx;
@@ -196,17 +260,39 @@ export default {
 	border: 18upx solid #fff;
 	box-shadow: 0upx 0upx 12upx #333;
 }
-.logincon {
+
+.logobox{
 	width: 750upx;
 	height: 380upx;
+	@include colflex;
+	justify-content:flex-start;
+	.logoImg{
+		width:180upx;
+		height:180upx;
+		border-radius: 100upx;
+	}
+	.logoTitle{
+		font-size: 32upx;
+		color: #000000;
+		font-weight: bold;
+		margin: 20upx 0;
+	}
+	.logoInfo{
+		font-size: 24upx;
+		color: #666666;
+	}
+}
+
+.logincon {
+	width: 750upx;
 	@include rowflex;
 	justify-content: center;
 }
 .wxloginbtn {
 	width: 300upx;
 	height: 100upx;
-	background: $color-m;
-	color: $color-36;
+	background: #363636;
+	color: #ffce00;
 	font-size: $fontsize-36;
 	border-radius: 6upx;
 	text-align: center;

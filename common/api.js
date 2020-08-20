@@ -3,10 +3,10 @@ import store from '@/store'
 //var webhost = "https://task.vsclouds.com/";
 
 // 开发服务器
-var webhost = "http://192.168.3.9:8080/";
+// var webhost = "http://192.168.3.9:8080/";
 
 // 开发服务器
-// var webhost = "https://jielongtest.vsclouds.com/8080/polly/";
+var webhost = "https://jielongtest.vsclouds.com/8080/polly/";
 
 // 接口列表
 var webapi = {
@@ -72,6 +72,9 @@ var webapi = {
 	
 	// 签到
 	signin:webhost + 'sign/in',
+	
+	// 公告
+	notice: webhost + 'announcement/current',
 	 
 	// 签到查询
 	signget: webhost + 'sign/get',
@@ -337,9 +340,9 @@ const getUserinfo = async() => {
 		
 		uni.setStorage({
 			key: 'starNum',
-			data: userRes.data.starSummary.totalCount
+			data: userRes.data.starSummary.currentCount
 		});
-		store.commit('changeStar', userRes.data.starSummary.totalCount)
+		store.commit('changeStar', userRes.data.starSummary.currentCount)
 		return true
 	}else{
 		uni.showModal({

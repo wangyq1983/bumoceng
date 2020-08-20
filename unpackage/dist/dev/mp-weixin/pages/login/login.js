@@ -157,6 +157,28 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 var _default =
 {
   data: function data() {
@@ -260,10 +282,9 @@ var _default =
                               console.log('set token is = ');
                               console.log(uni.getStorageSync('token'));_context3.next = 4;return (
                                 that.$api.getUserinfo());case 4:userinfo = _context3.sent;
-
                               if (userinfo) {
                                 uni.reLaunch({
-                                  url: that.origin });
+                                  url: that.origin !== '/undefined' ? that.origin : '/pages/rwlist/rwlist' });
 
                               } else {
                                 uni.showToast({
