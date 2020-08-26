@@ -393,6 +393,9 @@ page {
   line-height: 32rpx;
   border-radius: 5rpx;
 }
+page {
+  background: #f5f5f5;
+}
 .loginBox {
   width: 750rpx;
   height: 520rpx;

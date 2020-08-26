@@ -478,8 +478,13 @@ page {
   margin-right: 10rpx;
 }
 .rwHandle {
-  width: 40rpx;
+  width: 60rpx;
+  text-align: center;
   height: 50rpx;
+  line-height: 50rpx;
+  font-weight: bold;
+  color: #000;
+  font-size: 36rpx;
   position: absolute;
   top: 0;
   right: 0;

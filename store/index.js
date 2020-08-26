@@ -77,6 +77,9 @@ const store = new Vuex.Store({
 			console.log('state_starNum  is ========')
 			console.log(state.starNum)
 		},
+		changeprogress(state,progress){
+			state.progress = progress;
+		},
 		changeHonor(state,honor){
 			state.honor = honor;
 		},

@@ -74,12 +74,12 @@
 		
 		
 		<view class="rwlist">
-			<view class="newsbox">
+			<!-- <view class="newsbox">
 				<image src="/static/news.png" mode=""></image>
 				<view class="">
 					作业不磨蹭操作使用说明1
 				</view>
-			</view>
+			</view> -->
 		
 		<rwlistItem v-for="items in rwlist" :key='items.id' :info = "items" @on-cdtime = "countTime" @on-zhiliang = "zhiliang" @on-del = "deltask"></rwlistItem>
 		<view v-if = "isEmpty == 1">
@@ -183,16 +183,16 @@ export default {
 		      this.renderList(this.rwlist.length + 1,this.dataStep,this.date)
 		    }
 	},
-	onShareTimeline: async function(){
-		console.log('分享到朋友圈');
-		console.log(this)
-		let cjparams = {
-			jobInfoId:0,
-			thresholdTypeList:["share"]
-		}
-		var cjResult = await this.$api.cjCheck(cjparams);
-		this.renderCjlist(cjResult);
-	},
+	// onShareTimeline: async function(){
+	// 	console.log('分享到朋友圈');
+	// 	console.log(this)
+	// 	let cjparams = {
+	// 		jobInfoId:0,
+	// 		thresholdTypeList:["share"]
+	// 	}
+	// 	var cjResult = await this.$api.cjCheck(cjparams);
+	// 	this.renderCjlist(cjResult);
+	// },
 	onShareAppMessage:async function(){
 		console.log('分享');
 		var jielongImg = '/static/timebg.jpg';

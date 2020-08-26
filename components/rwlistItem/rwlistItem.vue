@@ -247,8 +247,13 @@ export default {
 	}
 }
 .rwHandle {
-	width: 40upx;
+	width: 60upx;
+	text-align: center;
 	height: 50upx;
+	line-height: 50upx;
+	font-weight: bold;
+	color:#000;
+	font-size: $fontsize-36;
 	position: absolute;
 	top: 0;
 	right: 0;

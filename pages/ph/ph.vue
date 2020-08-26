@@ -1,5 +1,8 @@
 <template>
 	<view>
+		<mask :showmask = 'cdtime' @on-close = "closemask">
+			<successdata :cjList = 'cjList' v-if="taskSuccess"></successdata>
+		</mask>
 		<userinfo></userinfo>
 		<view class="userbor"></view>
 		<view class="menuguide"><view class="left">总排行</view></view>
@@ -31,29 +34,37 @@
 							<view class="">
 								{{curNickname}}
 							</view>
-							<view class="">
-								level{{curLevel}}
+							
+						</view>
+						<view class="curpm">
+							<view class="" style="margin-right: 50upx;">
+								lv{{curLevel}}
 							</view>
 							<view class="">
 								{{curhonor}}
 							</view>
-						</view>
-						<view class="curpm">
-							<view class="" v-if="curData.ranking > 0">
-								排名 {{curData.ranking}} 
-							</view>
-							<view class="" v-else>
-								暂无排名
-							</view>
+							
+							
 						</view>
 					</view>
 				</view>
 				
 				
 			</view>
-			<view class="timebox" style="color:#ffce00">
-				{{curData.realDurationSumZh}}
+			<view class="phright">
+				<view class="" style="margin-right: 25upx;">
+					<view class="" v-if="curData.ranking > 0">
+						排名 {{curData.ranking}} 
+					</view>
+					<view class="" v-else>
+						暂无排名
+					</view>
+				</view>
+				<view class="timebox" style="color:#ffce00">
+					{{curData.realDurationSumZh}}
+				</view>
 			</view>
+			
 		</view>
 	</view>
 </template>
@@ -62,20 +73,70 @@
 export default {
 	data() {
 		return {
-			dataStep: 50,
+			dataStep: 100,
 			phlist: [],
 			phlistWeek: [],
 			curIcon: uni.getStorageSync('avatarUrl'),
 			curNickname:uni.getStorageSync('nickName'),
 			curLevel:uni.getStorageSync('level'),
 			curhonor:uni.getStorageSync('honor'),
-			curData:''
+			curData:'',
+			taskSuccess:false,
+			cdtime:false,
+			cjList:[]
 		};
 	},
 	onLoad() {
 		this.init();
 	},
+	onShareAppMessage:async function(){
+		console.log('分享');
+		console.log(this.curData)
+		var rankingNum = (this.curData.ranking > 0)?'我在作业效率榜中排名第'+this.curData.ranking:'作业不磨蹭'
+		var jielongImg = '/static/timebg.jpg';
+		var jielongpath = '/pages/ph/ph';
+		let cjparams = {
+			jobInfoId:0,
+			thresholdTypeList:["share"]
+		}
+		var cjResult = await this.$api.cjCheck(cjparams);
+		this.renderCjlist(cjResult);
+		return {
+		  title: rankingNum,
+		  path: '/pages/ph/ph',
+		  imageUrl: jielongImg,
+		  success: (res) => {
+			console.log("转发成功", res);
+			console.log(uni);
+			
+			uni.showToast({
+				title:'转发成功',
+				icon:'none',
+				duration:1500
+			})
+		  },
+		  fail: (res) => {
+			// console.log("转发失败", res);
+		  }
+		}
+	},
 	methods: {
+		renderCjlist:function(res){
+			console.log(res)
+			this.cjList = [];
+			if(res.data.length > 0){
+				this.taskSuccess = true;
+				this.cdtime = true;
+				this.cjList = res.data;
+			}
+		},
+		// 关闭计时弹层
+		closemask:function(){
+			// console.log(this);
+			this.cdtime = false;
+			this.taskSuccess = false;
+			
+		},
 		async init() {
 			//  rankType
 			//  summaryRank 总排行
@@ -218,12 +279,18 @@ export default {
 			}
 		}
 		.curpm{
-			color:$color-m
+			color:$color-m;
+			@include rowflex;
+			justify-content: flex-start;
+			font-size: $fontsize-28;
 		}
 	}
 	.ph1{
 		@include rowflex;
 		justify-content: flex-start;
 	}
+}
+.phright{
+	text-align: right;
 }
 </style>

@@ -1,6 +1,5 @@
 <template>
 	<view class="userbox">
-		
 		<view class="usericon userHonor1" v-if="honor1 == honorqt"><image :src="icon"></image></view>
 		<view class="usericon userHonor2" v-if="honor1 == honorby"><image :src="icon"></image></view>
 		<view class="usericon userHonor3" v-if="honor1 == honorhj"><image :src="icon"></image></view>
@@ -23,7 +22,10 @@
 			<view class="levelBox">
 				
 				<view class="levelTip">Lv{{ level1 }}</view>
-				<view class="levelProgress"><view class="progressCount" :style="{ width: levelnum1 + '%' }"></view></view>
+				<view class="levelProgress">
+					<view class="proNum">{{levelnum1}}%</view>
+					<view class="progressCount" :style="{ width: levelnum1 + '%' }"></view>
+				</view>
 				
 							
 				
@@ -216,6 +218,19 @@ export default {
 	line-height: $fontsize-28;
 	background: $color-f7;
 	border-radius: 0 8upx 8upx 0;
+	position: relative;
+}
+.proNum{
+	position: absolute;
+	z-index: 3;
+	width:300upx;
+	height:28upx;
+	text-align: center;
+	line-height: 28upx;
+	top:0;
+	left:0;
+	font-size: 18upx;
+	color: #363636;
 }
 .progressCount {
 	height: 28upx;

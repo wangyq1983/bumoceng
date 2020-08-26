@@ -84,25 +84,86 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 var _default =
 {
   data: function data() {
     return {
-      dataStep: 50,
+      dataStep: 100,
       phlist: [],
       phlistWeek: [],
       curIcon: uni.getStorageSync('avatarUrl'),
       curNickname: uni.getStorageSync('nickName'),
       curLevel: uni.getStorageSync('level'),
       curhonor: uni.getStorageSync('honor'),
-      curData: '' };
+      curData: '',
+      taskSuccess: false,
+      cdtime: false,
+      cjList: [] };
 
   },
   onLoad: function onLoad() {
     this.init();
   },
+  onShareAppMessage: function () {var _onShareAppMessage = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {var rankingNum, jielongImg, jielongpath, cjparams, cjResult;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:
+              console.log('分享');
+              console.log(this.curData);
+              rankingNum = this.curData.ranking > 0 ? '我在作业效率榜中排名第' + this.curData.ranking : '作业不磨蹭';
+              jielongImg = '/static/timebg.jpg';
+              jielongpath = '/pages/ph/ph';
+              cjparams = {
+                jobInfoId: 0,
+                thresholdTypeList: ["share"] };_context.next = 8;return (
+
+                this.$api.cjCheck(cjparams));case 8:cjResult = _context.sent;
+              this.renderCjlist(cjResult);return _context.abrupt("return",
+              {
+                title: rankingNum,
+                path: '/pages/ph/ph',
+                imageUrl: jielongImg,
+                success: function success(res) {
+                  console.log("转发成功", res);
+                  console.log(uni);
+
+                  uni.showToast({
+                    title: '转发成功',
+                    icon: 'none',
+                    duration: 1500 });
+
+                },
+                fail: function fail(res) {
+                  // console.log("转发失败", res);
+                } });case 11:case "end":return _context.stop();}}}, _callee, this);}));function onShareAppMessage() {return _onShareAppMessage.apply(this, arguments);}return onShareAppMessage;}(),
+
+
   methods: {
-    init: function init() {var _this = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {var that, params, ranklist;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:
+    renderCjlist: function renderCjlist(res) {
+      console.log(res);
+      this.cjList = [];
+      if (res.data.length > 0) {
+        this.taskSuccess = true;
+        this.cdtime = true;
+        this.cjList = res.data;
+      }
+    },
+    // 关闭计时弹层
+    closemask: function closemask() {
+      // console.log(this);
+      this.cdtime = false;
+      this.taskSuccess = false;
+
+    },
+    init: function init() {var _this = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee2() {var that, params, ranklist;return _regenerator.default.wrap(function _callee2$(_context2) {while (1) {switch (_context2.prev = _context2.next) {case 0:
                 //  rankType
                 //  summaryRank 总排行
                 //  weekRank  周排行
@@ -110,10 +171,10 @@ var _default =
                 params = {
                   from: 1,
                   count: _this.dataStep,
-                  rankType: 'summaryRank' };_context.next = 4;return (
+                  rankType: 'summaryRank' };_context2.next = 4;return (
 
-                  _this.$api.showLoading());case 4:_context.next = 6;return (
-                  _this.$api.getData(_this.$api.webapi.ranklist, params));case 6:ranklist = _context.sent;_context.next = 9;return (
+                  _this.$api.showLoading());case 4:_context2.next = 6;return (
+                  _this.$api.getData(_this.$api.webapi.ranklist, params));case 6:ranklist = _context2.sent;_context2.next = 9;return (
                   _this.$api.hideLoading());case 9: // 等待请求数据成功后，隐藏loading
                 if (_this.$api.reshook(ranklist, _this.$mp.page.route)) {
                   console.log(ranklist);
@@ -134,7 +195,7 @@ var _default =
                   console.log(ranklist.data);
                   _this.phlist = ranklist.data.rankList;
                   _this.curData = ranklist.data.userRankInfo;
-                }case 10:case "end":return _context.stop();}}}, _callee);}))();
+                }case 10:case "end":return _context2.stop();}}}, _callee2);}))();
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
@@ -262,6 +323,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "recyclableRender", function() { return recyclableRender; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "components", function() { return components; });
 var components = {
+  mask: function() {
+    return __webpack_require__.e(/*! import() | components/mask/mask */ "components/mask/mask").then(__webpack_require__.bind(null, /*! @/components/mask/mask.vue */ 120))
+  },
+  successdata: function() {
+    return __webpack_require__.e(/*! import() | components/successdata/successdata */ "components/successdata/successdata").then(__webpack_require__.bind(null, /*! @/components/successdata/successdata.vue */ 125))
+  },
   userinfo: function() {
     return __webpack_require__.e(/*! import() | components/userinfo/userinfo */ "components/userinfo/userinfo").then(__webpack_require__.bind(null, /*! @/components/userinfo/userinfo.vue */ 130))
   }

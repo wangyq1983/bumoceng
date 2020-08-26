@@ -1,12 +1,12 @@
 import store from '@/store'
 // 正式服务器
-//var webhost = "https://task.vsclouds.com/";
+var webhost = "https://task.vsclouds.com/";
 
 // 开发服务器
 // var webhost = "http://192.168.3.9:8080/";
 
 // 开发服务器
-var webhost = "https://jielongtest.vsclouds.com/8080/polly/";
+//var webhost = "https://jielongtest.vsclouds.com/8080/polly/";
 
 // 接口列表
 var webapi = {
@@ -164,7 +164,7 @@ const honorCorres = (honor) => {
 // 经验值设置
 var expval = {
 	ctask:10,
-	endtask:120,
+	endtask:30,
 	signin:10,
 	share:50
 }
@@ -180,7 +180,7 @@ const getWeekDay = () =>{
 	}
 }
 const honor = {
-	qt:"青铜学生",
+	qt:"青铜学渣",
 	by:"白银学民",
 	hj:"黄金学霸",
 	bj:"铂金学帝",

@@ -529,6 +529,19 @@ page {
   line-height: 28rpx;
   background: #f7f7f7;
   border-radius: 0 8rpx 8rpx 0;
+  position: relative;
+}
+.proNum {
+  position: absolute;
+  z-index: 3;
+  width: 300rpx;
+  height: 28rpx;
+  text-align: center;
+  line-height: 28rpx;
+  top: 0;
+  left: 0;
+  font-size: 18rpx;
+  color: #363636;
 }
 .progressCount {
   height: 28rpx;

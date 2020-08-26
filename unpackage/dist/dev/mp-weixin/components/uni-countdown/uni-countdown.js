@@ -269,8 +269,8 @@ var innerAudioContext = uni.getBackgroundAudioManager();var _default =
     audioplay: function audioplay() {
 
       innerAudioContext.title = '作业不磨蹭';
-      innerAudioContext.src = 'https://jielongtest.vsclouds.com/music/clock.mp3';
-
+      innerAudioContext.src = 'https://task.vsclouds.com/music/clock2.mp3';
+      //innerAudioContext.src = 'https://jielongtest.vsclouds.com/music/clock2.mp3';
       innerAudioContext.onPlay(function () {//可以播放事件
         console.log('开始播放');
         //innerAudioContext.play()
@@ -284,8 +284,8 @@ var innerAudioContext = uni.getBackgroundAudioManager();var _default =
         console.log('播放结束');
         // innerAudioContext.seek(2);
         console.log('重新开始');
-        innerAudioContext.src = 'https://jielongtest.vsclouds.com/music/clock.mp3';
-
+        innerAudioContext.src = 'https://task.vsclouds.com/music/clock2.mp3';
+        //innerAudioContext.src = 'https://jielongtest.vsclouds.com/music/clock2.mp3';
         //innerAudioContext.play()
       });
     },
