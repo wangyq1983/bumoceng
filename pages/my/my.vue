@@ -38,17 +38,6 @@
 				</view>
 			</view>
 
-			<!-- 成就 -->
-			<view class="proItem" @tap="gotoItem" data-type="cj">
-				<view class="iconbg iconcj">
-					<view class="iconcj1"><image src="/static/cj1.png" mode=""></image></view>
-				</view>
-				<view class="menuinfo">
-					<view class="menutitle">成就列表</view>
-					<view class="menuword">珍惜时间，提高效率，解锁成就！</view>
-				</view>
-			</view>
-
 			<!-- 排行 -->
 			<view class="proItem" @tap="gotoItem" data-type="ph">
 				<view class="iconbg iconph">
@@ -57,6 +46,17 @@
 				<view class="menuinfo">
 					<view class="menutitle">排行榜</view>
 					<view class="menuword">不磨蹭拖拉，高效利用时间，自律排行榜</view>
+				</view>
+			</view>
+			
+			<!-- 成就 -->
+			<view class="proItem" @tap="gotoItem" data-type="cj">
+				<view class="iconbg iconcj">
+					<view class="iconcj1"><image src="/static/cj1.png" mode=""></image></view>
+				</view>
+				<view class="menuinfo">
+					<view class="menutitle">成就列表</view>
+					<view class="menuword">珍惜时间，提高效率，解锁成就！</view>
 				</view>
 			</view>
 		</view>
@@ -155,21 +155,24 @@ export default {
 			await this.$api.showLoading(); // 显示loading
 			var chartRes = await this.$api.getData(this.$api.webapi.charts);
 			await this.$api.hideLoading(); // 等待请求数据成功后，隐藏loading
-			if (chartRes.resultCode == 0) {
-				console.log(chartRes);
+			if (this.$api.reshook(chartRes)) {
+				if (chartRes.resultCode == 0) {
+					console.log(chartRes);
+				}
+				this.serverData.categories = chartRes.data.categories;
+				this.serverData.series = chartRes.data.series;
+				this.serverData.durationList[0].data = chartRes.data.durationList;  //计划时间
+				
+				chartRes.data.realDurationList.forEach(function(item,index,arr){
+					arr[index] = that.secToMin(item)
+				});
+				
+				this.serverData.durationList[1].data = chartRes.data.realDurationList;   //实际时间
+				
+				this.initChart(this.serverData.categories,this.serverData.series);
+				this.initChart1(this.serverData.categories);
 			}
-			this.serverData.categories = chartRes.data.categories;
-			this.serverData.series = chartRes.data.series;
-			this.serverData.durationList[0].data = chartRes.data.durationList;  //计划时间
-
-			chartRes.data.realDurationList.forEach(function(item,index,arr){
-				arr[index] = that.secToMin(item)
-			});
-
-			this.serverData.durationList[1].data = chartRes.data.realDurationList;   //实际时间
 			
-			this.initChart(this.serverData.categories,this.serverData.series);
-			this.initChart1(this.serverData.categories);
 		},
 		gotoItem: function(e) {
 			let menutype = e.currentTarget.dataset.type;

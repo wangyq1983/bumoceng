@@ -34,7 +34,6 @@
 							<view class="">
 								{{curNickname}}
 							</view>
-							
 						</view>
 						<view class="curpm">
 							<view class="" style="margin-right: 50upx;">
@@ -43,8 +42,6 @@
 							<view class="">
 								{{curhonor}}
 							</view>
-							
-							
 						</view>
 					</view>
 				</view>
@@ -53,8 +50,17 @@
 			</view>
 			<view class="phright">
 				<view class="" style="margin-right: 25upx;">
-					<view class="" v-if="curData.ranking > 0">
-						排名 {{curData.ranking}} 
+					<view class="phshare" v-if="curData.ranking > 0">
+						<view>
+							排名 {{curData.ranking}} 
+						</view>
+						<button class="shareBtn" open-type="share">
+							<image src="/static/sharImg2.png" mode=""></image>
+							<view class="">
+								分享
+							</view>
+							
+						</button>
 					</view>
 					<view class="" v-else>
 						暂无排名
@@ -93,7 +99,7 @@ export default {
 		console.log('分享');
 		console.log(this.curData)
 		var rankingNum = (this.curData.ranking > 0)?'我在作业效率榜中排名第'+this.curData.ranking:'作业不磨蹭'
-		var jielongImg = '/static/timebg.jpg';
+		var jielongImg = '/static/phshare.png';
 		var jielongpath = '/pages/ph/ph';
 		let cjparams = {
 			jobInfoId:0,
@@ -238,7 +244,7 @@ export default {
 	}
 }
 .timebox {
-	font-size: $fontsize-30;
+	font-size: $fontsize-28;
 	color: $color-36;
 	padding-left: 50upx;
 	background: url('/static/shijian.png') no-repeat;
@@ -292,5 +298,33 @@ export default {
 }
 .phright{
 	text-align: right;
+}
+.phshare{
+	@include rowflex;
+	justify-content: center;
+}
+.shareBtn{
+	// background: $color-m;
+	color: $color-m;
+	@include rowflex;
+	justify-content: center;
+	margin-left: 20upx;
+	padding: 0 15upx;
+	border-radius: 6upx;
+	height: 40upx;
+	line-height: 40upx;
+	font-size: $fontsize-28;
+	border: 2upx solid $color-m;
+	image{
+		width:24upx;
+		height: 24upx;
+		border: none;
+		border-radius:0;
+		margin: 0 16upx 0 0;
+		box-shadow:none
+	}
+}
+button{
+	background: linear-gradient(to top,#363636,#666666);
 }
 </style>

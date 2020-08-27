@@ -355,7 +355,7 @@ __webpack_require__.r(__webpack_exports__);
   // },
   onShareAppMessage: function () {var _onShareAppMessage = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee2() {var jielongImg, jielongpath, cjparams, cjResult;return _regenerator.default.wrap(function _callee2$(_context2) {while (1) {switch (_context2.prev = _context2.next) {case 0:
               console.log('分享');
-              jielongImg = '/static/timebg.jpg';
+              jielongImg = '/static/shareImg1.png';
               jielongpath = '/pages/rwlist/rwlist';
               cjparams = {
                 jobInfoId: 0,
@@ -364,7 +364,7 @@ __webpack_require__.r(__webpack_exports__);
                 this.$api.cjCheck(cjparams));case 6:cjResult = _context2.sent;
               this.renderCjlist(cjResult);return _context2.abrupt("return",
               {
-                title: '让孩子从此作业不磨蹭',
+                title: '让孩子从此作业不磨蹭,快来试一下吧',
                 path: '/pages/rwlist/rwlist',
                 imageUrl: jielongImg,
                 success: function success(res) {

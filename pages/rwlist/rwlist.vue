@@ -195,7 +195,7 @@ export default {
 	// },
 	onShareAppMessage:async function(){
 		console.log('分享');
-		var jielongImg = '/static/timebg.jpg';
+		var jielongImg = '/static/shareImg1.png';
 		var jielongpath = '/pages/rwlist/rwlist';
 		let cjparams = {
 			jobInfoId:0,
@@ -204,7 +204,7 @@ export default {
 		var cjResult = await this.$api.cjCheck(cjparams);
 		this.renderCjlist(cjResult);
 		return {
-		  title: '让孩子从此作业不磨蹭',
+		  title: '让孩子从此作业不磨蹭,快来试一下吧',
 		  path: '/pages/rwlist/rwlist',
 		  imageUrl: jielongImg,
 		  success: (res) => {

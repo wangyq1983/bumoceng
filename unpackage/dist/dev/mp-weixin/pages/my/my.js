@@ -291,21 +291,24 @@ var Column1 = { categories: [], durationList: [] };var _default =
                   this.$api.showLoading());case 3:_context.next = 5;return (
                   this.$api.getData(this.$api.webapi.charts));case 5:chartRes = _context.sent;_context.next = 8;return (
                   this.$api.hideLoading());case 8: // 等待请求数据成功后，隐藏loading
-                if (chartRes.resultCode == 0) {
-                  console.log(chartRes);
-                }
-                this.serverData.categories = chartRes.data.categories;
-                this.serverData.series = chartRes.data.series;
-                this.serverData.durationList[0].data = chartRes.data.durationList; //计划时间
+                if (this.$api.reshook(chartRes)) {
+                  if (chartRes.resultCode == 0) {
+                    console.log(chartRes);
+                  }
+                  this.serverData.categories = chartRes.data.categories;
+                  this.serverData.series = chartRes.data.series;
+                  this.serverData.durationList[0].data = chartRes.data.durationList; //计划时间
 
-                chartRes.data.realDurationList.forEach(function (item, index, arr) {
-                  arr[index] = that.secToMin(item);
-                });
+                  chartRes.data.realDurationList.forEach(function (item, index, arr) {
+                    arr[index] = that.secToMin(item);
+                  });
 
-                this.serverData.durationList[1].data = chartRes.data.realDurationList; //实际时间
+                  this.serverData.durationList[1].data = chartRes.data.realDurationList; //实际时间
 
-                this.initChart(this.serverData.categories, this.serverData.series);
-                this.initChart1(this.serverData.categories);case 16:case "end":return _context.stop();}}}, _callee, this);}));function getServerData() {return _getServerData.apply(this, arguments);}return getServerData;}(),
+                  this.initChart(this.serverData.categories, this.serverData.series);
+                  this.initChart1(this.serverData.categories);
+                }case 9:case "end":return _context.stop();}}}, _callee, this);}));function getServerData() {return _getServerData.apply(this, arguments);}return getServerData;}(),
+
 
     gotoItem: function gotoItem(e) {
       var menutype = e.currentTarget.dataset.type;

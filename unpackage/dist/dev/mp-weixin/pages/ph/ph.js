@@ -95,6 +95,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 var _default =
 {
   data: function data() {
@@ -119,7 +125,7 @@ var _default =
               console.log('分享');
               console.log(this.curData);
               rankingNum = this.curData.ranking > 0 ? '我在作业效率榜中排名第' + this.curData.ranking : '作业不磨蹭';
-              jielongImg = '/static/timebg.jpg';
+              jielongImg = '/static/phshare.png';
               jielongpath = '/pages/ph/ph';
               cjparams = {
                 jobInfoId: 0,
