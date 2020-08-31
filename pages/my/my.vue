@@ -79,16 +79,16 @@ export default {
 			cHeight: 120,
 			pixelRatio: 1,
 			serverData: {
-				categories: ['7-1', '7-2', '7-3', '7-5', '7-9', '7-11', '7-15'],
+				categories: [],
 				series: [
 					{
 						name: '任务计划完成',
-						data: [6, 6, 7, 8, 5, 7, 3],
+						data: [],
 						color: '#3c8ceb'
 					},
 					{
 						name: '任务实际完成',
-						data: [2, 3, 5, 6, 3, 1, 3],
+						data: [],
 						color: '#ffce00'
 					}
 				],
@@ -158,19 +158,21 @@ export default {
 			if (this.$api.reshook(chartRes)) {
 				if (chartRes.resultCode == 0) {
 					console.log(chartRes);
+					this.serverData.categories = chartRes.data.categories;
+					this.serverData.series = chartRes.data.series;
+					this.serverData.durationList[0].data = chartRes.data.durationList;  //计划时间
+					
+					chartRes.data.realDurationList.forEach(function(item,index,arr){
+						arr[index] = that.secToMin(item)
+					});
+					
+					this.serverData.durationList[1].data = chartRes.data.realDurationList;   //实际时间
+					
+					this.initChart(this.serverData.categories,this.serverData.series);
+					this.initChart1(this.serverData.categories);
 				}
-				this.serverData.categories = chartRes.data.categories;
-				this.serverData.series = chartRes.data.series;
-				this.serverData.durationList[0].data = chartRes.data.durationList;  //计划时间
 				
-				chartRes.data.realDurationList.forEach(function(item,index,arr){
-					arr[index] = that.secToMin(item)
-				});
 				
-				this.serverData.durationList[1].data = chartRes.data.realDurationList;   //实际时间
-				
-				this.initChart(this.serverData.categories,this.serverData.series);
-				this.initChart1(this.serverData.categories);
 			}
 			
 		},
@@ -193,9 +195,17 @@ export default {
 				});
 			}
 			if (menutype == 'ph') {
-				uni.navigateTo({
-					url: '/pages/ph/ph'
-				});
+				if(uni.getStorageSync('userType') == "游客"){
+					uni.showToast({
+						title:'游客用户不能参与排名哦',
+						icon:'none'
+					})
+				}else{
+					uni.navigateTo({
+						url: '/pages/ph/ph'
+					});
+				}
+				
 			}
 		},
 		showColumn1(canvasId, chartData) {

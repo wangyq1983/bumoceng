@@ -8,7 +8,7 @@
 		<view class="usericon userHonor6" v-if="honor1 == honorxs"><image :src="icon"></image></view>
 		<view class="userinfo">
 			<view class="usernameBox">
-				<view class="username">{{ name }}</view>
+				<view class="username">{{ name }}<text class="txtlogin" v-if="userType" @tap = "gotoLogin">【立即登录】</text></view>
 				<view class="starBox">
 					<image src="/static/star.png" mode=""></image>
 					<view class="starCount">{{ star1 }}</view>
@@ -26,8 +26,6 @@
 					<view class="proNum">{{levelnum1}}%</view>
 					<view class="progressCount" :style="{ width: levelnum1 + '%' }"></view>
 				</view>
-				
-							
 				
 				<view class="qingtong1" v-if="honor1 == honorqt">
 					{{honor1}}
@@ -48,9 +46,7 @@
 					{{honor1}}
 				</view>
 			</view>
-			
 		</view>
-		
 	</view>
 </template>
 
@@ -64,6 +60,8 @@ export default {
 			honorbj:this.$api.honor.bj,
 			honorzs:this.$api.honor.zs,
 			honorxs:this.$api.honor.xs,
+			userType:uni.getStorageSync('userType') == "游客"?true:false,
+			// icon: '/static/defalutIcon.png',
 			icon: uni.getStorageSync('avatarUrl') ? uni.getStorageSync('avatarUrl') : '', //头像
 			name: uni.getStorageSync('nickName') ? uni.getStorageSync('nickName') : '', //昵称
 			level: this.$store.state.level ? this.$store.state.level : uni.getStorageSync('level'), //等级
@@ -96,6 +94,11 @@ export default {
 				console.log('userinfo is');
 				console.log(userRes);
 			}
+		},
+		gotoLogin:function(){
+			uni.navigateTo({
+				url:"/pages/login/login"
+			})
 		}
 	},
 	
@@ -108,7 +111,8 @@ export default {
 		console.log(this.$store.state.userInfo);
 		// this.getUser()
 		this.icon = uni.getStorageSync('avatarUrl') ? uni.getStorageSync('avatarUrl') : '';
-		this.name = uni.getStorageSync('nickName') ? uni.getStorageSync('nickName') : '';
+
+		this.name = uni.getStorageSync('nickName') ? uni.getStorageSync('nickName') : '临时游客';
 		// this.level = uni.getStorageSync('level') ? uni.getStorageSync('level') : 0;
 
 		// this.levelnum = uni.getStorageSync('progress') ? uni.getStorageSync('progress') : 0;
@@ -250,5 +254,10 @@ export default {
 	font-size: $fontsize-24;
 	color: $color-36;
 }
-
+.txtlogin{
+	font-size: 32upx;
+	font-weight: bold;
+	color: #3c8ceb;
+	padding-left:10upx;
+}
 </style>

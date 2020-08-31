@@ -44,6 +44,9 @@
   "requiredBackgroundModes": [
     "audio"
   ],
+  "uniStatistics": {
+    "enable": true
+  },
   "usingComponents": {},
-  "sitemapLocation": "sitemap32.json"
+  "sitemapLocation": "sitemap34.json"
 }

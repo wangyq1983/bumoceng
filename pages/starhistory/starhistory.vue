@@ -43,6 +43,10 @@
 				</view>
 			</view>
 		</view>
+	
+		<view v-if = "isEmpty == 1">
+		    <nodata wordinfo = "没有星变更历史记录" type = "1"></nodata>
+		  </view>
 	</view>
 </template>
 
@@ -51,7 +55,8 @@ export default {
 	data() {
 		return {
 			historyList:[],
-			dataStep:50
+			dataStep:50,
+			isEmpty:0
 		};
 	},
 	onLoad() {
@@ -71,7 +76,13 @@ export default {
 			
 			if (this.$api.reshook(historylist, this.$mp.page.route)) {
 				await this.$api.hideLoading(); // 等待请求数据成功后，隐藏loading
-				this.historyList = historylist.data  
+				if(historylist.data.length > 0){
+					this.historyList = historylist.data;
+					this.isEmpty = 0
+				}else{
+					this.isEmpty = 1
+				}
+				  
 			}
 		}
 	}

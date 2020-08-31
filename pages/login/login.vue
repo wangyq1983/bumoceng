@@ -25,15 +25,28 @@
 		</view>
 		<view class="logincon">
 			<!-- #ifdef MP-WEIXIN || H5 -->
-			<button class="wxloginbtn" open-type="getUserInfo" withCredentials="true" lang="zh_CN" @getuserinfo="login">微信授权登录</button>
+			<view class="loginconWx">
+				<button class="visitLogin" @tap = "visitLogin">游客登录</button>
+				<button class="wxloginbtn" open-type="getUserInfo" withCredentials="true" lang="zh_CN" @getuserinfo="login">微信授权登录</button>
+				
+			</view>
 			<!-- #endif -->
 
 			<!--#ifdef APP-PLUS-->
-			<view>微信登录</view>
-
-			<view>手机登录</view>
-
-			<view>QQ登录</view>
+			<view>
+				<view class="typelogin">
+					<view>微信登录</view>
+					
+					<view>手机登录</view>
+					
+					<view>QQ登录</view>
+				</view>
+				<view class="">
+					<button class="visitLogin" @tap = "visitLogin">游客登录</button>
+				</view>
+			</view>
+			
+			
 			<!--#endif-->
 
 			<!--#ifdef MP-QQ-->
@@ -128,14 +141,68 @@ export default {
 				}
 			});
 		},
+		// 游客登录
+		async visitLogin(){
+			// console.log("visit");
+			var tempName = Date.parse(new Date())+String(parseInt(Math.random()*1000000));
+			
+			console.log(tempName);
+			var params = {
+				username:tempName
+			}
+			
+			await this.$api.showLoading(); // 显示loading
+			let vloginres = await this.$api.postData(this.$api.webapi.visitLogin, params);
+			await this.$api.hideLoading();
+			console.log('visit login res is =============');
+			console.log(vloginres);
+			this.visitLoginSuccess(vloginres);
+		},
+		
+		
+		async visitLoginSuccess(res){
+			var that = this;
+			console.log(res.data);
+			uni.setStorage({
+				key: 'userId',
+				data: res.data.userId
+			})
+			if(res.data.type == 5){
+				uni.setStorage({
+					key: 'userType',
+					data:"游客"
+				});
 
+			}
+			uni.setStorage({
+				key: 'token',
+				data: res.data.token,
+				success: async function() {
+					console.log('set token is = ');
+					console.log(uni.getStorageSync('token'));
+					var userinfo = await that.$api.getUserinfo();
+					if (userinfo) {
+						uni.reLaunch({
+							url: (that.origin !== '/undefined')?that.origin:'/pages/rwlist/rwlist'
+						});
+					} else {
+						uni.showToast({
+							title: '获取用户信息失败',
+							icon: 'none',
+							duration: 2000
+						});
+					}
+				}
+			});
+			
+		},
 		async loginSuccess(res, platform) {
 			console.log(this.origin);
 			console.log('loginsuccess');
 			console.log(res.data);
 			// this.$store.commit('login',res.data);
-			var storgeName = ['avatarUrl', 'nickName', 'isLogin', 'userId'];
-			var storgeVal = [res.data.weiChatAuthUser.avatarUrl, res.data.weiChatAuthUser.nickName, true, res.data.userId];
+			var storgeName = ['avatarUrl', 'nickName', 'isLogin', 'userId',"userType"];
+			var storgeVal = [res.data.weiChatAuthUser.avatarUrl, res.data.weiChatAuthUser.nickName, true, res.data.userId,"正式"];
 			var that = this;
 			for (var i = 0; i < storgeName.length; i++) {
 				uni.setStorage({
@@ -292,7 +359,7 @@ page{
 	justify-content: center;
 }
 .wxloginbtn {
-	width: 300upx;
+	width:300upx;
 	height: 100upx;
 	background: #363636;
 	color: #ffce00;
@@ -300,5 +367,25 @@ page{
 	border-radius: 6upx;
 	text-align: center;
 	line-height: 100upx;
+}
+.loginconWx{
+	width:750upx;
+	@include rowflex;
+	justify-content:center;
+}
+.visitLogin{
+	width:300upx;
+	height: 100upx;
+	line-height: 100upx;
+	text-align: center;
+	background: #fcfcfc;
+	border-radius: 6upx
+}
+.typelogin{
+	@include rowflex;
+	justify-content: center;
+}
+.typelogin image{
+	
 }
 </style>

@@ -40,6 +40,9 @@ var webapi = {
 	// 微信登陆
 	uniLogin: webhost + "public/weixin/mp/common/user/login/wx",
 	
+	// 游客登录
+	visitLogin: webhost + "public/weixin/mp/common/tourist/login/wx",
+	
 	// 获取用户信息
 	userInfo: webhost + "weixin/mp/common/user/info",
 	
