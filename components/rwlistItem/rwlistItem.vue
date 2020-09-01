@@ -157,10 +157,13 @@ export default {
 		delAction() {
 			var _this = this;
 			uni.showActionSheet({
-				itemList: ['删除'],
+				itemList: ['编辑','删除'],
 				success(res) {
 					console.log(res.tapIndex);
 					if (res.tapIndex == 0) {
+						_this.edittask()
+					}
+					if (res.tapIndex == 1) {
 						_this.deltask()
 					}
 				},
@@ -168,6 +171,28 @@ export default {
 					console.log(res.errMsg);
 				}
 			});
+		},
+		async edittask() {
+			var params = {
+				id:this.itemcon.id,
+				flag:this.itemcon.flag,
+				typeName:this.itemcon.typeName,
+				jobDescription:this.itemcon.jobDescription,
+				duration:this.itemcon.duration,
+				starNumber:this.itemcon.starNumber,
+				completionSwitch:this.itemcon.completionSwitch
+			}
+			if(this.itemcon.flag == 1){
+				uni.navigateTo({
+					url:"/pages/createrw/createrw?"+this.$api.encodeData(params)
+				})
+			}
+			if(this.itemcon.flag == 2){
+				uni.navigateTo({
+					url:"/pages/createother/createother?"+this.$api.encodeData(params)
+				})
+			}
+			
 		},
 		async deltask() {
 			var params = {

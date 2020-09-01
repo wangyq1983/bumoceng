@@ -238,10 +238,34 @@ var _default =
       quality: false,
       newtypeshow: false,
       typevalue: '',
-      isdel: false };
+      isdel: false,
+      id: '',
+      editState: false,
+      btnWord: "保存" };
 
   },
-  onShow: function onShow() {
+  onLoad: function onLoad(options) {
+    console.log('onload is =======');
+    console.log(options);
+    if (options.id) {
+      this.editState = true;
+      this.btnWord = "保存更改";
+      this.id = options.id;
+      this.curtype = decodeURIComponent(options.typeName);
+      this.zycon = decodeURIComponent(options.jobDescription);
+      this.timelength = options.duration;
+      this.rewardstar = options.starNumber;
+      this.quality = this.$api.strbool(options.completionSwitch);
+    } else
+    {
+      this.btnWord = "保存";
+      this.editState = false;
+    }
+
+  },
+  onShow: function onShow(options) {
+    console.log('onshow is ===');
+    console.log(options);
     this.typelist();
   },
   methods: {
@@ -388,37 +412,62 @@ var _default =
       console.log('newtype is tap');
       this.newtypeshow = true;
     },
-    creatzyRequest: function () {var _creatzyRequest = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee4() {var verparam, params, ctask;return _regenerator.default.wrap(function _callee4$(_context4) {while (1) {switch (_context4.prev = _context4.next) {case 0:
+    creatzyRequest: function () {var _creatzyRequest = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee4() {var verparam, params, utask, ctask;return _regenerator.default.wrap(function _callee4$(_context4) {while (1) {switch (_context4.prev = _context4.next) {case 0:
 
                 verparam = {
                   typeName: this.curtype,
                   duration: Number(this.timelength),
                   starNumber: Number(this.rewardstar) };if (!
 
-                this.paramsVer(verparam)) {_context4.next = 12;break;}
-                console.log('params is ok');
+                this.paramsVer(verparam)) {_context4.next = 24;break;}
+                console.log('params is ok');if (!(
+                this.editState == true)) {_context4.next = 15;break;}
+                params = {
+                  id: this.id,
+                  flag: 1,
+                  typeName: this.curtype,
+                  jobDescription: this.zycon,
+                  duration: parseInt(this.timelength),
+                  starNumber: parseInt(this.rewardstar),
+                  completionSwitch: this.quality };_context4.next = 7;return (
+
+
+                  this.$api.showLoading());case 7:_context4.next = 9;return (
+                  this.$api.postData(this.$api.webapi.uTask, params));case 9:utask = _context4.sent;_context4.next = 12;return (
+                  this.$api.hideLoading());case 12: // 等待请求数据成功后，隐藏loading
+                if (this.$api.reshook(utask, this.$mp.page.route)) {
+                  this.createSuccess(utask, true);
+                }_context4.next = 24;break;case 15:
+
                 params = {
                   flag: 1,
                   typeName: this.curtype,
                   jobDescription: this.zycon,
                   duration: parseInt(this.timelength),
                   starNumber: parseInt(this.rewardstar),
-                  completionSwitch: this.quality };_context4.next = 6;return (
+                  completionSwitch: this.quality };_context4.next = 18;return (
 
 
-                  this.$api.showLoading());case 6:_context4.next = 8;return (
-                  this.$api.postData(this.$api.webapi.cTask, params));case 8:ctask = _context4.sent;_context4.next = 11;return (
-                  this.$api.hideLoading());case 11: // 等待请求数据成功后，隐藏loading
+                  this.$api.showLoading());case 18:_context4.next = 20;return (
+                  this.$api.postData(this.$api.webapi.cTask, params));case 20:ctask = _context4.sent;_context4.next = 23;return (
+                  this.$api.hideLoading());case 23: // 等待请求数据成功后，隐藏loading
                 if (this.$api.reshook(ctask, this.$mp.page.route)) {
-                  this.createSuccess(ctask);
-                }case 12:case "end":return _context4.stop();}}}, _callee4, this);}));function creatzyRequest() {return _creatzyRequest.apply(this, arguments);}return creatzyRequest;}(),
+                  this.createSuccess(ctask, false);
+                }case 24:case "end":return _context4.stop();}}}, _callee4, this);}));function creatzyRequest() {return _creatzyRequest.apply(this, arguments);}return creatzyRequest;}(),
 
 
-    createSuccess: function createSuccess(res) {
+
+
+    createSuccess: function createSuccess(res, editstate) {
+      if (editstate == true) {
+        var successWord = "任务编辑成功！";
+      } else {
+        var successWord = "任务创建成功！";
+      }
       console.log(res);
       if (res.resultCode == 0) {
         uni.showToast({
-          title: "任务创建成功！",
+          title: successWord,
           icon: 'none',
           duration: 1500 });
 

@@ -273,10 +273,13 @@ var _default =
     delAction: function delAction() {
       var _this = this;
       uni.showActionSheet({
-        itemList: ['删除'],
+        itemList: ['编辑', '删除'],
         success: function success(res) {
           console.log(res.tapIndex);
           if (res.tapIndex == 0) {
+            _this.edittask();
+          }
+          if (res.tapIndex == 1) {
             _this.deltask();
           }
         },
@@ -285,15 +288,37 @@ var _default =
         } });
 
     },
-    deltask: function deltask() {var _this3 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee2() {var params, taskdel;return _regenerator.default.wrap(function _callee2$(_context2) {while (1) {switch (_context2.prev = _context2.next) {case 0:
+    edittask: function edittask() {var _this3 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee2() {var params;return _regenerator.default.wrap(function _callee2$(_context2) {while (1) {switch (_context2.prev = _context2.next) {case 0:
                 params = {
-                  id: _this3.itemcon.id };_context2.next = 3;return (
+                  id: _this3.itemcon.id,
+                  flag: _this3.itemcon.flag,
+                  typeName: _this3.itemcon.typeName,
+                  jobDescription: _this3.itemcon.jobDescription,
+                  duration: _this3.itemcon.duration,
+                  starNumber: _this3.itemcon.starNumber,
+                  completionSwitch: _this3.itemcon.completionSwitch };
 
-                  _this3.$api.showLoading());case 3:_context2.next = 5;return (
-                  _this3.$api.postData(_this3.$api.webapi.dTask, params));case 5:taskdel = _context2.sent;_context2.next = 8;return (
-                  _this3.$api.hideLoading());case 8:
+                if (_this3.itemcon.flag == 1) {
+                  uni.navigateTo({
+                    url: "/pages/createrw/createrw?" + _this3.$api.encodeData(params) });
+
+                }
+                if (_this3.itemcon.flag == 2) {
+                  uni.navigateTo({
+                    url: "/pages/createother/createother?" + _this3.$api.encodeData(params) });
+
+                }case 3:case "end":return _context2.stop();}}}, _callee2);}))();
+
+    },
+    deltask: function deltask() {var _this4 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee3() {var params, taskdel;return _regenerator.default.wrap(function _callee3$(_context3) {while (1) {switch (_context3.prev = _context3.next) {case 0:
+                params = {
+                  id: _this4.itemcon.id };_context3.next = 3;return (
+
+                  _this4.$api.showLoading());case 3:_context3.next = 5;return (
+                  _this4.$api.postData(_this4.$api.webapi.dTask, params));case 5:taskdel = _context3.sent;_context3.next = 8;return (
+                  _this4.$api.hideLoading());case 8:
                 console.log(taskdel);
-                _this3.$emit('on-del', _this3.itemcon.id);case 10:case "end":return _context2.stop();}}}, _callee2);}))();
+                _this4.$emit('on-del', _this4.itemcon.id);case 10:case "end":return _context3.stop();}}}, _callee3);}))();
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 

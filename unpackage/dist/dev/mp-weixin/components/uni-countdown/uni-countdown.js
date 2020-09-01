@@ -137,12 +137,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
 
 /**
  * Countdown 倒计时
@@ -221,7 +215,7 @@ var innerAudioContext = uni.getBackgroundAudioManager();var _default =
       leftTime: 0,
       seconds: 0,
       realDuration: 0,
-      btntext: "",
+      btntext: '',
       timeout: false, // 是否超时
       timeouter: null, // 超时计数器
       timeoutSeconds: 0 // 超时秒数
@@ -230,9 +224,9 @@ var innerAudioContext = uni.getBackgroundAudioManager();var _default =
   computed: {
     txtBtn: function txtBtn() {
       if (this.timeout == false) {
-        return "任务完成";
+        return '任务完成';
       } else {
-        return "任务结束";
+        return '任务结束';
       }
     } },
 
@@ -267,11 +261,11 @@ var innerAudioContext = uni.getBackgroundAudioManager();var _default =
       }
     },
     audioplay: function audioplay() {
-
       innerAudioContext.title = '作业不磨蹭';
       innerAudioContext.src = 'https://task.vsclouds.com/music/clock2.mp3';
       //innerAudioContext.src = 'https://jielongtest.vsclouds.com/music/clock2.mp3';
-      innerAudioContext.onPlay(function () {//可以播放事件
+      innerAudioContext.onPlay(function () {
+        //可以播放事件
         console.log('开始播放');
         //innerAudioContext.play()
         //this.playing = !innerAudioContext.paused;//查看是否可以自动播放
@@ -312,28 +306,39 @@ var innerAudioContext = uni.getBackgroundAudioManager();var _default =
 
     // 计时完成
     taskover: function taskover() {
-      this.audiostop();
-      if (this.timeout) {
-        // 如果超时
-        clearInterval(this.timeouter);
-        var allDuration = this.toSeconds(0, this.hour, this.minute, this.second) + this.timeoutSeconds;
-        console.log(allDuration);
-        this.$emit("on-complete", allDuration, 4);
-      } else {
-        // 规定时间内完成
+      var _this = this;
+      uni.showModal({
+        title: '提示',
+        content: '您确定已经完成任务了吗？',
+        success: function success(res) {
+          if (res.confirm) {
+            _this.audiostop();
+            if (_this.timeout) {
+              // 如果超时
+              clearInterval(_this.timeouter);
+              var allDuration = _this.toSeconds(0, _this.hour, _this.minute, _this.second) + _this.timeoutSeconds;
+              console.log(allDuration);
+              _this.$emit('on-complete', allDuration, 4);
+            } else {
+              // 规定时间内完成
 
-        this.timeOver();
-        console.log('经历秒数是');
-        console.log('hour is' + this.h + 'minute is' + this.i + 'seconds is' + this.s);
+              _this.timeOver();
+              console.log('经历秒数是');
+              console.log('hour is' + _this.h + 'minute is' + _this.i + 'seconds is' + _this.s);
 
-        console.log(this.toSeconds(0, this.hour, this.minute, this.second));
-        console.log('-');
-        console.log(this.toSeconds(0, this.h, this.i, this.s));
-        console.log('=');
-        var realDuration = this.toSeconds(0, this.hour, this.minute, this.second) - this.toSeconds(0, this.h, this.i, this.s);
-        console.log(realDuration);
-        this.$emit("on-complete", realDuration >= 0 ? realDuration : 0, 3);
-      }
+              console.log(_this.toSeconds(0, _this.hour, _this.minute, _this.second));
+              console.log('-');
+              console.log(_this.toSeconds(0, _this.h, _this.i, _this.s));
+              console.log('=');
+              var realDuration = _this.toSeconds(0, _this.hour, _this.minute, _this.second) - _this.toSeconds(0, _this.h, _this.i, _this.s);
+              console.log(realDuration);
+              _this.$emit('on-complete', realDuration >= 0 ? realDuration : 0, 3);
+            }
+          } else if (res.cancel) {
+            console.log('用户点击取消');
+          }
+        } });
+
     },
 
     countDown: function countDown() {
@@ -363,14 +368,13 @@ var innerAudioContext = uni.getBackgroundAudioManager();var _default =
       this.h = hour;
       this.i = minute;
       this.s = second;
-
     },
-    timeoutStart: function timeoutStart() {var _this = this;
+    timeoutStart: function timeoutStart() {var _this2 = this;
       this.timeouter = setInterval(function () {
-        _this.timeoutSeconds++;
+        _this2.timeoutSeconds++;
       }, 1000);
     },
-    startData: function startData() {var _this2 = this;
+    startData: function startData() {var _this3 = this;
       this.seconds = this.toSeconds(this.day, this.hour, this.minute, this.second);
       if (this.seconds <= 0) {
         return;
@@ -378,12 +382,12 @@ var innerAudioContext = uni.getBackgroundAudioManager();var _default =
       this.audioplay();
       this.countDown();
       this.timer = setInterval(function () {
-        _this2.seconds--;
-        if (_this2.seconds < 0) {
-          _this2.timeUp();
+        _this3.seconds--;
+        if (_this3.seconds < 0) {
+          _this3.timeUp();
           return;
         }
-        _this2.countDown();
+        _this3.countDown();
       }, 1000);
     },
     changeFlag: function changeFlag() {

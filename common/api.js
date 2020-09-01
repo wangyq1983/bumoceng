@@ -283,6 +283,20 @@ const postData = (url, param) => {
 	})
 }
 
+
+// 字符型的true false转换布尔型
+const strbool = (str) =>{
+  if(str == 'true'){
+    return true
+  }
+  if (str == 'false') {
+    return false
+  }
+  if (str == 'undefined') {
+    return true
+  }
+}
+
 // 获取用户信息
 const getUserinfo = async() => {
 	// 获取用户信息
@@ -557,5 +571,6 @@ export default {
 	expTitle,
 	honorTitle,
 	cjCheck,
+	strbool,
 	honorCorres
 }
