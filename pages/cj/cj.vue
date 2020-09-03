@@ -28,24 +28,7 @@
 						{{items.cumulativeThreshold?(items.cumulativeThreshold>items.threshold?items.threshold:items.cumulativeThreshold):0}}/{{items.threshold}}
 					</view>
 				</view>
-				
-				
 			</view>
-			
-			<!-- <view class="cjitem gray">
-				<view class="cjicon">
-					信
-				</view>
-				<view class="cjInfo">
-					<view class="cjinfoTitle">
-						旗开得胜
-					</view>
-					<view class="cjinfoCon">
-						首次创建任务并按时完成
-					</view>
-				</view>
-			</view> -->
-			
 		</view>
 	</view>
 </template>
@@ -96,12 +79,6 @@ export default {
 			})
 			return curcount
 		}
-		// storel(){
-		// 	return this.storelevel*150
-		// },
-		// storagel(){
-		// 	return this.storagelevel*150
-		// }
 	},
 	onLoad() {
 		this.init();

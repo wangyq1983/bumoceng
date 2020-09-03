@@ -63,14 +63,7 @@
 		
 		</view>
 		
-		<!-- <view class="actionTest">
-			<view class="" @tap="storetap">
-				store test
-			</view>
-			<view class="" @tap="storagetap">
-				storagetest
-			</view>
-		</view> -->
+
 		
 		
 		<view class="rwlist">
@@ -172,8 +165,7 @@ export default {
 		// console.log('show');
 	},
 	onReachBottom: async function(){
-		// console.log('onReachBottom');
-		// console.log(this.rwlist.length)
+		
 		let params = {
 		      from: this.rwlist.length + 1,
 		      count: this.dataStep
@@ -195,7 +187,7 @@ export default {
 	// },
 	onShareAppMessage:async function(){
 		console.log('分享');
-		var jielongImg = '/static/shareImg1.png';
+		var jielongImg = '/static/shareImg1.jpg';
 		var jielongpath = '/pages/rwlist/rwlist';
 		let cjparams = {
 			jobInfoId:0,

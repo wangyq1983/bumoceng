@@ -8,16 +8,15 @@
 		<view class="usericon userHonor6" v-if="honor1 == honorxs"><image :src="icon"></image></view>
 		<view class="userinfo">
 			<view class="usernameBox">
-				<view class="username">{{ name }}<text class="txtlogin" v-if="userType" @tap = "gotoLogin">【立即登录】</text></view>
+				<view class="usernameWarp" @tap = "gotoEditUser">
+					<image src="/static/edit.png" mode="" class="editIcon"></image>
+					<view class="username">{{ name1 }}<text class="txtlogin" v-if="userType" @tap = "gotoLogin">【立即登录】</text></view>
+					
+				</view>
 				<view class="starBox">
 					<image src="/static/star.png" mode=""></image>
 					<view class="starCount">{{ star1 }}</view>
 				</view>
-				<!-- <view class="chengjiuBox">
-					
-					<image src="/static/cj_icon.png"></image>
-					<view class="cjword">成就：23</view>
-				</view> -->
 			</view>
 			<view class="levelBox">
 				
@@ -27,22 +26,22 @@
 					<view class="progressCount" :style="{ width: levelnum1 + '%' }"></view>
 				</view>
 				
-				<view class="qingtong1" v-if="honor1 == honorqt">
+				<view class="qingtong1" v-if="honor1 == honorqt" @tap = "gotoHonor">
 					{{honor1}}
 				</view>
-				<view class="baiyin2" v-if="honor1 == honorby">
+				<view class="baiyin2" v-if="honor1 == honorby" @tap = "gotoHonor">
 					{{honor1}}
 				</view>
-				<view class="huangjin3" v-if="honor1 == honorhj">
+				<view class="huangjin3" v-if="honor1 == honorhj" @tap = "gotoHonor">
 					{{honor1}}
 				</view>
-				<view class="bojin4" v-if="honor1 == honorbj">
+				<view class="bojin4" v-if="honor1 == honorbj" @tap = "gotoHonor">
 					{{honor1}}
 				</view>
-				<view class="zuanshi5" v-if="honor1 == honorzs">
+				<view class="zuanshi5" v-if="honor1 == honorzs" @tap = "gotoHonor">
 					{{honor1}}
 				</view>
-				<view class="xueshen6" v-if="honor1 == honorxs">
+				<view class="xueshen6" v-if="honor1 == honorxs" @tap = "gotoHonor">
 					{{honor1}}
 				</view>
 			</view>
@@ -61,7 +60,6 @@ export default {
 			honorzs:this.$api.honor.zs,
 			honorxs:this.$api.honor.xs,
 			userType:uni.getStorageSync('userType') == "游客"?true:false,
-			// icon: '/static/defalutIcon.png',
 			icon: uni.getStorageSync('avatarUrl') ? uni.getStorageSync('avatarUrl') : '', //头像
 			name: uni.getStorageSync('nickName') ? uni.getStorageSync('nickName') : '', //昵称
 			level: this.$store.state.level ? this.$store.state.level : uni.getStorageSync('level'), //等级
@@ -71,6 +69,9 @@ export default {
 		};
 	},
 	computed:{
+		name1:function(){
+			return this.$store.state.nickname?this.$store.state.nickname: (uni.getStorageSync('nickName')?uni.getStorageSync('nickName'):'临时游客')
+		},
 		level1:function(){
 			return this.$store.state.level ? this.$store.state.level : uni.getStorageSync('level')
 		},
@@ -99,6 +100,16 @@ export default {
 			uni.navigateTo({
 				url:"/pages/login/login"
 			})
+		},
+		gotoHonor:function(){
+			uni.navigateTo({
+				url:"/pages/honor/honor"
+			})
+		},
+		gotoEditUser:function(){
+			uni.navigateTo({
+				url:"/pages/edit/edit?user="+this.name1
+			})
 		}
 	},
 	
@@ -117,10 +128,6 @@ export default {
 
 		// this.levelnum = uni.getStorageSync('progress') ? uni.getStorageSync('progress') : 0;
 		// this.star = uni.getStorageSync('starNum') ? uni.getStorageSync('starNum') : 0;
-
-		// console.log(this.icon);
-		// console.log(this.name);
-		// console.log('------------------------------------');
 	}
 };
 </script>
@@ -165,8 +172,6 @@ export default {
 	width: 72upx;
 	height: 72upx;
 	border-radius: 168upx;
-	// border: 8upx solid #ffffff;
-	// box-shadow: 0upx 0upx 15upx #c0c0c0;
 }
 .userinfo {
 	width: 540upx;
@@ -182,6 +187,16 @@ export default {
 .usernameBox {
 	@include rowflex;
 	justify-content: flex-start;
+}
+.usernameWarp{
+	@include rowflex;
+	justify-content: flex-start;
+}
+.editIcon{
+	width:32upx;
+	height:32upx;
+	margin-right: 10upx;
+	opacity: 0.7;
 }
 .username {
 	font-size: $fontsize-28;

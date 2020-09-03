@@ -4,7 +4,10 @@
 			console.log('App Launch')
 		},
 		onShow: function() {
-			console.log('App Show')
+			console.log('App Show');
+			uni.setKeepScreenOn({
+			  keepScreenOn: true
+			})
 		},
 		onHide: function() {
 			console.log('App Hide')

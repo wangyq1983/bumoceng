@@ -48,7 +48,7 @@
 		<view class="selectStar">
 			<image src="/static/star.png" mode="" class="Imgicon"></image>
 			<view class="">设置奖励星</view>
-			<input type="number" value="" v-model="rewardstar" maxlength="12" />
+			<input type="number" value="" v-model="rewardstar" maxlength="6" />
 			<view class="">
 				颗
 				<text class="muststyle">(必填)</text>

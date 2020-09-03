@@ -99,7 +99,7 @@ export default {
 		console.log('分享');
 		console.log(this.curData)
 		var rankingNum = (this.curData.ranking > 0)?'我在作业效率榜中排名第'+this.curData.ranking:'作业不磨蹭'
-		var jielongImg = '/static/phshare.png';
+		var jielongImg = '/static/phshare.jpg';
 		var jielongpath = '/pages/ph/ph';
 		let cjparams = {
 			jobInfoId:0,
@@ -122,8 +122,7 @@ export default {
 			})
 		  },
 		  fail: (res) => {
-			// console.log("转发失败", res);
-		  }
+			}
 		}
 	},
 	methods: {

@@ -86,6 +86,9 @@ const store = new Vuex.Store({
 		changeCj(state,cj){
 			state.cjNum = cj
 		},
+		changName(state,name){
+			state.nickname = name
+		},
 		changesignList(state,list){
 			state.signList = list
 		},

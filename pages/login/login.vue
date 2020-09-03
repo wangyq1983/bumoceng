@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<!-- <view class="logintop"><image src="/static/icon.png" mode=""></image></view> -->
+		
 		<view class="loginBox">
 			<view class="loginWord">
 				<view class="logininfo">
@@ -14,7 +14,7 @@
 			</view>
 		</view>
 		<view class="logobox">
-			<image src="/static/icon.png" mode="" class="logoImg"></image>
+			<image src="/static/icon.jpg" mode="" class="logoImg"></image>
 			
 			<view class="logoTitle">
 				作业不磨蹭
@@ -31,7 +31,7 @@
 				
 			</view>
 			<!-- #endif -->
-
+			
 			<!--#ifdef APP-PLUS-->
 			<view>
 				<view class="typelogin">
@@ -50,7 +50,9 @@
 			<!--#endif-->
 
 			<!--#ifdef MP-QQ-->
-			<view>QQ登录</view>
+			<view class="">
+				<button class="visitLogin" @tap = "visitLogin">游客登录</button>
+			</view>
 			<!--#endif-->
 
 			<!--#ifdef MP-QQ-->
@@ -202,7 +204,7 @@ export default {
 			console.log(res.data);
 			// this.$store.commit('login',res.data);
 			var storgeName = ['avatarUrl', 'nickName', 'isLogin', 'userId',"userType"];
-			var storgeVal = [res.data.weiChatAuthUser.avatarUrl, res.data.weiChatAuthUser.nickName, true, res.data.userId,"正式"];
+			var storgeVal = [res.data.weiChatAuthUser.avatarUrl, res.data.name, true, res.data.userId,"正式"];
 			var that = this;
 			for (var i = 0; i < storgeName.length; i++) {
 				uni.setStorage({

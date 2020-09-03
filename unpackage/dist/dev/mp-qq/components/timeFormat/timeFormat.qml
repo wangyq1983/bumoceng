@@ -1,0 +1,1 @@
+<view>{{''+formatTime+''}}</view>

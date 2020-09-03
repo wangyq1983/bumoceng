@@ -1,0 +1,1 @@
+<view class="editName"><view class="inputTitle">请输入新的名称</view><input class="inputStyle" type="text" value="{{username}}" data-event-opts="{{[['input',[['__set_model',['','username','$event',[]]]]]]}}" bindinput="__e"/><view data-event-opts="{{[['tap',[['editName',['$event']]]]]}}" class="saveBtn" bindtap="__e">确定</view></view>

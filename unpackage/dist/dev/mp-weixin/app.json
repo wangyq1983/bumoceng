@@ -12,7 +12,9 @@
     "pages/cj/cj",
     "pages/ph/ph",
     "pages/starhistory/starhistory",
-    "pages/login/login"
+    "pages/login/login",
+    "pages/honor/honor",
+    "pages/edit/edit"
   ],
   "subPackages": [],
   "window": {
@@ -45,8 +47,7 @@
     "audio"
   ],
   "uniStatistics": {
-    "enable": true
+    "enable": false
   },
-  "usingComponents": {},
-  "sitemapLocation": "sitemap90.json"
+  "usingComponents": {}
 }

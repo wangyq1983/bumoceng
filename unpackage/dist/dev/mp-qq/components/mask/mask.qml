@@ -1,0 +1,1 @@
+<block qq:if="{{showmask}}"><view class="maskbg"><view class="maskBox"><view class="maskCon"><slot></slot></view><view data-event-opts="{{[['tap',[['closeEvent',['$event']]]]]}}" class="maskClose" bindtap="__e">×</view></view></view></block>

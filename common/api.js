@@ -46,6 +46,9 @@ var webapi = {
 	// 获取用户信息
 	userInfo: webhost + "weixin/mp/common/user/info",
 	
+	// 修改用户昵称
+	editName: webhost + "common/c/user/update",
+	
 	// 经验接口
 	exp: webhost + "user/experience/cumulative",
 	

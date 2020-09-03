@@ -1,4 +1,3 @@
-
 <template>
 	<view>
 		<mask :showmask = 'newtypeshow' @on-close = "closemask">
@@ -33,7 +32,7 @@
 		<view class="selectStar">
 			<image src="/static/starother.png" mode="" class="Imgicon"></image>
 			<view class="">设置奖励星</view>
-			<input type="number" value="" v-model="rewardstar" maxlength="12" />
+			<input type="number" value="" v-model="rewardstar" maxlength="6" />
 			<view class="">颗<text class="muststyle">(必填)</text></view>
 		</view>
 		<view class="zhiliangSwitch">
@@ -71,8 +70,6 @@ export default {
 		};
 	},
 	onLoad(options) {
-		console.log('onload is =======');
-		console.log(options);
 		if(options.id){
 			this.editState = true;
 			this.id = options.id;
@@ -147,7 +144,6 @@ export default {
 					this.defaluttype.forEach(function(item, index, arr) {
 						if(item.id == delId) {
 							arr.splice(index, 1);
-							//this.defaulttype = arr
 						}
 					});
 
@@ -194,7 +190,6 @@ export default {
 					// 	typeName:'英语'
 					// }
 				]
-				// console.log(deftype.concat(typelist.data))
 				this.defaluttype = deftype.concat(typelist.data)
 			}
 		},

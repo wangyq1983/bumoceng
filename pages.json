@@ -58,6 +58,14 @@
             "path" : "pages/login/login",
             "style" : {}
         }
+        ,{
+            "path" : "pages/honor/honor",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/edit/edit",
+            "style" : {}
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

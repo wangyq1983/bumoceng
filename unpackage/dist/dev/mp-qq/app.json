@@ -1,0 +1,49 @@
+{
+  "pages": [
+    "pages/rwlist/rwlist",
+    "pages/my/my",
+    "pages/index/index",
+    "pages/tabbar/rwlist/rwlist",
+    "pages/tabbar/my/my",
+    "pages/createrw/createrw",
+    "pages/createother/createother",
+    "pages/starjl/starjl",
+    "pages/star/star",
+    "pages/cj/cj",
+    "pages/ph/ph",
+    "pages/starhistory/starhistory",
+    "pages/login/login",
+    "pages/honor/honor",
+    "pages/edit/edit"
+  ],
+  "window": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "作业不磨蹭",
+    "navigationBarBackgroundColor": "#FFFFFF",
+    "backgroundColor": "#FFFFFF"
+  },
+  "tabBar": {
+    "color": "#7A7E83",
+    "selectedColor": "#b69406",
+    "borderStyle": "black",
+    "backgroundColor": "#F8F8F8",
+    "list": [
+      {
+        "pagePath": "pages/rwlist/rwlist",
+        "iconPath": "static/list.png",
+        "selectedIconPath": "static/list_cur.png",
+        "text": "任务列表"
+      },
+      {
+        "pagePath": "pages/my/my",
+        "iconPath": "static/my.png",
+        "selectedIconPath": "static/my_cur.png",
+        "text": "我的"
+      }
+    ]
+  },
+  "uniStatistics": {
+    "enable": false
+  },
+  "usingComponents": {}
+}
