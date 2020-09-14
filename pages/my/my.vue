@@ -59,6 +59,17 @@
 					<view class="menuword">珍惜时间，提高效率，解锁成就！</view>
 				</view>
 			</view>
+			
+			<!-- 快速上手 -->
+			<view class="proItem" @tap="gotoItem" data-type="study">
+				<view class="iconbg iconjl">
+					<view class="iconjl1"><image src="/static/study.png" mode=""></image></view>
+				</view>
+				<view class="menuinfo">
+					<view class="menutitle">新手教程</view>
+					<view class="menuword">生动的视频与图文讲解，让您快速上手使用</view>
+				</view>
+			</view>
 		</view>
 	</view>
 </template>
@@ -192,6 +203,11 @@ export default {
 			if (menutype == 'cj') {
 				uni.navigateTo({
 					url: '/pages/cj/cj'
+				});
+			}
+			if (menutype == 'study'){
+				uni.navigateTo({
+					url: '/pages/study/study'
 				});
 			}
 			if (menutype == 'ph') {

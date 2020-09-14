@@ -1,5 +1,5 @@
 {
-    "name" : "defaultmoban",
+    "name" : "作业不磨蹭",
     "appid" : "__UNI__8F77753",
     "description" : "",
     "versionName" : "1.0.0",
@@ -64,6 +64,9 @@
                         "appid" : "wx68fa52964aa56d13",
                         "appsecret" : "d5e9817892dd03ee8dad708bbd6e0ce9",
                         "UniversalLinks" : ""
+                    },
+                    "qq" : {
+                        "appid" : "1110960522"
                     }
                 },
                 "push" : {
@@ -73,8 +76,12 @@
                     "weixin" : {
                         "appid" : "wx68fa52964aa56d13",
                         "UniversalLinks" : ""
+                    },
+                    "qq" : {
+                        "appid" : "1110960522"
                     }
-                }
+                },
+                "ad" : {}
             },
             "icons" : {
                 "android" : {
@@ -160,6 +167,7 @@
         },
         "setting" : {
             "urlCheck" : false
-        }
+        },
+        "appid" : "1110960522"
     }
 }

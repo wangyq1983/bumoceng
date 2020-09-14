@@ -9,7 +9,6 @@
 					<view class="f3">快 又 好</view>
 				</view>
 				<view class="loginarrow">
-					
 				</view>
 			</view>
 		</view>
@@ -28,36 +27,81 @@
 			<view class="loginconWx">
 				<button class="visitLogin" @tap = "visitLogin">游客登录</button>
 				<button class="wxloginbtn" open-type="getUserInfo" withCredentials="true" lang="zh_CN" @getuserinfo="login">微信授权登录</button>
-				
 			</view>
+			<!-- <view class="typelogin">
+				<view>
+					<image src="/static/APP-PLUS/weixin.png" mode=""></image>
+					<view class="txt">
+						微信
+					</view>
+					
+					</view>
+				<view>
+					<image src="/static/APP-PLUS/qq.png" mode=""></image>
+					<view class="txt">
+						QQ
+					</view>
+					</view>
+				<view @tap = "gotoPhone">
+					<image src="/static/APP-PLUS/phone.png" mode=""></image>
+					<view class="txt">
+						手机
+					</view>
+					</view>
+				<view class="" @tap = "visitLogin">
+					<image src="/static/APP-PLUS/youke.png" mode=""></image>
+					<view class="txt">
+						游客
+					</view>
+				</view>
+				
+			</view> -->
+
+			
+			
 			<!-- #endif -->
 			
 			<!--#ifdef APP-PLUS-->
-			<view>
-				<view class="typelogin">
-					<view>微信登录</view>
+			<view class="typelogin">
+				<view>
+					<image src="/static/APP-PLUS/weixin.png" mode=""></image>
+					<view class="txt">
+						微信
+					</view>
 					
-					<view>手机登录</view>
-					
-					<view>QQ登录</view>
+					</view>
+				<view>
+					<image src="/static/APP-PLUS/qq.png" mode=""></image>
+					<view class="txt">
+						QQ
+					</view>
+					</view>
+				<view @tap = "gotoPhone">
+					<image src="/static/APP-PLUS/phone.png" mode=""></image>
+					<view class="txt">
+						手机
+					</view>
+					</view>
+				<view class="" @tap = "visitLogin">
+					<image src="/static/APP-PLUS/youke.png" mode=""></image>
+					<view class="txt">
+						游客
+					</view>
 				</view>
-				<view class="">
-					<button class="visitLogin" @tap = "visitLogin">游客登录</button>
-				</view>
+				
 			</view>
 			
 			
 			<!--#endif-->
 
 			<!--#ifdef MP-QQ-->
-			<view class="">
+			<view class="loginconWx">
 				<button class="visitLogin" @tap = "visitLogin">游客登录</button>
+				<button class="qqloginbtn" open-type="getUserInfo" withCredentials="true" lang="zh_CN" @getuserinfo="login">QQ授权登录</button>
 			</view>
+			
 			<!--#endif-->
 
-			<!--#ifdef MP-QQ-->
-			<view>QQ登录</view>
-			<!--#endif-->
 		</view>
 	</view>
 </template>
@@ -83,9 +127,16 @@ export default {
 	methods: {
 		//第一授权获取用户信息===》按钮触发
 		wxGetUserInfo() {
+			// #ifdef MP-QQ
+				var pro = 'qq';
+			// #endif
+				
+			// #ifdef MP-WEIXIN
+				var pro = 'weixin';
+			// #endif
 			let _this = this;
 			uni.getUserInfo({
-				provider: 'weixin',
+				provider: pro,
 				success: function(infoRes) {
 					console.log(infoRes);
 					let nickName = infoRes.userInfo.nickName; //昵称
@@ -104,9 +155,18 @@ export default {
 			uni.showLoading({
 				title: '登录中...'
 			});
+			
+			// #ifdef MP-QQ
+				var pro = 'qq';
+			// #endif
+				
+			// #ifdef MP-WEIXIN
+				var pro = 'weixin';
+			// #endif
 			// 1.wx获取登录用户code
 			uni.login({
-				provider: 'weixin',
+				
+				provider: pro,
 				success: async function(loginRes) {
 					console.log(loginRes);
 
@@ -114,7 +174,7 @@ export default {
 						code: loginRes.code
 					};
 					uni.getUserInfo({
-						provider: 'weixin',
+						provider: pro,
 						success: async function(infoRes) {
 							// console.log(infoRes); //获取用户信息后向调用信息更新方法
 							let nickName = infoRes.userInfo.nickName; //昵称
@@ -132,11 +192,12 @@ export default {
 							var params = _this.userinfo;
 							console.log(params);
 							await _this.$api.showLoading(); // 显示loading
+							
 							let loginres = await _this.$api.postData(_this.$api.webapi.uniLogin, params);
 							await _this.$api.hideLoading();
 
 							if (_this.$api.reshook(loginres, '/pages/login/login')) {
-								_this.loginSuccess(loginres, 'weixin');
+								_this.loginSuccess(loginres, pro);
 							}
 						}
 					});
@@ -161,6 +222,11 @@ export default {
 			this.visitLoginSuccess(vloginres);
 		},
 		
+		gotoPhone(){
+			uni.navigateTo({
+				url:'/pages/phonelogin/phonelogin'
+			})
+		},
 		
 		async visitLoginSuccess(res){
 			var that = this;
@@ -169,12 +235,15 @@ export default {
 				key: 'userId',
 				data: res.data.userId
 			})
+			uni.setStorage({
+				key: 'nickName',
+				data: '临时游客'
+			})
 			if(res.data.type == 5){
 				uni.setStorage({
 					key: 'userType',
 					data:"游客"
 				});
-
 			}
 			uni.setStorage({
 				key: 'token',
@@ -182,11 +251,31 @@ export default {
 				success: async function() {
 					console.log('set token is = ');
 					console.log(uni.getStorageSync('token'));
+					console.log(that.origin);
+					
+					if(that.origin == '/undefined'){
+						var realorigin = '/pages/rwlist/rwlist'
+					}else{
+						var realorigin = that.origin;
+					}
+					
 					var userinfo = await that.$api.getUserinfo();
 					if (userinfo) {
-						uni.reLaunch({
-							url: (that.origin !== '/undefined')?that.origin:'/pages/rwlist/rwlist'
-						});
+						console.log(userinfo)
+						// #ifdef APP-PLUS || MP-WEIXIN || MP-QQ
+							uni.reLaunch({
+								url: realorigin
+							});
+						// #endif
+						
+						// #ifdef H5
+							uni.reLaunch({
+								url: '/pages/rwlist/rwlist'
+							});
+						// #endif
+
+						
+						
 					} else {
 						uni.showToast({
 							title: '获取用户信息失败',
@@ -204,7 +293,14 @@ export default {
 			console.log(res.data);
 			// this.$store.commit('login',res.data);
 			var storgeName = ['avatarUrl', 'nickName', 'isLogin', 'userId',"userType"];
-			var storgeVal = [res.data.weiChatAuthUser.avatarUrl, res.data.name, true, res.data.userId,"正式"];
+			// #ifdef MP-QQ
+				var storgeVal = [res.data.qqAuthUser.avatarUrl, res.data.name, true, res.data.userId,"正式"];
+			// #endif
+				
+			// #ifdef MP-WEIXIN
+				var storgeVal = [res.data.weiChatAuthUser.avatarUrl, res.data.name, true, res.data.userId,"正式"];
+			// #endif
+			
 			var that = this;
 			for (var i = 0; i < storgeName.length; i++) {
 				uni.setStorage({
@@ -220,6 +316,7 @@ export default {
 					console.log(uni.getStorageSync('token'));
 					var userinfo = await that.$api.getUserinfo();
 					if (userinfo) {
+						
 						uni.reLaunch({
 							url: (that.origin !== '/undefined')?that.origin:'/pages/rwlist/rwlist'
 						});
@@ -370,6 +467,16 @@ page{
 	text-align: center;
 	line-height: 100upx;
 }
+.qqloginbtn{
+	width:300upx;
+	height: 100upx;
+	background: #0052d9;
+	color: #fff;
+	font-size: $fontsize-36;
+	border-radius: 6upx;
+	text-align: center;
+	line-height: 100upx;
+}
 .loginconWx{
 	width:750upx;
 	@include rowflex;
@@ -384,10 +491,23 @@ page{
 	border-radius: 6upx
 }
 .typelogin{
+	width:750upx;
 	@include rowflex;
-	justify-content: center;
-}
-.typelogin image{
+	justify-content: space-around;
 	
+	image{
+		width:120upx;
+		height:120upx;
+		border-radius: 100upx;
+		margin-left: 15upx;
+	}
+	.txt{
+		width:150upx;
+		font-size: 24upx;
+		color: #999;
+		text-align: center;
+	}
 }
+
+
 </style>

@@ -2,7 +2,6 @@
   "pages": [
     "pages/rwlist/rwlist",
     "pages/my/my",
-    "pages/index/index",
     "pages/tabbar/rwlist/rwlist",
     "pages/tabbar/my/my",
     "pages/createrw/createrw",

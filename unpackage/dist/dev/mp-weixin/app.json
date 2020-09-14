@@ -2,7 +2,6 @@
   "pages": [
     "pages/rwlist/rwlist",
     "pages/my/my",
-    "pages/index/index",
     "pages/tabbar/rwlist/rwlist",
     "pages/tabbar/my/my",
     "pages/createrw/createrw",
@@ -14,7 +13,9 @@
     "pages/starhistory/starhistory",
     "pages/login/login",
     "pages/honor/honor",
-    "pages/edit/edit"
+    "pages/edit/edit",
+    "pages/phonelogin/phonelogin",
+    "pages/study/study"
   ],
   "subPackages": [],
   "window": {
@@ -49,5 +50,6 @@
   "uniStatistics": {
     "enable": false
   },
-  "usingComponents": {}
+  "usingComponents": {},
+  "sitemapLocation": "sitemap64.json"
 }

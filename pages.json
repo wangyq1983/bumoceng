@@ -10,12 +10,7 @@
 			"path": "pages/my/my",
 			"style": {}
 		},
-		{
-			"path": "pages/index/index",
-			"style": {
-				"navigationBarTitleText": ""
-			}
-		}, 
+		
 		{
 			"path": "pages/tabbar/rwlist/rwlist",
 			"style": {}
@@ -64,6 +59,16 @@
         }
         ,{
             "path" : "pages/edit/edit",
+            "style" : {}
+        }
+		
+        ,{
+            "path" : "pages/phonelogin/phonelogin",
+            "style" : {}
+        }
+		
+        ,{
+            "path" : "pages/study/study",
             "style" : {}
         }
     ],

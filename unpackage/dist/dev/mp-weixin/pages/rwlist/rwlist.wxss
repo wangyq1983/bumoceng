@@ -461,6 +461,40 @@ page {
   height: 36rpx;
   margin-right: 20rpx;
 }
+.studyBar {
+  width: 750rpx;
+  height: 64rpx;
+  line-height: 64rpx;
+  background: rgba(54, 54, 54, 0.9);
+  position: fixed;
+  color: #ffce00;
+  font-size: 28rpx;
+  left: 0;
+  bottom: 163rpx;
+  z-index: 5;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+          justify-content: space-between;
+}
+.studyBar .txt {
+  padding-left: 40rpx;
+  text-decoration: underline;
+}
+.studyBar .btn {
+  width: 80rpx;
+  height: 64rpx;
+  text-align: center;
+}
 .createBox {
   width: 750rpx;
   height: 158rpx;
@@ -703,7 +737,7 @@ page {
   height: 40rpx;
   line-height: 40rpx;
   padding: 10rpx;
-  background: #E8F4D9;
+  background: #e8f4d9;
   font-size: 24rpx;
   color: #666;
   display: -webkit-box;

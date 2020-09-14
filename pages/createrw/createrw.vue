@@ -13,7 +13,8 @@
 				</view>
 			</view>
 		</mask>
-		<view class="typetip">请选择类别,长按类型标签出现删除按钮</view>
+		<view class="typetip">
+			请选择类别,长按类型标签出现删除按钮</view>
 		<view class="typeCon">
 			<view class="typeWarp" v-for="items in defaluttype" :key='items.typeName'>
 				<view :class = "(curtype == items.typeName)?'typeBox cur':'typeBox'" @longtap="showdel" @tap="typeselect" :data-id = "items.id" :data-value = "items.typeName">

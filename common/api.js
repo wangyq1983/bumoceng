@@ -1,12 +1,12 @@
 import store from '@/store'
 // 正式服务器
-var webhost = "https://task.vsclouds.com/";
+//var webhost = "https://task.vsclouds.com/";
 
 // 开发服务器
 // var webhost = "http://192.168.3.9:8080/";
 
 // 开发服务器
-//var webhost = "https://jielongtest.vsclouds.com/8080/polly/";
+var webhost = "https://jielongtest.vsclouds.com/8080/polly/";
 
 // 接口列表
 var webapi = {
@@ -36,16 +36,36 @@ var webapi = {
 	
 	// 排行榜
 	ranklist:webhost + 'rank/list',
-
+	
 	// 微信登陆
+	// #ifdef MP-WEIXIN
 	uniLogin: webhost + "public/weixin/mp/common/user/login/wx",
+	// #endif
+	
+	// qq登录
+	// #ifdef MP-QQ
+	uniLogin:webhost + "public/qq/mp/common/user/login",
+	// #endif
+	
 	
 	// 游客登录
 	visitLogin: webhost + "public/weixin/mp/common/tourist/login/wx",
 	
+	// #ifdef MP-WEIXIN 
 	// 获取用户信息
 	userInfo: webhost + "weixin/mp/common/user/info",
+	//userInfo: webhost + "common/c/user/info",
+	// #endif
 	
+	// #ifdef APP-PLUS || H5
+	userInfo: webhost + "common/c/user/info",
+	// #endif
+	
+	// #ifdef MP-QQ
+	// 获取QQ用户信息
+	userInfo:webhost + "qq/mp/common/user/info",
+	// #endif
+		
 	// 修改用户昵称
 	editName: webhost + "common/c/user/update",
 	
@@ -95,7 +115,13 @@ var webapi = {
 	cjList:webhost + 'achievement/user/list',
 	
 	// 成就请求
-	cjRequest:webhost + 'achievement/user/check'
+	cjRequest:webhost + 'achievement/user/check',
+	
+	// 获取验证码
+	getVerCode: webhost + 'public/common/user/code',
+	
+	// 手机号登录
+	phoneLogin: webhost + 'public/weixin/mp/common/user/login/phone'
 	
 	
 }
@@ -304,6 +330,7 @@ const strbool = (str) =>{
 const getUserinfo = async() => {
 	// 获取用户信息
 	var userRes = await getData(webapi.userInfo);
+
 	// console.log('token is');
 	// console.log(uni.getStorageSync("token"))
 	// console.log('userinfo is')

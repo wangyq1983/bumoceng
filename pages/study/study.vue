@@ -1,6 +1,6 @@
 <template>
-	<view class="content">
-		
+	<view>
+		<web-view src = "http://www.weiyicxkj.com"></web-view>
 	</view>
 </template>
 
@@ -8,18 +8,15 @@
 	export default {
 		data() {
 			return {
-				title: 'Hello'
+				
 			}
 		},
-		onLoad() {
-
-		},
 		methods: {
-
+			
 		}
 	}
 </script>
 
 <style>
-	
+
 </style>
