@@ -8,8 +8,11 @@
 				<view class="con">
 					<input type="text" placeholder="请输入类别名称" v-model="typevalue" maxlength="20"  />
 				</view>
-				<view class="eventBtn" @tap="ctype">
+				<view class="eventBtn" @tap="ctype" v-if="clickable">
 					保存
+				</view>
+				<view class="eventBtn" v-if="(clickable == false)">
+					保存中
 				</view>
 			</view>
 		</mask>
@@ -85,7 +88,8 @@
 			</view>
 			
 		</view> -->
-		<view class="saveBox"><view class="saveBtn" @tap="creatzyRequest">{{btnWord}}</view></view>
+		<view class="saveBox" v-if="clickable"><view class="saveBtn" @tap="creatzyRequest">{{btnWord}}</view></view>
+		<view class="saveBox" v-if="(clickable == false)"><view class="saveBtn">保存中</view></view>
 	</view>
 </template>
 
@@ -106,7 +110,8 @@ export default {
 			isdel:false,
 			id:'',
 			editState:false,
-			btnWord:"保存"
+			btnWord:"保存",
+			clickable:true
 		};
 	},
 	onLoad(options) {
@@ -243,31 +248,41 @@ export default {
 			}
 		},
 		// 创建类别
-		ctype:async function(){
-			var params = {
-				flag:1,
-				typeName:this.typevalue
-			}
-			await this.$api.showLoading(); // 显示loading
-			var ctype = await this.$api.postData(this.$api.webapi.cTaskType, params);
-			await this.$api.hideLoading(); // 等待请求数据成功后，隐藏loading
-			if (this.$api.reshook(ctype, this.$mp.page.route)) {
-				console.log('ctype')
-				console.log(ctype)
-				let _this = this;
-				if(ctype.resultCode == 0){
-					uni.showToast({
-						title:'类别新建成功',
-						icon:'none',
-						duration:1500
-					})
-					setTimeout(function(){
+		ctype:async function(){ 
+			console.log('this.clickable is ' + this.clickable)
+			if(this.clickable == false){
+				return false;
+			}else{
+				this.clickable = false;
+				console.log('new clickable is');
+				console.log(this.clickable);
+				var params = {
+					flag:1,
+					typeName:this.typevalue
+				}
+				await this.$api.showLoading(); // 显示loading
+				var ctype = await this.$api.postData(this.$api.webapi.cTaskType, params);
+				await this.$api.hideLoading(); // 等待请求数据成功后，隐藏loading
+				if (this.$api.reshook(ctype, this.$mp.page.route)) {
+					console.log('ctype')
+					console.log(ctype)
+					let _this = this;
+					if(ctype.resultCode == 0){
+						// uni.showToast({
+						// 	title:'类别新建成功',
+						// 	icon:'none',
+						// 	duration:100
+						// })
 						_this.closemask();
 						_this.defaluttype.unshift(ctype.data)
-					},1500)
-					
+						// setTimeout(function(){
+							
+						// },100)
+					}
 				}
+				this.clickable = true;
 			}
+			
 		},
 		closemask:function(){
 			this.newtypeshow = false
@@ -278,7 +293,7 @@ export default {
 			this.newtypeshow = true
 		},
 		creatzyRequest:async function(){
-			
+			this.clickable = false;
 			let verparam = {
 				typeName:this.curtype,
 				duration:Number(this.timelength),
@@ -336,7 +351,9 @@ export default {
 				icon:'none',
 				duration:1500
 			});
+			
 			setTimeout(function(){
+				this.clickable = true;
 				uni.reLaunch({
 					url:'/pages/rwlist/rwlist'
 				})

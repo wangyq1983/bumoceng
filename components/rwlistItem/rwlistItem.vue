@@ -45,7 +45,8 @@
 					<view class="">{{ item.name }}</view>
 				</label>
 			</radio-group>
-			<view :class="itemcon.flag == 1 ? 'zhiliangBtn' : 'zhiliangBtn1'" @tap="zhiliangEvent">确定</view>
+			<view :class="itemcon.flag == 1 ? 'zhiliangBtn' : 'zhiliangBtn1'" @tap="zhiliangEvent" v-if="clickable">确定</view>
+			<view :class="itemcon.flag == 1 ? 'zhiliangBtn' : 'zhiliangBtn1'" v-if="(clickable == false)">确定</view>
 		</view>
 	</view>
 </template>
@@ -54,6 +55,7 @@
 export default {
 	data() {
 		return {
+			clickable:true,
 			itemcon: {},
 			zhiliangCur: null,
 			items: [
@@ -106,52 +108,66 @@ export default {
 			this.$emit('on-cdtime', e.currentTarget.dataset.time, this.itemcon.id, this.itemcon.starNumber, this.itemcon.completionSwitch);
 		},
 		async zhiliangEvent() {
+			
 			if (this.itemcon.state == 1) {
 				uni.showToast({
 					title: '任务未完成,不能评价完成质量',
 					icon: 'none',
 					duration: 1500
 				});
+				
 			} else {
-				var params = {
-					id:this.itemcon.id,
-					// completionSwitch
-					// completionCheck
-					completion:this.zhiliangCur,
-					completionCheck:true
+				//console.log('zhiliangCur is ' + this.zhiliangCur);
+				
+				if(this.zhiliangCur == null){
+					uni.showToast({
+						title:"请选择完成质量",
+						icon:'none'
+					})
+				}else{
+					this.clickable = false;
+					var params = {
+						id:this.itemcon.id,
+						// completionSwitch
+						// completionCheck
+						completion:this.zhiliangCur,
+						completionCheck:true
+					}
+					
+					await this.$api.showLoading(); // 显示loading
+					var utask = await this.$api.postData(this.$api.webapi.uTask, params);
+					await this.$api.hideLoading();
+					var zhiliangpoint;
+					if(this.zhiliangCur == 1){
+						// 优
+						zhiliangpoint = 120
+					}
+					if(this.zhiliangCur == 2){
+						// 良
+						zhiliangpoint = 100
+					}
+					if(this.zhiliangCur == 3){
+						// 中
+						zhiliangpoint = 80
+					}
+					if(this.zhiliangCur == 4){
+						// 差
+						zhiliangpoint = 50
+					}
+					
+					var realstar = Math.ceil(this.itemcon.starNumber * 0.01 * zhiliangpoint);
+					await this.$api.addExp(this.$api.expval.endtask,true);
+					await this.$api.starAdjust(realstar, '任务完成',true);
+					await this.$api.getUserinfo();
+					let cjparams = {
+						jobInfoId:this.itemcon.id,
+						thresholdTypeList:["job","completionTimeToEnd","completeDays","completionQuality"]
+					}
+					var cjlist = await this.$api.cjCheck(cjparams);
+					this.$emit('on-zhiliang', realstar, this.$api.expval.endtask,cjlist.data);
+					this.clickable = true;
 				}
 				
-				await this.$api.showLoading(); // 显示loading
-				var utask = await this.$api.postData(this.$api.webapi.uTask, params);
-				await this.$api.hideLoading();
-				var zhiliangpoint;
-				if(this.zhiliangCur == 1){
-					// 优
-					zhiliangpoint = 120
-				}
-				if(this.zhiliangCur == 2){
-					// 良
-					zhiliangpoint = 100
-				}
-				if(this.zhiliangCur == 3){
-					// 中
-					zhiliangpoint = 80
-				}
-				if(this.zhiliangCur == 4){
-					// 差
-					zhiliangpoint = 50
-				}
-				
-				var realstar = Math.ceil(this.itemcon.starNumber * 0.01 * zhiliangpoint);
-				await this.$api.addExp(this.$api.expval.endtask,true);
-				await this.$api.starAdjust(realstar, '任务完成',true);
-				await this.$api.getUserinfo();
-				let cjparams = {
-					jobInfoId:this.itemcon.id,
-					thresholdTypeList:["job","completionTimeToEnd","completeDays","completionQuality"]
-				}
-				var cjlist = await this.$api.cjCheck(cjparams);
-				this.$emit('on-zhiliang', realstar, this.$api.expval.endtask,cjlist.data);
 			}
 		},
 		delAction() {

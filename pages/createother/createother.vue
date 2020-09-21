@@ -46,7 +46,10 @@
 				(选填)
 			</view>
 		</view>
-		<view class="saveBox"><view class="saveBtn" @tap="creatzyRequest">保存</view></view>
+		<view class="saveBox" v-if="clickable"><view class="saveBtn" @tap="creatzyRequest">保存</view></view>
+		
+		<view class="saveBox" v-if="(clickable == false)"><view class="saveBtn">保存中</view></view>
+		
 	</view>
 </template>
 
@@ -66,7 +69,8 @@ export default {
 			typevalue:'',
 			isdel:false,
 			id:'',
-			editState:false
+			editState:false,
+			clickable:true
 		};
 	},
 	onLoad(options) {
@@ -229,7 +233,7 @@ export default {
 			this.newtypeshow = true
 		},
 		creatzyRequest:async function(){
-			
+			this.clickable = false;
 			let verparam = {
 				typeName:this.curtype,
 				duration:Number(this.timelength),
@@ -297,6 +301,7 @@ export default {
 			}
 			
 			setTimeout(function(){
+				this.clickable = true;
 				uni.reLaunch({
 					url:'/pages/rwlist/rwlist'
 				})

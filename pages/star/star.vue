@@ -41,7 +41,8 @@
 			</view>
 			
 		</view>
-		<view class="saveBox"><view class="saveBtn" @tap="saveEvent">确定</view></view>
+		<view class="saveBox" v-if="clickable"><view class="saveBtn" @tap="saveEvent">确定</view></view>
+		<view class="saveBox" v-if="(clickable == false)"><view class="saveBtn">变更中</view></view>
 	</view>
 </template>
 
@@ -51,7 +52,8 @@
 			return {
 				changeType:'add',
 				inputstar:'',
-				starliyou:''
+				starliyou:'',
+				clickable:true
 			}
 		},
 		methods: {
@@ -65,9 +67,11 @@
 				})
 			},
 			saveEvent:async function(){
+				var that = this;
 				var StarCount = Number(this.inputstar);
 				console.log(StarCount)
 				if(Number.isInteger(StarCount) && (StarCount !== 0)){
+					this.clickable = false;
 					var starNum = (this.changeType == 'add')?StarCount:(-Math.abs(StarCount));
 					var params = {
 						adjustCount:starNum,
@@ -85,11 +89,15 @@
 								icon:'none',
 								duration:1500
 							})
+							
 							setTimeout(function(){
+								console.log('this.clickable is');
+								that.clickable = true;
+								console.log(this.clickable)
 								uni.navigateTo({
 									url:'/pages/starhistory/starhistory'
 								})
-							},1500)
+							},1550)
 						}
 					}
 				}else{
