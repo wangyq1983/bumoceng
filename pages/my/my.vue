@@ -70,6 +70,16 @@
 					<view class="menuword">生动的视频与图文讲解，让您快速上手使用</view>
 				</view>
 			</view>
+			
+			<view class="proItem" @tap="gotoItem" data-type="lx">
+				<view class="iconbg iconlx">
+					<view class="iconlx1"><image src="/static/contact.png" mode=""></image></view>
+				</view>
+				<view class="menuinfo">
+					<view class="menutitle">联系我们</view>
+					<view class="menuword">您有任何问题或者建议，欢迎联系我们</view>
+				</view>
+			</view>
 		</view>
 	</view>
 </template>
@@ -208,6 +218,11 @@ export default {
 			if (menutype == 'study'){
 				uni.navigateTo({
 					url: '/pages/study/study'
+				});
+			}
+			if (menutype == 'lx'){
+				uni.navigateTo({
+					url: '/pages/lx/lx'
 				});
 			}
 			if (menutype == 'ph') {
@@ -399,6 +414,15 @@ export default {
 .iconph1 {
 	@extend .iconjl1;
 	background: $color-u-ph1;
+}
+.iconlx {
+	background: $color-u-cj;
+	@include rowflex;
+	justify-content: center;
+}
+.iconlx1 {
+	@extend .iconjl1;
+	background-color: #acea65;
 }
 .menuinfo {
 	@include colflex;

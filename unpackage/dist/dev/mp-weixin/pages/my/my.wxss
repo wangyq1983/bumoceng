@@ -452,7 +452,7 @@ page {
   -webkit-justify-content: center;
           justify-content: center;
 }
-.iconjl1, .iconstar1, .iconcj1, .iconph1 {
+.iconjl1, .iconstar1, .iconcj1, .iconph1, .iconlx1 {
   width: 64rpx;
   height: 64rpx;
   border-radius: 64rpx;
@@ -471,7 +471,7 @@ page {
   -webkit-justify-content: center;
           justify-content: center;
 }
-.iconjl1 image, .iconstar1 image, .iconcj1 image, .iconph1 image, .iconstar1 image, .iconcj1 image, .iconph1 image {
+.iconjl1 image, .iconstar1 image, .iconcj1 image, .iconph1 image, .iconlx1 image, .iconstar1 image, .iconcj1 image, .iconph1 image {
   width: 40rpx;
   height: 40rpx;
 }
@@ -540,6 +540,25 @@ page {
 }
 .iconph1 {
   background: #b78ef1;
+}
+.iconlx {
+  background: #80d043;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+          justify-content: center;
+}
+.iconlx1 {
+  background-color: #acea65;
 }
 .menuinfo {
   display: -webkit-box;

@@ -15,7 +15,8 @@
     "pages/honor/honor",
     "pages/edit/edit",
     "pages/phonelogin/phonelogin",
-    "pages/study/study"
+    "pages/study/study",
+    "pages/lx/lx"
   ],
   "subPackages": [],
   "window": {
@@ -50,6 +51,5 @@
   "uniStatistics": {
     "enable": false
   },
-  "usingComponents": {},
-  "sitemapLocation": "sitemap67.json"
+  "usingComponents": {}
 }

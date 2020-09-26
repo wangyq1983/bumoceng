@@ -10,7 +10,7 @@
 			<view class="usernameBox">
 				<view class="usernameWarp" @tap = "gotoEditUser">
 					<image src="/static/edit.png" mode="" class="editIcon"></image>
-					<view class="username">{{ name1 }}<text class="txtlogin" v-if="userType" @tap = "gotoLogin">【立即登录】</text></view>
+					<view class="username">{{ name1 }}<text class="txtlogin" v-if="userType" @tap.stop = "gotoLogin">【立即登录】</text></view>
 					
 				</view>
 				<view class="starBox">

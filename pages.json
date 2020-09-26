@@ -71,6 +71,10 @@
             "path" : "pages/study/study",
             "style" : {}
         }
+        ,{
+            "path" : "pages/lx/lx",
+            "style" : {}
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
