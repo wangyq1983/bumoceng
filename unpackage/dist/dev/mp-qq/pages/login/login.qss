@@ -37,6 +37,7 @@
   text-align: center;
   background: #ffce00;
   color: #fff;
+  border-radius: 8rpx;
 }
 page {
   overflow-x: hidden;
@@ -288,6 +289,7 @@ page {
   background: #ffce00;
   color: #363636;
   font-size: 32rpx;
+  border-radius: 6rpx;
 }
 .arrow {
   width: 0;
@@ -568,6 +570,7 @@ page {
   border-radius: 6rpx;
 }
 .typelogin {
+  width: 750rpx;
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
@@ -578,8 +581,19 @@ page {
   -webkit-box-align: center;
   -webkit-align-items: center;
           align-items: center;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-          justify-content: center;
+  -webkit-justify-content: space-around;
+          justify-content: space-around;
+}
+.typelogin image {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 100rpx;
+  margin-left: 15rpx;
+}
+.typelogin .txt {
+  width: 150rpx;
+  font-size: 24rpx;
+  color: #999;
+  text-align: center;
 }
 

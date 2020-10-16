@@ -280,8 +280,8 @@ export default {
 						this.createSuccess(ctask,false); 
 					}
 				}
-				
-				
+			}else{
+				this.clickable = true
 			}
 			
 		},
@@ -347,8 +347,8 @@ export default {
 	color: $color-36;
 	background: #ffffff;
 	border: 1upx solid $color-u-jl;
-	
 	@include rowflex;
+	@include borradius6;
 	justify-content: flex-start;
 }
 .typeBox.cur {
@@ -367,6 +367,7 @@ export default {
 	padding: 20upx;
 	height: 256upx;
 	color: $color-36;
+	@include borradius6;
 }
 .selectTime,
 .selectStar {
@@ -384,6 +385,7 @@ export default {
 .selectStar input {
 	width: 180upx;
 	border: 2upx solid $color-u-jl;
+	@include borradius6;
 }
 .selectStar {
 }

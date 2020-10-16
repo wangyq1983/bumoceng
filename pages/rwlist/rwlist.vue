@@ -3,6 +3,7 @@
 		<mask :showmask="cdtime" @on-close="closemask">
 			<view class="cdlayer" v-if="nowtask">
 				<uniCountdown
+					@on-cancel="timecancal"
 					@on-complete="timed"
 					:showmask="cdtime"
 					:show-day="false"
@@ -10,6 +11,8 @@
 					:hour="hourTask"
 					:minute="minuteTask"
 					:second="secondTask"
+					:startT = "startTime"
+					:isoverTime = "isoverTime"
 					ref="countDown"
 				></uniCountdown>
 			</view>
@@ -48,6 +51,9 @@
 						<view class="arrow"></view>
 					</view>
 				</picker>
+				<!-- <view class="">
+					点击进入朋友圈分享页面
+				</view> -->
 				<!-- <view class="" @tap = "clearsign">
 				取消签到
 			</view>
@@ -73,6 +79,7 @@
 			<view v-if="isEmpty == 1"><nodata wordinfo="没有任务哦" type="1"></nodata></view>
 			<view v-if="isEnd == true"><endLine></endLine></view>
 		</view>
+		<!-- #ifdef MP-WEIXIN || H5 -->
 		<view class="studyBar" v-if="showStudy">
 			<view class="txt" @tap = "gotoStudy">
 				 快速上手使用指南
@@ -81,7 +88,9 @@
 				×
 			</view>
 		</view>
-		<view class="createBox" style="border-top: 10upx solid #e6e6e6;">
+		<!-- #endif -->
+		
+		<view class="createBox" style="border-top: 4upx solid #a1a1a1;">
 			<view class="createTask zuoye" @tap="gotoCreate" data-type="zuoye">
 				<view class="taskbg zuoye1"></view>
 				<view class="taskInfo">
@@ -131,7 +140,9 @@ export default {
 			enddate: '',
 			isEmpty: 0,
 			isEnd: false,
-			showStudy:2
+			showStudy:2,
+			startTime:'',
+			isoverTime:0
 		};
 	},
 	computed: {
@@ -195,13 +206,11 @@ export default {
 	},
 	// onShareTimeline: async function(){
 	// 	console.log('分享到朋友圈');
-	// 	console.log(this)
-	// 	let cjparams = {
-	// 		jobInfoId:0,
-	// 		thresholdTypeList:["share"]
-	// 	}
-	// 	var cjResult = await this.$api.cjCheck(cjparams);
-	// 	this.renderCjlist(cjResult);
+	// 	return {
+	// 	    title: "测试小程序朋友圈分享",
+	// 	    query: "userId=10679&dateTime=2020-08-23",
+	// 	    imageUrl: "/static/shareImg1.jpg"
+	// 	  }
 	// },
 	onShareAppMessage: async function() {
 		console.log('分享');
@@ -448,20 +457,34 @@ export default {
 			this.taskSuccess = true;
 		},
 		formatTime: function(tasktime) {
-			// tasktime 任务计时默认以分钟计算
-			this.secondTask = 0;
-			if (tasktime > 60) {
-				this.hourTask = Math.floor(tasktime / 60);
-				this.minuteTask = tasktime % 60;
-				this.showhour = true;
-			} else {
-				this.hourTask = 0;
-				this.minuteTask = tasktime;
-				this.showhour = false;
+			console.log('tasktime is '+tasktime)
+			
+			if(tasktime > 0){
+				this.isoverTime = 0;
+				if (tasktime >3600) {
+					this.hourTask = parseInt(Math.floor(tasktime / 3600));
+					console.log('hour is'+ this.hourTask)
+					
+					this.minuteTask = parseInt((tasktime % 3600)/60) ;
+					console.log('min is'+ this.minuteTask)
+					this.secondTask = (tasktime % 3600)%60;
+					console.log('sec is'+ this.secondTask)
+					this.showhour = true;
+				} else {
+					this.hourTask = 0;
+					this.minuteTask = parseInt(tasktime/60);
+					console.log('min is'+ this.minuteTask)
+					this.secondTask = tasktime%60;
+					console.log('sec is'+ this.secondTask)
+					this.showhour = false;
+				}
+			}else{
+				this.isoverTime =  Math.abs(tasktime);
+				// var tasktime = Math.abs(tasktime);
 			}
 		},
 		//子组件点击开始任务触发
-		countTime: function(cdtime, taskid, star, ifswitch) {
+		countTime: function(cdtime, taskid, star, ifswitch,startTime) {
 			this.cdtime = true;
 			// console.log(cdtime);
 			// console.log(taskid)
@@ -469,6 +492,7 @@ export default {
 			this.star = star;
 			this.ifswitch = ifswitch;
 			this.signIn = false;
+			this.startTime = startTime;
 			this.formatTime(cdtime);
 		},
 		// 关闭计时弹层
@@ -488,7 +512,7 @@ export default {
 				this.cdtime = false;
 				this.nowtask = '';
 			} else {
-				this.$refs.countDown.audiostop();
+				// this.$refs.countDown.audiostop();
 				this.showhour = false;
 				this.cdtime = false;
 				this.nowtask = '';
@@ -497,6 +521,23 @@ export default {
 				this.init();
 			}
 		},
+		
+		// 任务取消
+		timecancal: async function(){
+			var params = {
+				id: this.nowtask,
+				state:1
+			}
+			await this.$api.showLoading(); // 显示loading
+			var utask = await this.$api.postData(this.$api.webapi.uTask, params);
+			await this.$api.hideLoading(); // 等待请求数据成功后，隐藏loading
+			this.signIn = false;
+			this.showhour = false;
+			this.cdtime = false;
+			this.nowtask = '';
+			this.closemask();
+		},
+		
 		// 任务完成
 		timed: async function(minute, state) {
 			// console.log('秒数');
@@ -608,6 +649,7 @@ export default {
 		height: 60upx;
 		line-height: 60upx;
 		border: 4upx solid #848484;
+		border-radius: 10upx;
 		padding: 0 20upx;
 		@include rowflex;
 		justify-content: space-between;
@@ -672,6 +714,8 @@ export default {
 	width: 346upx;
 	height: 116upx;
 	position: relative;
+	border-radius:10upx;
+	overflow: hidden;
 }
 .taskbg {
 	width: 0;

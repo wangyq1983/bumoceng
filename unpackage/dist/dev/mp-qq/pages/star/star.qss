@@ -37,6 +37,7 @@
   text-align: center;
   background: #ffce00;
   color: #fff;
+  border-radius: 8rpx;
 }
 page {
   overflow-x: hidden;
@@ -288,6 +289,7 @@ page {
   background: #ffce00;
   color: #363636;
   font-size: 32rpx;
+  border-radius: 6rpx;
 }
 .arrow {
   width: 0;
@@ -422,6 +424,7 @@ page {
   background: #f7f7f7;
   margin-right: 20rpx;
   padding: 3rpx 15rpx;
+  border-radius: 6rpx;
 }
 .current {
   background: #ffce00;
@@ -456,11 +459,13 @@ page {
   border: 2rpx solid #ffce00;
   margin-left: 10rpx;
   width: 120rpx;
+  border-radius: 6rpx;
 }
 .starliyou textarea {
   width: 660rpx;
   padding: 10rpx;
   border: 2rpx solid #ffce00;
+  border-radius: 6rpx;
 }
 .starinfo {
   padding: 6rpx 20rpx;

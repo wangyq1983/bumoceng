@@ -67,6 +67,15 @@ $uni-opacity-disabled: 0.3; // 组件禁用态的透明度
 @mixin warpwidth {
 	width: 690upx;
 }
+@mixin borradius6{
+	border-radius: 6upx;
+}
+@mixin borradius8{
+	border-radius:8upx;
+}
+@mixin borradius10{
+	border-radius: 10upx;
+}
 /* 内边距 */
 @mixin warppadding {
 	padding: 30upx;
@@ -103,6 +112,7 @@ $uni-opacity-disabled: 0.3; // 组件禁用态的透明度
 	text-align: center;
 	background: $color-m;
 	color: #fff;
+	border-radius: 8upx;
 }
 
 page {
@@ -277,6 +287,7 @@ page {
 	background: $color-m;
 	color: $color-36;
 	font-size: $fontsize-32;
+	@include borradius6;
 }
 
 .arrow{

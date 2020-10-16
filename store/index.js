@@ -15,7 +15,7 @@ const store = new Vuex.Store({
 		userid:"",
 		level:0,  // 等级
 		progress:0,  // 经验进度
-		starNum:0,  // 星数
+		starNum:null,  // 星数
 		cjNum:0,  // 成就点数
 		levelupdata:false,
 		honorupdata:false,

@@ -37,6 +37,7 @@
   text-align: center;
   background: #ffce00;
   color: #fff;
+  border-radius: 8rpx;
 }
 page {
   overflow-x: hidden;
@@ -288,6 +289,7 @@ page {
   background: #ffce00;
   color: #363636;
   font-size: 32rpx;
+  border-radius: 6rpx;
 }
 .arrow {
   width: 0;
@@ -419,6 +421,7 @@ page {
   height: 60rpx;
   line-height: 60rpx;
   border: 4rpx solid #848484;
+  border-radius: 10rpx;
   padding: 0 20rpx;
   display: -webkit-box;
   display: -webkit-flex;
@@ -520,6 +523,8 @@ page {
   width: 346rpx;
   height: 116rpx;
   position: relative;
+  border-radius: 10rpx;
+  overflow: hidden;
 }
 .taskbg {
   width: 0;

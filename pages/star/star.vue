@@ -81,6 +81,7 @@
 					// var starRes = await this.$api.starAdjust(starNum,this.starliyou);
 					var starRes = await this.$api.postData(this.$api.webapi.star,params);
 					await this.$api.hideLoading(); // 等待请求数据成功后，隐藏loading
+					this.clickable = true;
 					if (this.$api.reshook(starRes, this.$mp.page.route)) {
 						if(starRes.resultCode == 0){
 							await this.$api.getUserinfo()
@@ -92,14 +93,17 @@
 							
 							setTimeout(function(){
 								console.log('this.clickable is');
-								that.clickable = true;
+								
 								console.log(this.clickable)
 								uni.navigateTo({
 									url:'/pages/starhistory/starhistory'
 								})
 							},1550)
+						}else{
+							
 						}
 					}
+					
 				}else{
 					uni.showToast({
 						title:'星数量请输入整数',
@@ -133,6 +137,7 @@
 	background: $color-f7;
 	margin-right:20upx;
 	padding:3upx 15upx;
+	@include borradius6;
 }
 .current{
 	background: $color-m;
@@ -156,6 +161,7 @@
 	border: 2upx solid $color-m;
 	margin-left: 10upx;
 	width:120upx;
+	@include borradius6;
 }
 .starliyou{
 	
@@ -164,6 +170,7 @@
 	width:660upx;
 	padding:10upx;
 	border: 2upx solid $color-m;
+	@include borradius6;
 }
 
 .starinfo{

@@ -37,6 +37,7 @@
   text-align: center;
   background: #ffce00;
   color: #fff;
+  border-radius: 8rpx;
 }
 page {
   overflow-x: hidden;
@@ -288,6 +289,7 @@ page {
   background: #ffce00;
   color: #363636;
   font-size: 32rpx;
+  border-radius: 6rpx;
 }
 .arrow {
   width: 0;

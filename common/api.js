@@ -31,6 +31,9 @@ var webapi = {
 	// 任务列表
 	TaskList: webhost + 'job/list',
 
+	// 任务开始动作
+	TaskStart: webhost + 'job/start',
+
 	// 任务结束动作
 	TaskEnd: webhost + 'job/end',
 	
@@ -326,6 +329,16 @@ const strbool = (str) =>{
   }
 }
 
+// 星变化返回true or false
+const startPd = (num) =>{
+	
+	if(num == null){
+		return false;
+	}else{
+		return true
+	}
+}
+
 // 获取用户信息
 const getUserinfo = async() => {
 	// 获取用户信息
@@ -501,7 +514,7 @@ const hideLoading = () => {
 
 const checkCode = (code) => {
 	// console.log(code);
-	if (code == 0) {
+	if (code == 0 ) {
 		return true;
 	} else {
 		return false
@@ -562,6 +575,51 @@ const secToTime = (sec) =>{
 	}
 }
 
+/**
+ * 年月日时分秒 转化为 时分秒
+ */
+const timeSwitch = (time) =>{
+	if(time !== 1){
+		var timestr = new Array();
+		var timestr = time.split(" ");
+		return timestr[1]
+	}
+}
+
+/**
+ * 年月日时分秒时间转换为时间戳
+ */
+const switchTimestamp = (time) => {
+	return new Date(time).getTime()
+}
+
+/**
+ * 返回剩余任务时间进入计时画面 
+ * duration 需要的时长
+ * beginTime 开始时间
+ */
+const surplusTime = (duration,beginTime) => {
+	if(beginTime !== 1){
+		console.log('开始时间戳')
+		var beginStamp = switchTimestamp(beginTime); // 开始时间戳
+		console.log(beginStamp);
+		
+		console.log('当前时间戳')
+		var nowStamp = new Date().getTime(); // 当前时间戳
+		console.log(nowStamp);
+		var surplusSec = (duration*60) - parseInt((nowStamp - beginStamp)/1000)
+		// console.log('预算时间'+duration*60);
+		// console.log('使用时间'+parseInt((nowStamp - beginStamp)/1000));
+		// console.log('surplusSec is ---' + surplusSec);
+		return surplusSec
+	}
+}
+
+
+/**
+ * 判断后台执行的任务是否已经超时
+ */
+
 
 /** 
  * new Date() ---> 转化为 年 月 日 时 分 秒
@@ -602,5 +660,8 @@ export default {
 	honorTitle,
 	cjCheck,
 	strbool,
-	honorCorres
+	honorCorres,
+	timeSwitch,
+	surplusTime,
+	startPd
 }

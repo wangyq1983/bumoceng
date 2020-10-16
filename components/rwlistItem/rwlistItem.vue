@@ -2,9 +2,13 @@
 	<view class="rwItem">
 		<view class="TitleBox">
 			<view v-if="itemcon.state == 1 && itemcon.flag == 1" class="rwState ongoing"></view>
+			<view v-if="itemcon.state == 2 && surplusTime > 0 && itemcon.flag == 1" class="rwState goon"></view>
+			<view v-if="itemcon.state == 2 && surplusTime <= 0 && itemcon.flag == 1" class="rwState onfail"></view>
 			<view v-if="itemcon.state == 3 && itemcon.flag == 1" class="rwState onend"></view>
 			<view v-if="itemcon.state == 4 && itemcon.flag == 1" class="rwState onfail"></view>
 			<view v-if="itemcon.state == 1 && itemcon.flag == 2" class="rwState ongoing1"></view>
+			<view v-if="itemcon.state == 2 && surplusTime > 0 && itemcon.flag == 2" class="rwState goon1"></view>
+			<view v-if="itemcon.state == 2 && surplusTime <= 0 && itemcon.flag == 2" class="rwState onfail"></view><strong></strong>
 			<view v-if="itemcon.state == 3 && itemcon.flag == 2" class="rwState onend1"></view>
 			<view v-if="itemcon.state == 4 && itemcon.flag == 2" class="rwState onfail1"></view>
 			<view :class="itemcon.flag == 1 ? 'rwType':'rwType1'">{{ itemcon.typeName }}</view>
@@ -16,9 +20,11 @@
 		</view>
 		<view class="rwInfo" v-if="itemcon.jobDescription">{{ itemcon.jobDescription }}</view>
 		<view class="rwAction">
-			<view v-if="itemcon.state == 1 && itemcon.flag == 1" class="rwBtn" @tap="beginTask" :data-time="itemcon.duration"><view class="startBtn">开始任务</view></view>
-			<view v-if="itemcon.state == 1 && itemcon.flag == 2" class="rwBtn" @tap="beginTask" :data-time="itemcon.duration"><view class="startBtn1">开始任务</view></view>
+			<view v-if="itemcon.state == 1 && itemcon.flag == 1" class="rwBtn" @tap="beginTask" :data-time="itemcon.duration*60"><view class="startBtn">开始任务</view></view>
+			<view v-if="itemcon.state == 1 && itemcon.flag == 2" class="rwBtn" @tap="beginTask" :data-time="itemcon.duration*60"><view class="startBtn1">开始任务</view></view>
 			
+			<view class="rwBtn" v-if="itemcon.state == 2 && (surplusTime > 0)" @tap="goonTask" :data-time="surplusTime"><view class="taskgoon">任务进行中</view></view>
+			<view class="rwBtn" v-if="itemcon.state == 2 && (surplusTime <= 0)"><view class="taskover">任务已超时</view></view>
 			<view class="rwBtn" v-if="itemcon.state == 3"><view class="taskover">任务已完成</view></view>
 			<view class="rwBtn" v-if="itemcon.state == 4"><view class="taskover">任务已失败</view></view>
 			<view class="timebox">
@@ -33,6 +39,12 @@
 				<view v-if="itemcon.state == 4" class="rwTime">
 					实际完成时间
 					<text>{{ realtime }}</text>
+				</view>
+				<view v-if="itemcon.state == 2" class="rwTime">
+					开始时间:
+					<text>{{ shortTime }}</text>
+					<!-- 剩余时间：
+					<text>{{surplusTime}}</text> -->
 				</view>
 			</view>
 		</view>
@@ -89,7 +101,19 @@ export default {
 	computed: {
 		realtime() {
 			return this.$api.secToTime(this.itemcon.realDuration);
+		},
+		shortTime(){
+			return this.$api.timeSwitch(this.itemcon.beginDate?this.itemcon.beginDate:1)
+		},
+		surplusTime:{
+			get:function(){
+				return this.$api.surplusTime(this.itemcon.duration,this.itemcon.beginDate?this.itemcon.beginDate:1)
+			},
+			set:function(){
+				
+			}
 		}
+		
 	},
 	methods: {
 		radioChange(evt) {
@@ -102,10 +126,23 @@ export default {
 				}
 			}
 		},
-		beginTask(e) {
+		async beginTask(e) {
 			console.log(this);
 			console.log(e.currentTarget.dataset.time);
-			this.$emit('on-cdtime', e.currentTarget.dataset.time, this.itemcon.id, this.itemcon.starNumber, this.itemcon.completionSwitch);
+			
+			var params = {
+				id:this.itemcon.id
+			}
+			await this.$api.showLoading(); // 显示loading
+			var taskS = await this.$api.postData(this.$api.webapi.TaskStart, params);
+			await this.$api.hideLoading();
+			var beginTime = new Date().getTime(); // 获取任务开始时间戳
+			this.$emit('on-cdtime', e.currentTarget.dataset.time, this.itemcon.id, this.itemcon.starNumber, this.itemcon.completionSwitch,beginTime);
+		},
+		goonTask(e) {
+			var surplusTime1 = this.$api.surplusTime(this.itemcon.duration,this.itemcon.beginDate?this.itemcon.beginDate:1);
+			var beginTime = new Date(this.itemcon.beginDate?this.itemcon.beginDate:1).getTime();
+			this.$emit('on-cdtime', surplusTime1, this.itemcon.id, this.itemcon.starNumber, this.itemcon.completionSwitch,beginTime);
 		},
 		async zhiliangEvent() {
 			
@@ -208,7 +245,6 @@ export default {
 					url:"/pages/createother/createother?"+this.$api.encodeData(params)
 				})
 			}
-			
 		},
 		async deltask() {
 			var params = {
@@ -228,7 +264,7 @@ export default {
 .rwItem {
 	@include warpwidth;
 	@include warppadding;
-	border-bottom: 10upx solid $color-bor;
+	border-bottom: 10upx solid #c7c7c7;
 }
 .TitleBox {
 	@include warpwidth;
@@ -240,6 +276,14 @@ export default {
 .rwState {
 	width: 50upx;
 	height: 50upx;
+}
+.goon{
+	background-image: url(/static/goon.png);
+	background-size: 50upx 50upx;
+}
+.goon1{
+	background-image: url(/static/goon1.png);
+	background-size: 50upx 50upx;
 }
 .ongoing {
 	background-image: url(/static/tanhao.png);
@@ -304,6 +348,7 @@ export default {
 	padding: 15upx;
 	box-sizing: border-box;
 	background: $color-bor;
+	border-radius: 10upx;
 	color: $color-00;
 	font-size: $fontsize-28;
 }
@@ -317,6 +362,9 @@ export default {
 .rwBtn {
 	font-size: $fontsize-30;
 }
+.rwBtn > view{
+	border-radius: 8upx;
+}
 .startBtn {
 	background: $color-m;
 	padding: 10upx 20upx;
@@ -329,6 +377,11 @@ export default {
 .taskover {
 	background: $color-36;
 	color: $color-m;
+	padding: 10upx 20upx;
+}
+.taskgoon{
+	background-color: #f75900;
+	color: #fff;
 	padding: 10upx 20upx;
 }
 .endBtn {

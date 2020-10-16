@@ -13,7 +13,10 @@
     "pages/starhistory/starhistory",
     "pages/login/login",
     "pages/honor/honor",
-    "pages/edit/edit"
+    "pages/edit/edit",
+    "pages/phonelogin/phonelogin",
+    "pages/study/study",
+    "pages/lx/lx"
   ],
   "window": {
     "navigationBarTextStyle": "black",

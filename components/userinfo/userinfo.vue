@@ -79,7 +79,7 @@ export default {
 			return this.$store.state.progress ? this.$store.state.progress : uni.getStorageSync('progress')
 		},
 		star1:function(){
-			return this.$store.state.starNum? this.$store.state.starNum : uni.getStorageSync('starNum')
+			return this.$api.startPd(this.$store.state.starNum)? this.$store.state.starNum : uni.getStorageSync('starNum')
 		},
 		honor1:function(){
 			return this.$store.state.honor? this.$store.state.honor : uni.getStorageSync('honor')

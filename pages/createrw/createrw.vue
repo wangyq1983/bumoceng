@@ -336,6 +336,8 @@ export default {
 					}
 				}
 				
+			}else{
+				this.clickable = true
 			}
 		},
 		createSuccess(res,editstate){
@@ -401,9 +403,9 @@ export default {
 	color: $color-36;
 	background: #ffffff;
 	border: 1upx solid $color-mbg;
-	
 	@include rowflex;
 	justify-content: flex-start;
+	@include borradius6;
 }
 .typeBox.cur {
 	background: $color-mbg;
@@ -421,6 +423,8 @@ export default {
 	padding: 20upx;
 	height: 256upx;
 	color: $color-36;
+	@include borradius6;
+	
 }
 .selectTime,
 .selectStar {
@@ -438,6 +442,7 @@ export default {
 .selectStar input {
 	width: 180upx;
 	border: 2upx solid $color-m;
+	@include borradius6;
 }
 .selectStar {
 }
@@ -476,6 +481,7 @@ export default {
 			margin: 70upx;
 			border: 2upx solid $color-m;
 			padding:10upx;
+			@include borradius6;
 		}
 	}
 	.eventBtn{
@@ -486,6 +492,7 @@ export default {
 		background: $color-m;
 		color: $color-36;
 		font-size: $fontsize-32;
+		@include borradius8;
 	}
 }
 .zhilianginfo{

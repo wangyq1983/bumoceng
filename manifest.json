@@ -126,7 +126,8 @@
     "mp-weixin" : {
         "appid" : "wx68fa52964aa56d13",
         "setting" : {
-            "urlCheck" : false
+            "urlCheck" : false,
+            "minified" : true
         },
         "usingComponents" : true,
         "requiredBackgroundModes" : [ "audio" ],
@@ -150,6 +151,10 @@
         "usingComponents" : true,
         "uniStatistics" : {
             "enable" : false
+        },
+        "appid" : "tta851deec376a49d2",
+        "setting" : {
+            "minified" : true
         }
     },
     "uniStatistics" : {
@@ -166,7 +171,8 @@
             "enable" : false
         },
         "setting" : {
-            "urlCheck" : false
+            "urlCheck" : false,
+            "minified" : true
         },
         "appid" : "1110960522"
     }

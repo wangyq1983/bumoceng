@@ -37,6 +37,7 @@
   text-align: center;
   background: #ffce00;
   color: #fff;
+  border-radius: 8rpx;
 }
 page {
   overflow-x: hidden;
@@ -288,6 +289,7 @@ page {
   background: #ffce00;
   color: #363636;
   font-size: 32rpx;
+  border-radius: 6rpx;
 }
 .arrow {
   width: 0;
@@ -450,6 +452,7 @@ page {
   -webkit-box-pack: start;
   -webkit-justify-content: flex-start;
           justify-content: flex-start;
+  border-radius: 6rpx;
 }
 .typeBox.cur {
   background: #ffb123;
@@ -467,6 +470,7 @@ page {
   padding: 20rpx;
   height: 256rpx;
   color: #363636;
+  border-radius: 6rpx;
 }
 .selectTime,
 .selectStar {
@@ -493,6 +497,7 @@ page {
 .selectStar input {
   width: 180rpx;
   border: 2rpx solid #ffce00;
+  border-radius: 6rpx;
 }
 .zhiliangSwitch {
   width: 690rpx;
@@ -553,6 +558,7 @@ page {
   margin: 70rpx;
   border: 2rpx solid #ffce00;
   padding: 10rpx;
+  border-radius: 6rpx;
 }
 .layerCon .eventBtn {
   width: 300rpx;
@@ -562,6 +568,7 @@ page {
   background: #ffce00;
   color: #363636;
   font-size: 32rpx;
+  border-radius: 8rpx;
 }
 .zhilianginfo {
   margin: 10rpx 30rpx;

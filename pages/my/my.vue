@@ -59,27 +59,29 @@
 					<view class="menuword">珍惜时间，提高效率，解锁成就！</view>
 				</view>
 			</view>
+			<!-- #ifdef MP-WEIXIN || H5 -->
+				<!-- 快速上手 -->
+				<view class="proItem" @tap="gotoItem" data-type="study">
+					<view class="iconbg iconjl">
+						<view class="iconjl1"><image src="/static/study.png" mode=""></image></view>
+					</view>
+					<view class="menuinfo">
+						<view class="menutitle">新手教程</view>
+						<view class="menuword">生动的视频与图文讲解，让您快速上手使用</view>
+					</view>
+				</view>
+				
+				<view class="proItem" @tap="gotoItem" data-type="lx">
+					<view class="iconbg iconlx">
+						<view class="iconlx1"><image src="/static/contact.png" mode=""></image></view>
+					</view>
+					<view class="menuinfo">
+						<view class="menutitle">联系我们</view>
+						<view class="menuword">您有任何问题或者建议，欢迎联系我们</view>
+					</view>
+				</view>
+			<!-- #endif -->
 			
-			<!-- 快速上手 -->
-			<view class="proItem" @tap="gotoItem" data-type="study">
-				<view class="iconbg iconjl">
-					<view class="iconjl1"><image src="/static/study.png" mode=""></image></view>
-				</view>
-				<view class="menuinfo">
-					<view class="menutitle">新手教程</view>
-					<view class="menuword">生动的视频与图文讲解，让您快速上手使用</view>
-				</view>
-			</view>
-			
-			<view class="proItem" @tap="gotoItem" data-type="lx">
-				<view class="iconbg iconlx">
-					<view class="iconlx1"><image src="/static/contact.png" mode=""></image></view>
-				</view>
-				<view class="menuinfo">
-					<view class="menutitle">联系我们</view>
-					<view class="menuword">您有任何问题或者建议，欢迎联系我们</view>
-				</view>
-			</view>
 		</view>
 	</view>
 </template>

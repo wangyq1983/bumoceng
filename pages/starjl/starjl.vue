@@ -281,9 +281,11 @@ export default {
 }
 .isshixian {
 	background: $color-m;
+	@include borradius6;
 }
 .shixianend {
 	background-color: #bebebe;
+	@include borradius6;
 }
 .addxyBox{
 	width:750upx;
@@ -342,6 +344,7 @@ export default {
 		font-size: $fontsize-28;
 		margin-bottom: 10upx;
 		color: $color-36;
+		@include borradius6;
 	}
 	textarea::-webkit-input-placeholder {
 		color: $color-bb;
@@ -361,6 +364,7 @@ export default {
 			width: 120upx;
 			border: 2upx solid $color-m;
 			margin-left: 20upx;
+			@include borradius6;
 		}
 	}
 }

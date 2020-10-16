@@ -37,6 +37,7 @@
   text-align: center;
   background: #ffce00;
   color: #fff;
+  border-radius: 8rpx;
 }
 page {
   overflow-x: hidden;
@@ -288,6 +289,7 @@ page {
   background: #ffce00;
   color: #363636;
   font-size: 32rpx;
+  border-radius: 6rpx;
 }
 .arrow {
   width: 0;
@@ -496,9 +498,11 @@ page {
 }
 .isshixian {
   background: #ffce00;
+  border-radius: 6rpx;
 }
 .shixianend {
   background-color: #bebebe;
+  border-radius: 6rpx;
 }
 .addxyBox {
   width: 750rpx;
@@ -569,6 +573,7 @@ page {
   font-size: 28rpx;
   margin-bottom: 10rpx;
   color: #363636;
+  border-radius: 6rpx;
 }
 .crewardLayer textarea::-webkit-input-placeholder {
   color: #bbbbbb;
@@ -600,6 +605,7 @@ page {
   width: 120rpx;
   border: 2rpx solid #ffce00;
   margin-left: 20rpx;
+  border-radius: 6rpx;
 }
 .tipinfo {
   color: #bbbbbb;

@@ -126,6 +126,32 @@
 	margin: 5rpx;
 	text-align: center;
 }
+.taskbtnWarp.data-v-6cd74fee{
+	width:500rpx;
+	height: 80rpx;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-box-orient: horizontal;
+	-webkit-box-direction: normal;
+	-webkit-flex-direction: row;
+	        flex-direction: row;
+	-webkit-box-pack: justify;
+	-webkit-justify-content: space-between;
+	        justify-content: space-between;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	        align-items: center;
+	margin-top: 60rpx;
+}
+.taskcal.data-v-6cd74fee{
+	width: 180rpx;
+	height:72rpx;
+	line-height: 72rpx;
+	background: #363636;
+	color: #ffce00;
+	text-align: center;
+}
 .taskendBtn.data-v-6cd74fee {
 	width: 200rpx;
 	height: 80rpx;
@@ -133,7 +159,6 @@
 	text-align: center;
 	background: #ffce00;
 	color: #363636;
-	margin-top: 60rpx;
 }
 .timeout.data-v-6cd74fee {
 	display: -webkit-box;

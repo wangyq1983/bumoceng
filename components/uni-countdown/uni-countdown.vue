@@ -1,6 +1,6 @@
 <template>
 	<view class="uniwarp">
-		<view :class="musicOn == true ? 'musicBox switchOn rotate' : 'musicBox switchOff'" @tap="musicEvent"></view>
+		<!-- <view :class="musicOn == true ? 'musicBox switchOn rotate' : 'musicBox switchOff'" @tap="musicEvent"></view> -->
 		<view class="timeCir">
 			<view class="uni-countdown">
 				<text v-if="showDay" :style="{ color: color }" class="uni-countdown__number">{{ d }}</text>
@@ -17,8 +17,14 @@
 				<view class="">超时 {{ timeoutSeconds }} 秒</view>
 			</view>
 		</view>
-
-		<view class="taskendBtn" @tap="taskover">{{ txtBtn }}</view>
+		<view class="taskbtnWarp">
+			<view class="taskendBtn" @tap="taskover">{{ txtBtn }}</view>
+			<view class="taskcal" @tap="taskcal">
+				任务取消
+			</view>
+		</view>
+		
+		
 	</view>
 </template>
 <script>
@@ -38,7 +44,7 @@
  * @event {Function} timeup 倒计时时间到触发事件
  * @example <uni-countdown :day="1" :hour="1" :minute="12" :second="40"></uni-countdown>
  */
-const innerAudioContext = uni.getBackgroundAudioManager();
+// const innerAudioContext = uni.getBackgroundAudioManager();
 export default {
 	name: 'UniCountdown',
 	props: {
@@ -85,6 +91,12 @@ export default {
 		second: {
 			type: Number,
 			default: 0
+		},
+		startT:{
+			type:Number
+		},
+		isoverTime:{
+			type:Number
 		}
 	},
 	data() {
@@ -135,43 +147,43 @@ export default {
 		clearInterval(this.timer);
 	},
 	methods: {
-		musicEvent: function() {
-			this.musicOn = !this.musicOn;
-			if (this.musicOn == true) {
-				this.audioplay();
-			}
-			if (this.musicOn == false) {
-				this.audiostop();
-			}
-		},
-		audioplay: function() {
-			innerAudioContext.title = '作业不磨蹭';
-			innerAudioContext.src = 'https://task.vsclouds.com/music/clock2.mp3';
-			//innerAudioContext.src = 'https://jielongtest.vsclouds.com/music/clock2.mp3';
-			innerAudioContext.onPlay(() => {
-				//可以播放事件
-				console.log('开始播放');
-				//innerAudioContext.play()
-				//this.playing = !innerAudioContext.paused;//查看是否可以自动播放
-			});
-			innerAudioContext.onError(res => {
-				console.log(res.errMsg);
-				console.log(res.errCode);
-			});
-			innerAudioContext.onEnded(() => {
-				console.log('播放结束');
-				// innerAudioContext.seek(2);
-				console.log('重新开始');
-				innerAudioContext.src = 'https://task.vsclouds.com/music/clock2.mp3';
-				//innerAudioContext.src = 'https://jielongtest.vsclouds.com/music/clock2.mp3';
-				//innerAudioContext.play()
-			});
-		},
-		audiostop: function() {
-			console.log('audiostop');
-			console.log(innerAudioContext);
-			innerAudioContext.stop();
-		},
+		// musicEvent: function() {
+		// 	this.musicOn = !this.musicOn;
+		// 	if (this.musicOn == true) {
+		// 		this.audioplay();
+		// 	}
+		// 	if (this.musicOn == false) {
+		// 		this.audiostop();
+		// 	}
+		// },
+		// audioplay: function() {
+		// 	innerAudioContext.title = '作业不磨蹭';
+		// 	innerAudioContext.src = 'https://task.vsclouds.com/music/clock2.mp3';
+		// 	//innerAudioContext.src = 'https://jielongtest.vsclouds.com/music/clock2.mp3';
+		// 	innerAudioContext.onPlay(() => {
+		// 		//可以播放事件
+		// 		console.log('开始播放');
+		// 		//innerAudioContext.play()
+		// 		//this.playing = !innerAudioContext.paused;//查看是否可以自动播放
+		// 	});
+		// 	innerAudioContext.onError(res => {
+		// 		console.log(res.errMsg);
+		// 		console.log(res.errCode);
+		// 	});
+		// 	innerAudioContext.onEnded(() => {
+		// 		console.log('播放结束');
+		// 		// innerAudioContext.seek(2);
+		// 		console.log('重新开始');
+		// 		innerAudioContext.src = 'https://task.vsclouds.com/music/clock2.mp3';
+		// 		//innerAudioContext.src = 'https://jielongtest.vsclouds.com/music/clock2.mp3';
+		// 		//innerAudioContext.play()
+		// 	});
+		// },
+		// audiostop: function() {
+		// 	console.log('audiostop');
+		// 	console.log(innerAudioContext);
+		// 	innerAudioContext.stop();
+		// },
 		toSeconds(day, hours, minutes, seconds) {
 			return day * 60 * 60 * 24 + hours * 60 * 60 + minutes * 60 + seconds;
 		},
@@ -196,27 +208,30 @@ export default {
 				content: '您确定已经完成任务了吗？',
 				success(res) {
 					if (res.confirm) {
-						_this.audiostop();
+						// _this.audiostop();
+						
+						var nowTime = parseInt((new Date().getTime() - _this.startT) / 1000);
+						
 						if (_this.timeout) {
 							// 如果超时
 							clearInterval(_this.timeouter);
 							let allDuration = _this.toSeconds(0, _this.hour, _this.minute, _this.second) + _this.timeoutSeconds;
 							console.log(allDuration);
-							_this.$emit('on-complete', allDuration, 4);
+							_this.$emit('on-complete', nowTime, 4);
+							
 						} else {
+							
 							// 规定时间内完成
-
 							_this.timeOver();
 							console.log('经历秒数是');
 							console.log('hour is' + _this.h + 'minute is' + _this.i + 'seconds is' + _this.s);
-
 							console.log(_this.toSeconds(0, _this.hour, _this.minute, _this.second));
 							console.log('-');
 							console.log(_this.toSeconds(0, _this.h, _this.i, _this.s));
 							console.log('=');
 							let realDuration = _this.toSeconds(0, _this.hour, _this.minute, _this.second) - _this.toSeconds(0, _this.h, _this.i, _this.s);
 							console.log(realDuration);
-							_this.$emit('on-complete', realDuration >= 0 ? realDuration : 0, 3);
+							_this.$emit('on-complete', nowTime >= 0 ? nowTime : 0, 3);
 						}
 					} else if (res.cancel) {
 						console.log('用户点击取消');
@@ -224,7 +239,24 @@ export default {
 				}
 			});
 		},
-
+		
+		// 取消计时
+		taskcal(){
+			var _this = this;
+				uni.showModal({
+					title: '提示',
+					content: '您确定要取消任务吗？',
+					success(res) {
+						if (res.confirm) {
+							// _this.audiostop();
+							_this.$emit('on-cancel');
+						} else if (res.cancel) {
+							console.log('用户点击取消');
+						}
+					}
+				});
+			
+		},
 		countDown() {
 			let seconds = this.seconds;
 			let [day, hour, minute, second] = [0, 0, 0, 0];
@@ -259,20 +291,27 @@ export default {
 			}, 1000);
 		},
 		startData() {
-			this.seconds = this.toSeconds(this.day, this.hour, this.minute, this.second);
-			if (this.seconds <= 0) {
-				return;
-			}
-			this.audioplay();
-			this.countDown();
-			this.timer = setInterval(() => {
-				this.seconds--;
-				if (this.seconds < 0) {
-					this.timeUp();
+			if(this.isoverTime == 0){
+				this.seconds = this.toSeconds(this.day, this.hour, this.minute, this.second);
+				if (this.seconds <= 0) {
 					return;
 				}
+				//this.audioplay();
 				this.countDown();
-			}, 1000);
+				this.timer = setInterval(() => {
+					this.seconds--;
+					if (this.seconds < 0) {
+						this.timeUp();
+						return;
+					}
+					this.countDown();
+				}, 1000);
+			}else{
+				this.timeOver();
+				this.timeoutSeconds = this.isoverTime;
+				this.timeUp();
+			}
+			
 		},
 		changeFlag() {
 			if (!this.syncFlag) {
@@ -359,6 +398,23 @@ export default {
 	margin: 5rpx;
 	text-align: center;
 }
+.taskbtnWarp{
+	width:500upx;
+	height: 80upx;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+	margin-top: 60upx;
+}
+.taskcal{
+	width: 180upx;
+	height:72upx;
+	line-height: 72upx;
+	background: #363636;
+	color: #ffce00;
+	text-align: center;
+}
 .taskendBtn {
 	width: 200upx;
 	height: 80upx;
@@ -366,7 +422,7 @@ export default {
 	text-align: center;
 	background: #ffce00;
 	color: #363636;
-	margin-top: 60upx;
+	
 }
 .timeout {
 	display: flex;
