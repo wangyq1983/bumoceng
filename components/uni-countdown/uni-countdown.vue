@@ -24,6 +24,9 @@
 			</view>
 		</view>
 		
+		<!-- <view class="">
+			{{hour}}时{{minute}}分{{second}}秒-超时{{isoverTime}}|{{h}}:{{i}}:{{s}}
+		</view> -->
 		
 	</view>
 </template>
@@ -97,6 +100,9 @@ export default {
 		},
 		isoverTime:{
 			type:Number
+		},
+		taskseconds:{
+			type:Number
 		}
 	},
 	data() {
@@ -138,14 +144,40 @@ export default {
 		},
 		second(val) {
 			this.changeFlag();
+		},
+		isoverTime(val){
+			this.changeFlag()
 		}
 	},
+	beforeCreate:function(){
+		
+	},
 	created: function(e) {
-		this.startData();
+		console.log('倒计时created')
+		console.log('getSec is'+this.$api.TempData.getSec);
+		if (!this.syncFlag) {
+			console.log('执行startData函数_mounted')
+			//this.seconds = this.toSeconds(this.day, this.hour, this.minute, this.second);
+			if(this.$api.TempData.getSec){
+				this.startData();
+				this.syncFlag = true;
+			}
+		}
+		 
 	},
-	beforeDestroy() {
+	beforeMount:function(){
+		console.log('倒计时beforeMount')
+	},
+	mounted:function() {
+		console.log('倒计时mounted')
+		
+	},
+	beforeDestroy:function() {
+		console.log('倒计时beforeDestroy')
 		clearInterval(this.timer);
+		clearInterval(this.timeouter);
 	},
+
 	methods: {
 		// musicEvent: function() {
 		// 	this.musicOn = !this.musicOn;
@@ -185,18 +217,22 @@ export default {
 		// 	innerAudioContext.stop();
 		// },
 		toSeconds(day, hours, minutes, seconds) {
+			console.log('执行toseconds函数 转化为秒');
+			
 			return day * 60 * 60 * 24 + hours * 60 * 60 + minutes * 60 + seconds;
 		},
 		toMinutes(hours, minutes) {
 			return hours * 60 + minutes;
 		},
 		timeUp() {
+			console.log('执行timeup函数，终止常规计时，显示超时，超时计时开始')
 			clearInterval(this.timer);
 			this.timeout = true;
 			this.timeoutStart();
 			this.$emit('timeup');
 		},
 		timeOver() {
+			console.log('执行timeover函数，终止常规计时')
 			clearInterval(this.timer);
 		},
 
@@ -258,45 +294,53 @@ export default {
 			
 		},
 		countDown() {
+			console.log('执行countdown函数，开始倒计时')
 			let seconds = this.seconds;
 			let [day, hour, minute, second] = [0, 0, 0, 0];
-			if (seconds > 0) {
+			console.log('seconds is=='+seconds);
+			if (seconds >= 0) {
+				console.log('seconds 大于等于0')
 				day = Math.floor(seconds / (60 * 60 * 24));
 				hour = Math.floor(seconds / (60 * 60)) - day * 24;
 				minute = Math.floor(seconds / 60) - day * 24 * 60 - hour * 60;
 				second = Math.floor(seconds) - day * 24 * 60 * 60 - hour * 60 * 60 - minute * 60;
-			} else {
-				this.timeUp();
-			}
-			if (day < 10) {
-				day = '0' + day;
-			}
-			if (hour < 10) {
-				hour = '0' + hour;
-			}
-			if (minute < 10) {
-				minute = '0' + minute;
-			}
-			if (second < 10) {
-				second = '0' + second;
-			}
-			this.d = day;
-			this.h = hour;
-			this.i = minute;
-			this.s = second;
+				if (day < 10) {
+					day = '0' + day;
+				}
+				if (hour < 10) {
+					hour = '0' + hour;
+				}
+				if (minute < 10) {
+					minute = '0' + minute;
+				}
+				if (second < 10) {
+					second = '0' + second;
+				}
+				console.log('d-h-i-s赋值')
+				this.d = day;
+				this.h = hour;
+				this.i = minute;
+				this.s = second;
+			} 
+			
 		},
 		timeoutStart() {
+			console.log('执行timeoutStart函数，超时计时运行中')
+			this.timeoutSeconds = this.isoverTime;
 			this.timeouter = setInterval(() => {
 				this.timeoutSeconds++;
 			}, 1000);
 		},
 		startData() {
+			this.$api.TempData.getSec = false;
+			console.log('执行startData函数')
 			if(this.isoverTime == 0){
+				console.log('isoverTime == '+0);
+				console.log('this_day is = '+ this.day);
+				console.log('this_hour is = '+ this.hour);
+				console.log('this_minute is = '+ this.minute);
+				console.log('this_second is = '+ this.second);
 				this.seconds = this.toSeconds(this.day, this.hour, this.minute, this.second);
-				if (this.seconds <= 0) {
-					return;
-				}
-				//this.audioplay();
 				this.countDown();
 				this.timer = setInterval(() => {
 					this.seconds--;
@@ -306,7 +350,15 @@ export default {
 					}
 					this.countDown();
 				}, 1000);
+				
+				// if (this.seconds <= 0) {
+				// 	this.timeUp();
+				// 	return;
+				// }
+				//this.audioplay();
+				
 			}else{
+				console.log('isoverTime !=='+0)
 				this.timeOver();
 				this.timeoutSeconds = this.isoverTime;
 				this.timeUp();
@@ -315,9 +367,14 @@ export default {
 		},
 		changeFlag() {
 			if (!this.syncFlag) {
-				this.seconds = this.toSeconds(this.day, this.hour, this.minute, this.second);
-				this.startData();
-				this.syncFlag = true;
+				console.log('执行函数changeFlag')
+				if(this.$api.TempData.getSec){
+					this.seconds = this.toSeconds(this.day, this.hour, this.minute, this.second);
+					this.startData();
+					this.syncFlag = true;
+				}
+				
+				
 			}
 		}
 	}

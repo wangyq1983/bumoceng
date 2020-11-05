@@ -3,12 +3,12 @@
 		<view class="TitleBox">
 			<view v-if="itemcon.state == 1 && itemcon.flag == 1" class="rwState ongoing"></view>
 			<view v-if="itemcon.state == 2 && surplusTime > 0 && itemcon.flag == 1" class="rwState goon"></view>
-			<view v-if="itemcon.state == 2 && surplusTime <= 0 && itemcon.flag == 1" class="rwState onfail"></view>
+			<view v-if="itemcon.state == 2 && surplusTime <= 0 && itemcon.flag == 1" class="rwState goon"></view>
 			<view v-if="itemcon.state == 3 && itemcon.flag == 1" class="rwState onend"></view>
 			<view v-if="itemcon.state == 4 && itemcon.flag == 1" class="rwState onfail"></view>
 			<view v-if="itemcon.state == 1 && itemcon.flag == 2" class="rwState ongoing1"></view>
 			<view v-if="itemcon.state == 2 && surplusTime > 0 && itemcon.flag == 2" class="rwState goon1"></view>
-			<view v-if="itemcon.state == 2 && surplusTime <= 0 && itemcon.flag == 2" class="rwState onfail"></view><strong></strong>
+			<view v-if="itemcon.state == 2 && surplusTime <= 0 && itemcon.flag == 2" class="rwState goon1"></view><strong></strong>
 			<view v-if="itemcon.state == 3 && itemcon.flag == 2" class="rwState onend1"></view>
 			<view v-if="itemcon.state == 4 && itemcon.flag == 2" class="rwState onfail1"></view>
 			<view :class="itemcon.flag == 1 ? 'rwType':'rwType1'">{{ itemcon.typeName }}</view>
@@ -16,7 +16,17 @@
 				<image src="/static/menustar.png" mode=""></image>
 				<view class="">{{ itemcon.starNumber }}</view>
 			</view>
-			<view class="rwHandle" @tap="delAction">⋮</view>
+			<view class="itemAction">
+				<view class="rwShare" @tap = "itemShare">
+					<image src="/static/sharezy1.png" mode="" v-if="itemcon.flag == 1"></image>
+					<image src="/static/sharezy2.png" mode="" v-if="itemcon.flag == 2"></image>
+				</view>
+				<view class="rwEdit" @tap = "itemEdit">
+					<image src="/static/cz1.png" mode="" v-if="itemcon.flag == 1"></image>
+					<image src="/static/cz2.png" mode="" v-if="itemcon.flag == 2"></image>
+				</view>
+			</view>
+			<!-- <view class="rwHandle" @tap="delAction">⋮</view> -->
 		</view>
 		<view class="rwInfo" v-if="itemcon.jobDescription">{{ itemcon.jobDescription }}</view>
 		<view class="rwAction">
@@ -24,7 +34,7 @@
 			<view v-if="itemcon.state == 1 && itemcon.flag == 2" class="rwBtn" @tap="beginTask" :data-time="itemcon.duration*60"><view class="startBtn1">开始任务</view></view>
 			
 			<view class="rwBtn" v-if="itemcon.state == 2 && (surplusTime > 0)" @tap="goonTask" :data-time="surplusTime"><view class="taskgoon">任务进行中</view></view>
-			<view class="rwBtn" v-if="itemcon.state == 2 && (surplusTime <= 0)"><view class="taskover">任务已超时</view></view>
+			<view class="rwBtn" v-if="itemcon.state == 2 && (surplusTime <= 0)" @tap="goonTask" :data-time="surplusTime"><view class="taskgoon">任务已超时</view></view>
 			<view class="rwBtn" v-if="itemcon.state == 3"><view class="taskover">任务已完成</view></view>
 			<view class="rwBtn" v-if="itemcon.state == 4"><view class="taskover">任务已失败</view></view>
 			<view class="timebox">
@@ -91,11 +101,16 @@ export default {
 		};
 	},
 	props: {
-		info: Object
+		info: Object,
+		nowtask:Number
 	},
 	created() {
 		// console.log('组件创建后，但还未挂载');
 		this.itemcon = this.info;
+		if(this.itemcon.id == this.nowtask){
+			console.log('taskid相等则触发goontask函数调出计时界面')
+			this.goonTask()
+		}
 		// console.log(this.itemcon);
 	},
 	computed: {
@@ -117,7 +132,7 @@ export default {
 	},
 	methods: {
 		radioChange(evt) {
-			console.log(evt.detail.value);
+			//console.log(evt.detail.value);
 			this.zhiliangCur = evt.detail.value;
 			for (let i = 0; i < this.items.length; i++) {
 				if (this.items[i].value === evt.detail.value) {
@@ -127,8 +142,8 @@ export default {
 			}
 		},
 		async beginTask(e) {
-			console.log(this);
-			console.log(e.currentTarget.dataset.time);
+			//console.log(this);
+			//console.log(e.currentTarget.dataset.time);
 			
 			var params = {
 				id:this.itemcon.id
@@ -142,17 +157,17 @@ export default {
 		goonTask(e) {
 			var surplusTime1 = this.$api.surplusTime(this.itemcon.duration,this.itemcon.beginDate?this.itemcon.beginDate:1);
 			var beginTime = new Date(this.itemcon.beginDate?this.itemcon.beginDate:1).getTime();
+			console.log('执行goonTask函数，计时剩余秒数是'+surplusTime1+'开始时间'+beginTime+'taskid是'+this.itemcon.id);
 			this.$emit('on-cdtime', surplusTime1, this.itemcon.id, this.itemcon.starNumber, this.itemcon.completionSwitch,beginTime);
 		},
 		async zhiliangEvent() {
 			
-			if (this.itemcon.state == 1) {
+			if (this.itemcon.state == 1 || this.itemcon.state == 2) {
 				uni.showToast({
 					title: '任务未完成,不能评价完成质量',
 					icon: 'none',
 					duration: 1500
-				});
-				
+				});	
 			} else {
 				//console.log('zhiliangCur is ' + this.zhiliangCur);
 				
@@ -207,12 +222,17 @@ export default {
 				
 			}
 		},
-		delAction() {
+		itemShare(){
+			uni.navigateTo({
+				url:'/pages/share/share'
+			})
+		},
+		itemEdit() {
 			var _this = this;
 			uni.showActionSheet({
 				itemList: ['编辑','删除'],
 				success(res) {
-					console.log(res.tapIndex);
+					//console.log(res.tapIndex);
 					if (res.tapIndex == 0) {
 						_this.edittask()
 					}
@@ -253,7 +273,7 @@ export default {
 			await this.$api.showLoading(); // 显示loading
 			var taskdel = await this.$api.postData(this.$api.webapi.dTask, params);
 			await this.$api.hideLoading();
-			console.log(taskdel);
+			//console.log(taskdel);
 			this.$emit('on-del',this.itemcon.id)
 		}
 	}
@@ -329,6 +349,30 @@ export default {
 		width: 30upx;
 		height: 30upx;
 		margin-right: 10upx;
+	}
+}
+.itemAction{
+	width:200upx;
+	height: 50upx;
+	position: absolute;
+	top: 0;
+	right: 0;
+	display: flex;
+	flex-direction: space-between;
+	justify-content: center;
+	align-items: center;
+}
+.rwShare,.rwEdit{
+	width: 80upx;
+	height: 40upx;
+	margin-top: 10upx;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	image{
+		width: 40upx;
+		height: 40upx;
 	}
 }
 .rwHandle {

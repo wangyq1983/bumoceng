@@ -16,7 +16,8 @@
     "pages/edit/edit",
     "pages/phonelogin/phonelogin",
     "pages/study/study",
-    "pages/lx/lx"
+    "pages/lx/lx",
+    "pages/share/share"
   ],
   "subPackages": [],
   "window": {

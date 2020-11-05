@@ -339,6 +339,15 @@ const startPd = (num) =>{
 	}
 }
 
+// 临时数据存储
+var TempData = {
+	taskid:null,
+	smzq:[],
+	zxlc:[],
+	getSec:false
+}
+
+
 // 获取用户信息
 const getUserinfo = async() => {
 	// 获取用户信息
@@ -545,6 +554,14 @@ const reshook = (res, path) => {
 		      icon:"none",
 		      duration:1500
 		    })
+			if(res.resultCode == 87014){
+				setTimeout(function(){
+					uni.reLaunch({
+						url:'/pages/rwlist/rwlist'
+					})
+				},1500)
+				
+			 }
 		  }
 	}
 	console.log('reshook')
@@ -600,13 +617,13 @@ const switchTimestamp = (time) => {
  */
 const surplusTime = (duration,beginTime) => {
 	if(beginTime !== 1){
-		console.log('开始时间戳')
+		//console.log('开始时间戳')
 		var beginStamp = switchTimestamp(beginTime); // 开始时间戳
-		console.log(beginStamp);
+		//console.log(beginStamp);
 		
-		console.log('当前时间戳')
+		//console.log('当前时间戳')
 		var nowStamp = new Date().getTime(); // 当前时间戳
-		console.log(nowStamp);
+		//console.log(nowStamp);
 		var surplusSec = (duration*60) - parseInt((nowStamp - beginStamp)/1000)
 		// console.log('预算时间'+duration*60);
 		// console.log('使用时间'+parseInt((nowStamp - beginStamp)/1000));
@@ -639,6 +656,7 @@ const formatTime = (date) => {
   return [year, month, day].map(formatNumber).join('-') 
 }
 
+
 export default {
 	encodeData,
 	getData,
@@ -663,5 +681,6 @@ export default {
 	honorCorres,
 	timeSwitch,
 	surplusTime,
-	startPd
+	startPd,
+	TempData
 }

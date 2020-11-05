@@ -301,6 +301,7 @@ export default {
 			}
 			if(this.paramsVer(verparam)){
 				console.log('params is ok')
+				
 				if(this.editState == true){
 					var params = {
 						id:this.id,

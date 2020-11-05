@@ -487,6 +487,48 @@ page {
   height: 30rpx;
   margin-right: 10rpx;
 }
+.itemAction {
+  width: 200rpx;
+  height: 50rpx;
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: space-between;
+          flex-direction: space-between;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+          justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+}
+.rwShare, .rwEdit {
+  width: 80rpx;
+  height: 40rpx;
+  margin-top: 10rpx;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+          justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+}
+.rwShare image, .rwEdit image {
+  width: 40rpx;
+  height: 40rpx;
+}
 .rwHandle {
   width: 60rpx;
   text-align: center;

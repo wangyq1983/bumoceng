@@ -92,8 +92,8 @@ export default {
 			var userRes = await this.$api.getData(this.$api.webapi.userInfo);
 			await this.$api.hideLoading(); // 等待请求数据成功后，隐藏loading
 			if (this.$api.reshook(userRes)) {
-				console.log('userinfo is');
-				console.log(userRes);
+				//console.log('userinfo is');
+				//console.log(userRes);
 			}
 		},
 		gotoLogin:function(){
@@ -114,12 +114,12 @@ export default {
 	},
 	
 	created() {
-		console.log('created');
-		console.log('------------------------------------');
-		console.log('this.$store is = ')
-		console.log(this.$store);
-		console.log(this.$store.state)
-		console.log(this.$store.state.userInfo);
+		//console.log('created');
+		// console.log('------------------------------------');
+		// console.log('this.$store is = ')
+		// console.log(this.$store);
+		// console.log(this.$store.state)
+		// console.log(this.$store.state.userInfo);
 		// this.getUser()
 		this.icon = uni.getStorageSync('avatarUrl') ? uni.getStorageSync('avatarUrl') : '';
 

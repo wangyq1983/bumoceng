@@ -13,6 +13,7 @@
 					:second="secondTask"
 					:startT = "startTime"
 					:isoverTime = "isoverTime"
+					:taskseconds = "taskseconds"
 					ref="countDown"
 				></uniCountdown>
 			</view>
@@ -75,7 +76,7 @@
 				</view>
 			</view> -->
 
-			<rwlistItem v-for="items in rwlist" :key="items.id" :info="items" @on-cdtime="countTime" @on-zhiliang="zhiliang" @on-del="deltask"></rwlistItem>
+			<rwlistItem v-for="items in rwlist" :nowtask = "nowtask" :key="items.id" :info="items" @on-cdtime="countTime" @on-zhiliang="zhiliang" @on-del="deltask"></rwlistItem>
 			<view v-if="isEmpty == 1"><nodata wordinfo="没有任务哦" type="1"></nodata></view>
 			<view v-if="isEnd == true"><endLine></endLine></view>
 		</view>
@@ -120,6 +121,7 @@ export default {
 			cdtime: false,
 			// cdtime:true,
 			taskTime: '',
+			taskseconds: 0,
 			minuteTask: '',
 			secondTask: '',
 			hourTask: '',
@@ -142,7 +144,8 @@ export default {
 			isEnd: false,
 			showStudy:2,
 			startTime:'',
-			isoverTime:0
+			isoverTime:0,
+			tempId:null
 		};
 	},
 	computed: {
@@ -169,30 +172,45 @@ export default {
 		// console.log('load');
 		//console.log(this.$mp.page.route)
 		// this.signget()
+		
+		if(options.taskid){
+			
+			this.nowtask  = options.taskid;
+			// this.star = decodeURIComponent(options.star);
+			// this.ifswitch = options.ifswitch;
+			// this.startTime = options.startTime;
+			
+			// this.$refs.(this.nowtask). 
+			console.log('rwlist页面隐藏时的taskid赋值给nowtask')
+		}
 		this.init();
 	},
+	
 	onShow() {
-		console.log('showstudy')
-		console.log(uni.getStorageSync('showStudy'))
-		console.log(uni.getStorageSync('showStudy') == '');
-		console.log(uni.getStorageSync('showStudy') == undefined);
-		
+		// console.log('showstudy')
+		// console.log(uni.getStorageSync('showStudy'))
+		// console.log(uni.getStorageSync('showStudy') == '');
+		// console.log(uni.getStorageSync('showStudy') == undefined);
 		
 		if(uni.getStorageSync('showStudy') == '' || uni.getStorageSync('showStudy') == false){
-			console.log(1)
+			//console.log(1)
 			this.showStudy = true;
 		}else if(uni.getStorageSync('showStudy') == 1){
-			console.log(2)
+			//console.log(2)
 			this.showStudy = false;
 		}else if(uni.getStorageSync('showStudy') == 2){
-			console.log(3)
+			//console.log(3)
 			this.showStudy = true;
 		}
-		console.log('this.showStudy')
-		console.log(this.showStudy)
+		//console.log('this.showStudy')
+		//console.log(this.showStudy)
 		
 		
 		// console.log('show');
+	},
+	onHide(){
+		//console.log('关闭计时弹层');
+		//this.showmask = false;
 	},
 	onReachBottom: async function() {
 		let params = {
@@ -213,7 +231,7 @@ export default {
 	// 	  }
 	// },
 	onShareAppMessage: async function() {
-		console.log('分享');
+		//console.log('分享');
 		var jielongImg = '/static/shareImg1.jpg';
 		var jielongpath = '/pages/rwlist/rwlist';
 		let cjparams = {
@@ -227,8 +245,8 @@ export default {
 			path: '/pages/rwlist/rwlist',
 			imageUrl: jielongImg,
 			success: res => {
-				console.log('转发成功', res);
-				console.log(uni);
+				//console.log('转发成功', res);
+				//console.log(uni);
 
 				uni.showToast({
 					title: '转发成功',
@@ -262,7 +280,7 @@ export default {
 			    }
 		},
 		renderCjlist: function(res) {
-			console.log(res);
+			//console.log(res);
 			this.cjList = [];
 			if (res.data.length > 0) {
 				this.taskSuccess = true;
@@ -457,28 +475,30 @@ export default {
 			this.taskSuccess = true;
 		},
 		formatTime: function(tasktime) {
-			console.log('tasktime is '+tasktime)
+			//console.log('tasktime is '+tasktime)
 			
 			if(tasktime > 0){
 				this.isoverTime = 0;
 				if (tasktime >3600) {
 					this.hourTask = parseInt(Math.floor(tasktime / 3600));
-					console.log('hour is'+ this.hourTask)
+					//console.log('hour is'+ this.hourTask)
 					
 					this.minuteTask = parseInt((tasktime % 3600)/60) ;
-					console.log('min is'+ this.minuteTask)
+					//console.log('min is'+ this.minuteTask)
 					this.secondTask = (tasktime % 3600)%60;
-					console.log('sec is'+ this.secondTask)
+					//console.log('sec is'+ this.secondTask)
 					this.showhour = true;
+					
 				} else {
 					this.hourTask = 0;
 					this.minuteTask = parseInt(tasktime/60);
-					console.log('min is'+ this.minuteTask)
+					//console.log('min is'+ this.minuteTask)
 					this.secondTask = tasktime%60;
-					console.log('sec is'+ this.secondTask)
+					//console.log('sec is'+ this.secondTask)
 					this.showhour = false;
 				}
 			}else{
+				//console.log('tasktime is ===== '+tasktime)
 				this.isoverTime =  Math.abs(tasktime);
 				// var tasktime = Math.abs(tasktime);
 			}
@@ -488,15 +508,42 @@ export default {
 			this.cdtime = true;
 			// console.log(cdtime);
 			// console.log(taskid)
+			
+			this.formatTime(cdtime);
 			this.nowtask = taskid;
 			this.star = star;
 			this.ifswitch = ifswitch;
 			this.signIn = false;
 			this.startTime = startTime;
-			this.formatTime(cdtime);
+			this.taskseconds = (cdtime > 0) ? cdtime : 0;
+			this.$api.TempData.getSec = true;
+			this.$api.TempData.taskid = taskid;
+			
+			
+			// uni.setStorage({
+			// 	key: 'nowtaskid',
+			// 	data: taskid
+			// })
+			// uni.setStorage({
+			// 	key: 'nowstar',
+			// 	data: star
+			// })
+			// uni.setStorage({
+			// 	key:'nowifswitch',
+			// 	data:ifswitch
+			// })
+			// uni.setStorage({
+			// 	key:'nowstartTime',
+			// 	data:startTime
+			// })
 		},
 		// 关闭计时弹层
 		closemask: function() {
+			this.$api.TempData = {
+				taskid:null,
+				smzq:[],
+				zxlc:[]
+			}
 			// console.log(this);
 			if (this.taskSuccess) {
 				this.taskSuccess = false;
