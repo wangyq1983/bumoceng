@@ -180,7 +180,8 @@
 .timeCir.data-v-6cd74fee {
 	width: 472rpx;
 	height: 472rpx;
-	border-radius: 400rpx;
+	-webkit-border-radius: 400rpx;
+	        border-radius: 400rpx;
 	background: rgba(255, 255, 255, 0.5);
 	border: 6rpx solid #fff;
 	display: -webkit-box;

@@ -37,7 +37,8 @@
   text-align: center;
   background: #ffce00;
   color: #fff;
-  border-radius: 8rpx;
+  -webkit-border-radius: 8rpx;
+          border-radius: 8rpx;
 }
 page {
   overflow-x: hidden;
@@ -113,7 +114,8 @@ page {
   height: 80rpx;
   line-height: 80rpx;
   text-align: center;
-  border-radius: 50rpx;
+  -webkit-border-radius: 50rpx;
+          border-radius: 50rpx;
   border: 4rpx solid #fff;
   margin-top: 20rpx;
   font-size: 60rpx;
@@ -153,7 +155,8 @@ page {
   top: 0;
   left: 50rpx;
   padding: 50rpx 0 40rpx;
-  border-radius: 10rpx;
+  -webkit-border-radius: 10rpx;
+          border-radius: 10rpx;
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
@@ -213,7 +216,8 @@ page {
 .slayCon .con .item .honor {
   background: #363636;
   color: #ffce00;
-  border-radius: 10rpx;
+  -webkit-border-radius: 10rpx;
+          border-radius: 10rpx;
   padding: 5rpx 12rpx;
 }
 .slayCon .con .item .cjlist {
@@ -244,15 +248,18 @@ page {
   width: 80rpx;
   height: 80rpx;
   line-height: 80rpx;
-  border-radius: 20rpx;
+  -webkit-border-radius: 20rpx;
+          border-radius: 20rpx;
   border: 8rpx solid #c09d29;
   text-align: center;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#f9ee84), color-stop(#eed138), to(#f9ee84));
   background-image: -webkit-linear-gradient(#f9ee84, #eed138, #f9ee84);
   background-image: linear-gradient(#f9ee84, #eed138, #f9ee84);
   font-size: 50rpx;
   color: #8c6d01;
   font-weight: bold;
-  box-shadow: 0 0 20rpx #fff;
+  -webkit-box-shadow: 0 0 20rpx #fff;
+          box-shadow: 0 0 20rpx #fff;
 }
 .slayCon .con .item .cjlist .cjitem .title {
   width: 150rpx;
@@ -289,7 +296,8 @@ page {
   background: #ffce00;
   color: #363636;
   font-size: 32rpx;
-  border-radius: 6rpx;
+  -webkit-border-radius: 6rpx;
+          border-radius: 6rpx;
 }
 .arrow {
   width: 0;
@@ -329,7 +337,9 @@ page {
   height: 58rpx;
   line-height: 58rpx;
   padding: 1rpx 20rpx;
-  border-radius: 10rpx;
+  -webkit-border-radius: 10rpx;
+          border-radius: 10rpx;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#736427), to(#221e0c));
   background-image: -webkit-linear-gradient(#736427, #221e0c);
   background-image: linear-gradient(#736427, #221e0c);
   color: #ffce00;
@@ -343,7 +353,8 @@ page {
   padding: 1rpx 8rpx;
   height: 32rpx;
   line-height: 32rpx;
-  border-radius: 5rpx;
+  -webkit-border-radius: 5rpx;
+          border-radius: 5rpx;
 }
 .baiyin2 {
   background: #8da1ba;
@@ -353,7 +364,8 @@ page {
   padding: 1rpx 8rpx;
   height: 32rpx;
   line-height: 32rpx;
-  border-radius: 5rpx;
+  -webkit-border-radius: 5rpx;
+          border-radius: 5rpx;
 }
 .huangjin3 {
   background: #ff8a00;
@@ -363,7 +375,8 @@ page {
   padding: 1rpx 8rpx;
   height: 32rpx;
   line-height: 32rpx;
-  border-radius: 5rpx;
+  -webkit-border-radius: 5rpx;
+          border-radius: 5rpx;
 }
 .bojin4 {
   background: #6396d7;
@@ -373,7 +386,8 @@ page {
   padding: 1rpx 8rpx;
   height: 32rpx;
   line-height: 32rpx;
-  border-radius: 5rpx;
+  -webkit-border-radius: 5rpx;
+          border-radius: 5rpx;
 }
 .zuanshi5 {
   background: #1e81f9;
@@ -383,7 +397,8 @@ page {
   padding: 1rpx 8rpx;
   height: 32rpx;
   line-height: 32rpx;
-  border-radius: 5rpx;
+  -webkit-border-radius: 5rpx;
+          border-radius: 5rpx;
 }
 .xueshen6 {
   background: #921fec;
@@ -393,7 +408,8 @@ page {
   padding: 1rpx 8rpx;
   height: 32rpx;
   line-height: 32rpx;
-  border-radius: 5rpx;
+  -webkit-border-radius: 5rpx;
+          border-radius: 5rpx;
 }
 .menuguide {
   border-top: 6rpx solid #ffce00;
@@ -455,7 +471,8 @@ page {
 }
 .cu-timeline > .cu-item .content {
   padding: 20rpx;
-  border-radius: 16rpx;
+  -webkit-border-radius: 16rpx;
+          border-radius: 16rpx;
   -webkit-box-pack: start;
   -webkit-justify-content: flex-start;
           justify-content: flex-start;
@@ -498,7 +515,8 @@ page {
   text-align: center;
   color: #fff;
   background: #39b54a;
-  border-radius: 30rpx;
+  -webkit-border-radius: 30rpx;
+          border-radius: 30rpx;
   border: 6rpx solid #ffffff;
   position: absolute;
   z-index: 999;
@@ -512,7 +530,8 @@ page {
   text-align: center;
   color: #fff;
   background: #0081ff;
-  border-radius: 30rpx;
+  -webkit-border-radius: 30rpx;
+          border-radius: 30rpx;
   border: 6rpx solid #ffffff;
   position: absolute;
   z-index: 999;

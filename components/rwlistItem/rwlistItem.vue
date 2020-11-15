@@ -18,8 +18,8 @@
 			</view>
 			<view class="itemAction">
 				<view class="rwShare" @tap = "itemShare">
-					<image src="/static/sharezy1.png" mode="" v-if="itemcon.flag == 1"></image>
-					<image src="/static/sharezy2.png" mode="" v-if="itemcon.flag == 2"></image>
+					<image src="/static/zyshare1.png" mode="" v-if="itemcon.flag == 1"></image>
+					<image src="/static/zyshare2.png" mode="" v-if="itemcon.flag == 2"></image>
 				</view>
 				<view class="rwEdit" @tap = "itemEdit">
 					<image src="/static/cz1.png" mode="" v-if="itemcon.flag == 1"></image>
@@ -224,7 +224,7 @@ export default {
 		},
 		itemShare(){
 			uni.navigateTo({
-				url:'/pages/share/share'
+				url:'/pages/share/share?jobid='+this.itemcon.id + '&shareUserId='+this.itemcon.userId
 			})
 		},
 		itemEdit() {
