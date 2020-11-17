@@ -12,11 +12,13 @@
 			      console.error("请使用 2.2.3 或以上的基础库以使用云能力");
 			    }
 		},
-		onShow: function() {
+		onShow: function(options) {
 			console.log('App Show');
 			uni.setKeepScreenOn({
 			  keepScreenOn: true
-			})
+			});
+			console.log(options)
+			console.log('onshow is end');
 			// if(this.$api.TempData.taskid){
 			// 	uni.reLaunch({
 			// 		url:'/pages/rwlist/rwlist?taskid='+this.$api.TempData.taskid

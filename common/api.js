@@ -1,12 +1,12 @@
 import store from '@/store'
 // 正式服务器
-//var webhost = "https://task.vsclouds.com/";
+var webhost = "https://task.vsclouds.com/";
 
 // 开发服务器
 // var webhost = "http://192.168.3.9:8080/";
 
 // 开发服务器
-var webhost = "https://jielongtest.vsclouds.com/8080/polly/";
+// var webhost = "https://jielongtest.vsclouds.com/8080/polly/";
 
 // 接口列表
 var webapi = {

@@ -37,7 +37,8 @@
   text-align: center;
   background: #ffce00;
   color: #fff;
-  border-radius: 8rpx;
+  -webkit-border-radius: 8rpx;
+          border-radius: 8rpx;
 }
 page {
   overflow-x: hidden;
@@ -113,7 +114,8 @@ page {
   height: 80rpx;
   line-height: 80rpx;
   text-align: center;
-  border-radius: 50rpx;
+  -webkit-border-radius: 50rpx;
+          border-radius: 50rpx;
   border: 4rpx solid #fff;
   margin-top: 20rpx;
   font-size: 60rpx;
@@ -153,7 +155,8 @@ page {
   top: 0;
   left: 50rpx;
   padding: 50rpx 0 40rpx;
-  border-radius: 10rpx;
+  -webkit-border-radius: 10rpx;
+          border-radius: 10rpx;
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
@@ -213,7 +216,8 @@ page {
 .slayCon .con .item .honor {
   background: #363636;
   color: #ffce00;
-  border-radius: 10rpx;
+  -webkit-border-radius: 10rpx;
+          border-radius: 10rpx;
   padding: 5rpx 12rpx;
 }
 .slayCon .con .item .cjlist {
@@ -244,15 +248,18 @@ page {
   width: 80rpx;
   height: 80rpx;
   line-height: 80rpx;
-  border-radius: 20rpx;
+  -webkit-border-radius: 20rpx;
+          border-radius: 20rpx;
   border: 8rpx solid #c09d29;
   text-align: center;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#f9ee84), color-stop(#eed138), to(#f9ee84));
   background-image: -webkit-linear-gradient(#f9ee84, #eed138, #f9ee84);
   background-image: linear-gradient(#f9ee84, #eed138, #f9ee84);
   font-size: 50rpx;
   color: #8c6d01;
   font-weight: bold;
-  box-shadow: 0 0 20rpx #fff;
+  -webkit-box-shadow: 0 0 20rpx #fff;
+          box-shadow: 0 0 20rpx #fff;
 }
 .slayCon .con .item .cjlist .cjitem .title {
   width: 150rpx;
@@ -289,7 +296,8 @@ page {
   background: #ffce00;
   color: #363636;
   font-size: 32rpx;
-  border-radius: 6rpx;
+  -webkit-border-radius: 6rpx;
+          border-radius: 6rpx;
 }
 .arrow {
   width: 0;
@@ -329,7 +337,9 @@ page {
   height: 58rpx;
   line-height: 58rpx;
   padding: 1rpx 20rpx;
-  border-radius: 10rpx;
+  -webkit-border-radius: 10rpx;
+          border-radius: 10rpx;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#736427), to(#221e0c));
   background-image: -webkit-linear-gradient(#736427, #221e0c);
   background-image: linear-gradient(#736427, #221e0c);
   color: #ffce00;
@@ -343,7 +353,8 @@ page {
   padding: 1rpx 8rpx;
   height: 32rpx;
   line-height: 32rpx;
-  border-radius: 5rpx;
+  -webkit-border-radius: 5rpx;
+          border-radius: 5rpx;
 }
 .baiyin2 {
   background: #8da1ba;
@@ -353,7 +364,8 @@ page {
   padding: 1rpx 8rpx;
   height: 32rpx;
   line-height: 32rpx;
-  border-radius: 5rpx;
+  -webkit-border-radius: 5rpx;
+          border-radius: 5rpx;
 }
 .huangjin3 {
   background: #ff8a00;
@@ -363,7 +375,8 @@ page {
   padding: 1rpx 8rpx;
   height: 32rpx;
   line-height: 32rpx;
-  border-radius: 5rpx;
+  -webkit-border-radius: 5rpx;
+          border-radius: 5rpx;
 }
 .bojin4 {
   background: #6396d7;
@@ -373,7 +386,8 @@ page {
   padding: 1rpx 8rpx;
   height: 32rpx;
   line-height: 32rpx;
-  border-radius: 5rpx;
+  -webkit-border-radius: 5rpx;
+          border-radius: 5rpx;
 }
 .zuanshi5 {
   background: #1e81f9;
@@ -383,7 +397,8 @@ page {
   padding: 1rpx 8rpx;
   height: 32rpx;
   line-height: 32rpx;
-  border-radius: 5rpx;
+  -webkit-border-radius: 5rpx;
+          border-radius: 5rpx;
 }
 .xueshen6 {
   background: #921fec;
@@ -393,7 +408,8 @@ page {
   padding: 1rpx 8rpx;
   height: 32rpx;
   line-height: 32rpx;
-  border-radius: 5rpx;
+  -webkit-border-radius: 5rpx;
+          border-radius: 5rpx;
 }
 .rwItem {
   width: 690rpx;
@@ -487,6 +503,48 @@ page {
   height: 30rpx;
   margin-right: 10rpx;
 }
+.itemAction {
+  width: 200rpx;
+  height: 50rpx;
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: space-between;
+          flex-direction: space-between;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+          justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+}
+.rwShare, .rwEdit {
+  width: 80rpx;
+  height: 40rpx;
+  margin-top: 10rpx;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+          justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+}
+.rwShare image, .rwEdit image {
+  width: 40rpx;
+  height: 40rpx;
+}
 .rwHandle {
   width: 60rpx;
   text-align: center;
@@ -502,9 +560,11 @@ page {
 .rwInfo {
   width: 690rpx;
   padding: 15rpx;
-  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
   background: #f4f4f4;
-  border-radius: 10rpx;
+  -webkit-border-radius: 10rpx;
+          border-radius: 10rpx;
   color: #000000;
   font-size: 28rpx;
 }
@@ -530,7 +590,8 @@ page {
   font-size: 30rpx;
 }
 .rwBtn > view {
-  border-radius: 8rpx;
+  -webkit-border-radius: 8rpx;
+          border-radius: 8rpx;
 }
 .startBtn {
   background: #ffce00;

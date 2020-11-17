@@ -97,7 +97,6 @@
 export default {
 	data() {
 		return {
-			
 			defaluttype:[],
 			deftype:[],
 			curtype:'',

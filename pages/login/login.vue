@@ -316,7 +316,8 @@ export default {
 					console.log(uni.getStorageSync('token'));
 					var userinfo = await that.$api.getUserinfo();
 					if (userinfo) {
-						
+						console.log('来源网址');
+						console.log(that.origin);
 						uni.reLaunch({
 							url: (that.origin !== '/undefined')?that.origin:'/pages/rwlist/rwlist'
 						});

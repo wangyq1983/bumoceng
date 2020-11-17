@@ -219,12 +219,11 @@ export default {
 					this.$emit('on-zhiliang', realstar, this.$api.expval.endtask,cjlist.data);
 					this.clickable = true;
 				}
-				
 			}
 		},
 		itemShare(){
 			uni.navigateTo({
-				url:'/pages/share/share?jobid='+this.itemcon.id + '&shareUserId='+this.itemcon.userId
+				url:'/pages/share/share?jobIds='+this.itemcon.id + '&shareUserId='+this.itemcon.userId
 			})
 		},
 		itemEdit() {
