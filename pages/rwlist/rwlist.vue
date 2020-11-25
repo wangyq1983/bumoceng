@@ -80,7 +80,7 @@
 			<view v-if="isEmpty == 1"><nodata wordinfo="没有任务哦" type="1"></nodata></view>
 			<view v-if="isEnd == true"><endLine></endLine></view>
 		</view>
-		<!-- #ifdef MP-WEIXIN || H5 -->
+		<!-- #ifdef MP-WEIXIN || H5
 		<view class="studyBar" v-if="showStudy">
 			<view class="txt" @tap = "gotoStudy">
 				 快速上手使用指南

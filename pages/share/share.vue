@@ -1,5 +1,11 @@
 <template>
 	<view class="shareWarp">
+		<mask :showmask="cdtime" @on-close="closemask">
+			<successdata
+				:cjList="cjList"
+				v-if="taskSuccess"
+			></successdata>
+		</mask>
 		<view class="shareBox">
 			<view class="box1">
 				<view class="">
@@ -45,7 +51,7 @@
 			<!-- <view class="saveBox" v-if="clickable"><view class="saveBtn" @tap="creatzyRequest">{{btnWord}}</view></view>
 			<view class="saveBox" v-if="(clickable == false)"><view class="saveBtn">保存中</view></view> -->
 
-			<view class="addTask" v-if="!(userid == shareUserId)">
+			<view class="addTask">
 				<view class="saveAction" v-if="clickable" @tap="addTask">加入任务</view>
 				<view class="saveing" v-if="clickable == false">加入中</view>
 			</view>
@@ -83,7 +89,10 @@ export default {
 			createTime: '', //创建时间
 			taskState: 1,
 			routePath: '',
-			currentPage:''
+			currentPage: '',
+			cjList:[],
+			taskSuccess:false,
+			cdtime:false
 		};
 	},
 	onLoad(options) {
@@ -115,26 +124,32 @@ export default {
 			title: '作业不磨蹭'
 		};
 	},
-	
+
 	onShareAppMessage: async function() {
 		//console.log('分享');
 		// var jielongImg = '/static/shareImg1.jpg';
 		//var jielongpath = '/pages/rwlist/rwlist';
 		var alltitle = this.name + '分享了' + this.typeName + '作业';
 		var sharePath = '/' + this.currentPage;
-
-		
-
+		let cjparams = {
+			jobInfoId: 0,
+			thresholdTypeList: ['share']
+		};
+		var cjResult = await this.$api.cjCheck(cjparams);
+		this.renderCjlist(cjResult);
 		return {
 			title: alltitle,
-			path: sharePath,
+			path: sharePath
 			// imageUrl: jielongImg,
-			
+
 			//query:'jobIds=' + encodeURIComponent(this.jobIds) + '&shareUserId=' + encodeURIComponent(this.shareUserId)
-			
 		};
 	},
 	methods: {
+		closemask: function() {
+			this.taskSuccess = false;
+			this.cdtime = false;
+		},
 		shareAction() {
 			var _this = this;
 			uni.showActionSheet({
@@ -153,6 +168,15 @@ export default {
 				}
 			});
 		},
+		renderCjlist: function(res) {
+			//console.log(res);
+			this.cjList = [];
+			if (res.data.length > 0) {
+				this.taskSuccess = true;
+				this.cdtime = true;
+				this.cjList = res.data;
+			}
+		},
 		async init() {
 			var params = {
 				jobIds: Number(this.jobIds),
@@ -164,20 +188,34 @@ export default {
 			console.log(shareTask);
 
 			if (shareTask.resultCode == 0) {
-				var shareData = shareTask.data.jobInfoList[0];
-				this.createTime = shareData.createDate;
-				this.duration = shareData.duration;
-				this.jobDescription = shareData.jobDescription;
-				this.realDuration = this.$api.secToTime(shareData.realDuration);
-				this.starNumber = shareData.starNumber;
-				this.typeName = shareData.typeName;
-				this.taskState = shareData.state;
-				this.flag = shareData.flag;
-				this.completionSwitch = shareData.completionSwitch;
-				this.avatar = shareTask.data.userBaseInfo.avatar;
-				this.name = shareTask.data.userBaseInfo.name;
-				this.level = shareTask.data.userLevelInfo.level;
-				this.honor1 = this.$api.expTitle(shareTask.data.userLevelInfo.level);
+				if (shareTask.data.jobInfoList.length == 0) {
+					uni.showModal({
+						title: '此分享的作业任务已被删除',
+						content: '此分享的作业任务已被删除',
+						success: res => {
+							if (res.confirm) {
+								resolve();
+							} else {
+								reject();
+							}
+						}
+					});
+				} else {
+					var shareData = shareTask.data.jobInfoList[0];
+					this.createTime = shareData.createDate;
+					this.duration = shareData.duration;
+					this.jobDescription = shareData.jobDescription;
+					this.realDuration = this.$api.secToTime(shareData.realDuration);
+					this.starNumber = shareData.starNumber;
+					this.typeName = shareData.typeName;
+					this.taskState = shareData.state;
+					this.flag = shareData.flag;
+					this.completionSwitch = shareData.completionSwitch;
+					this.avatar = shareTask.data.userBaseInfo.avatar;
+					this.name = shareTask.data.userBaseInfo.name;
+					this.level = shareTask.data.userLevelInfo.level;
+					this.honor1 = this.$api.expTitle(shareTask.data.userLevelInfo.level);
+				}
 			}
 		},
 		async addTask() {
