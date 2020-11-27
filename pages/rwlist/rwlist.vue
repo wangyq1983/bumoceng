@@ -80,7 +80,8 @@
 			<view v-if="isEmpty == 1"><nodata wordinfo="没有任务哦" type="1"></nodata></view>
 			<view v-if="isEnd == true"><endLine></endLine></view>
 		</view>
-		<!-- #ifdef MP-WEIXIN || H5
+
+		<!-- #ifdef MP-WEIXIN || H5-->
 		<view class="studyBar" v-if="showStudy">
 			<view class="txt" @tap = "gotoStudy">
 				 快速上手使用指南
@@ -925,8 +926,8 @@ export default {
 	}
 }
 .rwlist {
-	margin-top: 230upx;
-	margin-bottom: 178upx;
+	padding-top: 230upx;
+	padding-bottom: 178upx;
 }
 .indexTop {
 	width: 750upx;

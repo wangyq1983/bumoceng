@@ -1,12 +1,12 @@
 import store from '@/store'
 // 正式服务器
-//var webhost = "https://task.vsclouds.com/";
+var webhost = "https://task.vsclouds.com/";
 
 // 开发服务器
 // var webhost = "http://192.168.3.9:8080/";
 
 // 开发服务器
-var webhost = "https://jielongtest.vsclouds.com/8080/polly/";
+//var webhost = "https://jielongtest.vsclouds.com/8080/polly/";
 
 // 接口列表
 var webapi = {
@@ -610,7 +610,8 @@ const timeSwitch = (time) =>{
  * 年月日时分秒时间转换为时间戳
  */
 const switchTimestamp = (time) => {
-	return new Date(time).getTime()
+	// replace 解决ios下时间问题
+	return new Date(time.replace(/-/g,'/')).getTime()
 }
 
 /**
@@ -632,6 +633,8 @@ const surplusTime = (duration,beginTime) => {
 		// console.log('使用时间'+parseInt((nowStamp - beginStamp)/1000));
 		// console.log('surplusSec is ---' + surplusSec);
 		return surplusSec
+	}else{
+		return 888
 	}
 }
 

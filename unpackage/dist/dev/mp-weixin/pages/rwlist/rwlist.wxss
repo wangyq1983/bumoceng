@@ -39,6 +39,7 @@
   color: #fff;
   -webkit-border-radius: 8rpx;
           border-radius: 8rpx;
+  font-size: 36rpx;
 }
 page {
   overflow-x: hidden;
@@ -410,6 +411,10 @@ page {
   line-height: 32rpx;
   -webkit-border-radius: 5rpx;
           border-radius: 5rpx;
+}
+input {
+  line-height: 56rpx;
+  height: 56rpx;
 }
 .timeSelect {
   width: 710rpx;
@@ -790,8 +795,8 @@ page {
   opacity: 0.3;
 }
 .rwlist {
-  margin-top: 230rpx;
-  margin-bottom: 178rpx;
+  padding-top: 230rpx;
+  padding-bottom: 178rpx;
 }
 .indexTop {
   width: 750rpx;

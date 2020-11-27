@@ -425,6 +425,7 @@ export default {
 	height: 256upx;
 	color: $color-36;
 	@include borradius6;
+	font-size: $fontsize-32;
 	
 }
 .selectTime,
@@ -483,6 +484,7 @@ export default {
 			border: 2upx solid $color-m;
 			padding:10upx;
 			@include borradius6;
+			font-size: $fontsize-32;
 		}
 	}
 	.eventBtn{

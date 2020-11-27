@@ -368,6 +368,7 @@ export default {
 	height: 256upx;
 	color: $color-36;
 	@include borradius6;
+	font-size: $fontsize-32;
 }
 .selectTime,
 .selectStar {

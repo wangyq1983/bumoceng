@@ -231,7 +231,7 @@ export default {
 	// @include colflex;
 	// width:750upx;
 	// justify-content: flex-start;
-	margin-bottom: 180upx;
+	padding-bottom: 180upx;
 }
 .jlitem {
 	@include warpwidth;

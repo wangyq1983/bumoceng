@@ -1,11 +1,6 @@
 <template>
 	<view class="shareWarp">
-		<mask :showmask="cdtime" @on-close="closemask">
-			<successdata
-				:cjList="cjList"
-				v-if="taskSuccess"
-			></successdata>
-		</mask>
+		
 		<view class="shareBox">
 			<view class="box1">
 				<view class="">
@@ -136,7 +131,7 @@ export default {
 			thresholdTypeList: ['share']
 		};
 		var cjResult = await this.$api.cjCheck(cjparams);
-		this.renderCjlist(cjResult);
+		
 		return {
 			title: alltitle,
 			path: sharePath
@@ -146,10 +141,7 @@ export default {
 		};
 	},
 	methods: {
-		closemask: function() {
-			this.taskSuccess = false;
-			this.cdtime = false;
-		},
+		
 		shareAction() {
 			var _this = this;
 			uni.showActionSheet({
@@ -168,15 +160,7 @@ export default {
 				}
 			});
 		},
-		renderCjlist: function(res) {
-			//console.log(res);
-			this.cjList = [];
-			if (res.data.length > 0) {
-				this.taskSuccess = true;
-				this.cdtime = true;
-				this.cjList = res.data;
-			}
-		},
+		
 		async init() {
 			var params = {
 				jobIds: Number(this.jobIds),

@@ -113,6 +113,7 @@ $uni-opacity-disabled: 0.3; // 组件禁用态的透明度
 	background: $color-m;
 	color: #fff;
 	border-radius: 8upx;
+	font-size: $fontsize-36;
 }
 
 page {
@@ -349,4 +350,8 @@ page {
 .xueshen6{
 	background: #921fec;
 	@include honstyle
+}
+input{
+	line-height: 56upx;
+	height: 56upx;
 }

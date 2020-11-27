@@ -39,6 +39,7 @@
   color: #fff;
   -webkit-border-radius: 8rpx;
           border-radius: 8rpx;
+  font-size: 36rpx;
 }
 page {
   overflow-x: hidden;
@@ -411,6 +412,10 @@ page {
   -webkit-border-radius: 5rpx;
           border-radius: 5rpx;
 }
+input {
+  line-height: 56rpx;
+  height: 56rpx;
+}
 page {
   background: #f5f5f5;
 }
@@ -591,6 +596,7 @@ page {
   background: #fcfcfc;
   -webkit-border-radius: 6rpx;
           border-radius: 6rpx;
+  font-size: 36rpx;
 }
 .typelogin {
   width: 750rpx;

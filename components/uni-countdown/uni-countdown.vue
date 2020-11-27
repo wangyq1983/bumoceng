@@ -20,7 +20,7 @@
 		<view class="taskbtnWarp">
 			<view class="taskendBtn" @tap="taskover">{{ txtBtn }}</view>
 			<view class="taskcal" @tap="taskcal">
-				任务取消
+				取消计时
 			</view>
 		</view>
 		
@@ -281,7 +281,7 @@ export default {
 			var _this = this;
 				uni.showModal({
 					title: '提示',
-					content: '您确定要取消任务吗？',
+					content: '您确定要取消计时吗？',
 					success(res) {
 						if (res.confirm) {
 							// _this.audiostop();
@@ -463,6 +463,7 @@ export default {
 	justify-content: space-between;
 	align-items: center;
 	margin-top: 60upx;
+	font-size:30upx;
 }
 .taskcal{
 	width: 180upx;

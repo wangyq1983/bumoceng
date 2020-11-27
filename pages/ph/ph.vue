@@ -189,7 +189,7 @@ export default {
 	@include colflex;
 	justify-content: flex-start;
 	align-items: flex-start;
-	margin-bottom: 130upx;
+	padding-bottom: 130upx;
 }
 .phitem {
 	@include rowflex;

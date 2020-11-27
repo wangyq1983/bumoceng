@@ -143,6 +143,7 @@
 	-webkit-align-items: center;
 	        align-items: center;
 	margin-top: 60rpx;
+	font-size:30rpx;
 }
 .taskcal.data-v-6cd74fee{
 	width: 180rpx;

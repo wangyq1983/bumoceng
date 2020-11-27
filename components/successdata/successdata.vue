@@ -19,7 +19,7 @@
 					<image src="/static/menustar.png" mode=""></image>
 					<view class="" style="font-weight: bold;">{{ starNum}}</view>
 				</view>
-				<view class="item">
+				<view class="item" v-if="expType>0">
 					获得经验 : <text style="font-weight: bold;">{{ expType }}</text>
 				</view>
 				<view class="item" style="flex-direction: column;" v-if="cjList.length > 0">
@@ -62,6 +62,10 @@ export default {
 		},
 		honorchange: {
 			type: Boolean
+		},
+		jingyan:{
+			type: Boolean,
+			default:true
 		}
 	},
 	data() {

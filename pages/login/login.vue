@@ -1,7 +1,6 @@
 <template>
-	<view>
-		
-		<view class="loginBox">
+	<view>		
+		<view class="loginBox" v-if="isPhone">
 			<view class="loginWord">
 				<view class="logininfo">
 					<view class="f1">写</view>
@@ -11,6 +10,9 @@
 				<view class="loginarrow">
 				</view>
 			</view>
+		</view>
+		<view class="" style="height: 100upx;" v-if ="!isPhone">
+			
 		</view>
 		<view class="logobox">
 			<image src="/static/icon.jpg" mode="" class="logoImg"></image>
@@ -117,12 +119,29 @@ export default {
 			avatarUrl: null,
 			userinfo: {},
 			code: '',
+			isPhone:true,
 			isCanUse: uni.getStorageSync('isCanUse') || true //默认为true
 		};
 	},
 	onLoad: function(options) {
+		var _this = this;
+		uni.getSystemInfo({
+			
+			success:function(res){
+				console.log('设备是')
+				console.log(res);
+				
+				if(res.model.indexOf("iPad") != -1){
+					_this.isPhone = false;
+				}else{
+					_this.isPhone = true;
+				}
+			}
+		})
+		
 		this.origin = '/' + decodeURIComponent(options.url);
 		console.log(this.origin);
+		
 	},
 	methods: {
 		//第一授权获取用户信息===》按钮触发
@@ -489,7 +508,8 @@ page{
 	line-height: 100upx;
 	text-align: center;
 	background: #fcfcfc;
-	border-radius: 6upx
+	border-radius: 6upx;
+	font-size: $fontsize-36;
 }
 .typelogin{
 	width:750upx;
